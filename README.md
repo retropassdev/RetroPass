@@ -17,7 +17,7 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 - Xbox developer account and console configured for Developer Mode
 - RetroArch version **higher** than **v1.10.0.** installed in Developer Mode
   - Currently, that means you will need to build your own RetroArch from the master branch. This is needed because RA v1.10.0. doesn't include necessary changes that were merged at a later date. As soon as a new official version is available, this step won't be needed.
-  - For seamless experience, it is recommended to setup a hotkey for quiting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
+  - For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
 - External storage of any type used for setting up content library
 - Additional computer for setting up content library
 
@@ -37,7 +37,7 @@ RetroPass can't be configured directly from Xbox because it doesn't have a built
 
 ## Setup with LaunchBox
 
-LaunchBox is a preffered option, because it gives the best results when properly set up. Mainly, it has support for multiple title and gameplay screenshots.
+LaunchBox is a preferred option, because it gives the best results when properly set up. Mainly, it has support for multiple title and gameplay screenshots.
 
 1. Setup and configure LaunchBox to work with RetroArch on PC, preferably directly on external storage.
 2. Download all images, descriptions and videos
@@ -80,7 +80,7 @@ If you do not wish to use LaunchBox, it is also possible to create Emulation Sta
 4. Check that **es_systems.cfg** file exists somewhere in the Emulation Station directory and that it has valid systems defined. i.e.
 	- Ignore **\<path>** property, it doesn't have to be properly set.
 	- Make sure that **\<command>** property for each system is properly configured. Paths are not important, as long as the core name is properly specified. RetroPass ignores everything in the command line except the core name. It knows how to properly pass it to RetroArch.
-	- **\<fullname>** is what is atually displayed in RetroPass as the name of the system.
+	- **\<fullname>** is what is actually displayed in RetroPass as the name of the system.
 	- In the example below, only relevant properties are shown:
 
 	```XML
