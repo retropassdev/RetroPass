@@ -15,9 +15,8 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 ## Prerequisites
 
 - Xbox developer account and console configured for Developer Mode
-- RetroArch version **higher** than **v1.10.0.** installed in Developer Mode
-  - Currently, that means you will need to build your own RetroArch from the master branch. This is needed because RA v1.10.0. doesn't include necessary changes that were merged at a later date. As soon as a new official version is available, this step won't be needed.
-  - For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
+- RetroArch version **v1.10.1.** or **higher** installed in Developer Mode
+- For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
 - External storage of any type used for setting up content library
 - Additional computer for setting up content library
 
