@@ -57,7 +57,8 @@ LaunchBox is a preferred option, because it gives the best results when properly
 	<dataSource>
 		<type>LaunchBox</type>
 		<relativePath>./LaunchBox</relativePath>
-	</dataSource>```
+	</dataSource>
+	```
 7. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
 
 ## Setup with Emulation Station
@@ -75,7 +76,8 @@ If you do not wish to use LaunchBox, it is also possible to create Emulation Sta
 	<dataSource>
 		<type>EmulationStation</type>
 		<relativePath>./EmulationStation</relativePath>
-	</dataSource>```
+	</dataSource>
+	```
 4. Check that **es_systems.cfg** file exists somewhere in the Emulation Station directory and that it has valid systems defined. i.e.
 	- Ignore **\<path>** property, it doesn't have to be properly set.
 	- Make sure that **\<command>** property for each system is properly configured. Paths are not important, as long as the core name is properly specified. RetroPass ignores everything in the command line except the core name. It knows how to properly pass it to RetroArch.
@@ -88,7 +90,8 @@ If you do not wish to use LaunchBox, it is also possible to create Emulation Sta
 		<fullname>Nintendo Entertainment System</fullname>	
 		<command>-L %HOME%\\systems\nestopia_libretro.dll</command>
 		<platform>nes</platform>
-	</system>```
+	</system>
+	```
 5. Setup **gamelist.xml** for every system:
 	- **gamelist.xml** must be in its own directory which equals system's **\<name>** defined in **es_systems.cfg**. For example, based on the example in step 3, it is expected that for NES, it should be **/nes/gamelist.xml**.
 	- All paths defined in **\<path>**, **\<thumbnail>**, **\<image>**, **\<video>**  must be a relative path to **\<relativePath>** defined in step 3. 
