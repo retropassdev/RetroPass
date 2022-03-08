@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.Media.Core;
 using Windows.Storage;
 using Windows.System;
@@ -182,7 +183,7 @@ namespace RetroPass
 			}
 		}
 
-		public async static void StartContent(PlaylistItem playlistItem)
+		public async static Task StartContent(PlaylistItem playlistItem)
 		{
 			var game = playlistItem.game;
 			playlistItem.playlist.SetLastPlayed(playlistItem);
@@ -215,7 +216,8 @@ namespace RetroPass
 				mediaPlayerElement.MediaPlayer.Pause();
 			}
 
-			StartContent(playlistItem);
+			await StartContent(playlistItem);
+			Hide();
 		}
 	}
 }
