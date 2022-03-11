@@ -51,6 +51,9 @@ namespace RetroPass
 			BoxFrontFileName = sb.ToString();// + "-";
 			BoxFrontContentName = Path.GetFileNameWithoutExtension(ApplicationPath);
 
+			//split multiple genre
+			Genre = Genre.Replace(";", ", ");
+
 			Trace.TraceInformation("GameRetroPass: BoxFrontFileName Init: {0}" + BoxFrontFileName);
 			Trace.TraceInformation("GameRetroPass: BoxFrontContentName Init: {0}" + BoxFrontContentName);
 		}

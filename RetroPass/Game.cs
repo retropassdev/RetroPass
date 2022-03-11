@@ -201,7 +201,10 @@ namespace RetroPass
 			QueryOptions options = new QueryOptions();
 			options.ApplicationSearchFilter =
 				"System.FileName:~\"" + VideoTitle + ".???" + "\"" + " OR " +
-				"System.FileName:~\"" + BoxFrontContentName + ".???" + "\"";
+				"System.FileName:~\"" + VideoTitle + "-*.???" + "\"" + " OR " +
+				"System.FileName:~\"" + BoxFrontContentName + ".???" + "\"" + " OR " +
+				"System.FileName:~\"" + BoxFrontContentName + "-*.???" + "\"";
+
 			options.FolderDepth = FolderDepth.Deep;
 			options.SetThumbnailPrefetch(ThumbnailMode.SingleItem, 100, ThumbnailOptions.ReturnOnlyIfCached);
 			StorageFileQueryResult queryResult = folder.CreateFileQueryWithOptions(options);
