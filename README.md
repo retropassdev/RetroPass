@@ -9,7 +9,7 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
  - Xbox only
  - optimized for gamepad only
  - no custom themes
- - no support for zipped content
+ - zipped content supported only if RetroArch cores support it
  - no scrapper
   
 ## Prerequisites
