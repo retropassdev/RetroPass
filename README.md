@@ -38,15 +38,24 @@ RetroPass can't be configured directly from Xbox because it doesn't have a built
 
 LaunchBox is a preferred option, because it gives the best results when properly set up. Mainly, it has support for multiple title and gameplay screenshots.
 
-1. Setup and configure LaunchBox to work with RetroArch on PC, preferably directly on external storage.
-2. Download all images, descriptions and videos
-3. Make sure that **\<CommandLine>** property for each emulator is properly configured in **LaunchBox/Data/Emulators.xml**. The path is not important, as long as the core name is properly specified. RetroPass ignores the path part and gets only the name of the core. It knows how to properly pass it to RetroArch.
+1. Install LaunchBox directly to external storage.
+2. Setup and configure LaunchBox to work with RetroArch.
+3. **IMPORTANT!!!** When you import your content, it will ask you to select which media type to download. If you are using LaunchBox just to configure RetroPass, there is no need to download all the media types because RetroPass needs only a subset. It will speed up your setup process and it will make less burden on LaunchBox database. You only need to check these media types:
+  - "Box - Front" 
+  - "Screenshot - Game Title"
+  - "Screenshot - Gameplay"
+  - "Screenshot - Game Select"
+  - "Video"
+
+  ![](/Docs/media_types.png)
+
+
+4. Make sure that **\<CommandLine>** property for each emulator is properly configured in **LaunchBox/Data/Emulators.xml**. The path is not important, as long as the core name is properly specified. RetroPass ignores the path part and gets only the name of the core. It knows how to properly pass it to RetroArch.
 
 	```XML
 	<CommandLine>-L "cores\<core_name>.dll"</CommandLine>
 	```
 	Where **\<core_name>** is the name of the core you wish to use for particular emulator.
-4. If you didn't set up everything on external storage in step 1, now copy LaunchBox to external storage
 5. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
 6. Edit **RetroPass.xml** configuration file. 
 	
