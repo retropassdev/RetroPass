@@ -15,5 +15,10 @@ namespace RetroPass
 
 		[XmlIgnoreAttribute]
 		public StorageFolder BoxFrontFolder { get; set; }
+
+		public Platform Copy()
+		{
+			return (Platform)this.MemberwiseClone();
+		}
 	}
 }

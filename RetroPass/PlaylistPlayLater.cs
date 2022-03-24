@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,8 +57,29 @@ namespace RetroPass
 			{
 				var playlistRetroPass = new PlaylistRetroPass();
 				playlistRetroPass.games = PlaylistItems.Select(t => t.game).OfType<GameRetroPass>().ToList();
+
+				//platform paths must be relative when saving
+				foreach (var game in playlistRetroPass.games)
+				{
+					game.GamePlatform.BoxFrontPath = game.GamePlatform.BoxFrontPath == "" ? "" : Path.GetRelativePath(game.DataRootFolder, game.GamePlatform.BoxFrontPath);
+					game.GamePlatform.ScreenshotGameplayPath = game.GamePlatform.ScreenshotGameplayPath == "" ? "" : Path.GetRelativePath(game.DataRootFolder, game.GamePlatform.ScreenshotGameplayPath);
+					game.GamePlatform.ScreenshotGameSelectPath = game.GamePlatform.ScreenshotGameSelectPath == "" ? "" : Path.GetRelativePath(game.DataRootFolder, game.GamePlatform.ScreenshotGameSelectPath);
+					game.GamePlatform.ScreenshotGameTitlePath = game.GamePlatform.ScreenshotGameTitlePath == "" ? "" : Path.GetRelativePath(game.DataRootFolder, game.GamePlatform.ScreenshotGameTitlePath);
+					game.GamePlatform.VideoPath = game.GamePlatform.VideoPath == "" ? "" : Path.GetRelativePath(game.DataRootFolder, game.GamePlatform.VideoPath);
+				}
+
 				//GameRetroPass[] games = PlaylistItems.Select(t => t.game).ToArray();
 				x.Serialize(writer, playlistRetroPass);
+
+				foreach (var game in playlistRetroPass.games)
+				{
+					game.GamePlatform.BoxFrontPath = game.GamePlatform.BoxFrontPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.BoxFrontPath));
+					game.GamePlatform.ScreenshotGameplayPath = game.GamePlatform.ScreenshotGameplayPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.ScreenshotGameplayPath));
+					game.GamePlatform.ScreenshotGameSelectPath = game.GamePlatform.ScreenshotGameSelectPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.ScreenshotGameSelectPath));
+					game.GamePlatform.ScreenshotGameTitlePath = game.GamePlatform.ScreenshotGameTitlePath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.ScreenshotGameTitlePath));
+					game.GamePlatform.VideoPath = game.GamePlatform.VideoPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.VideoPath));
+				}
+
 				await FileIO.WriteTextAsync(filename, writer.ToString());
 			}
 		}
@@ -73,16 +95,36 @@ namespace RetroPass
 			StorageFile filename = await StorageUtils.GetFileAsync(folder, fileName);
 			string xmlPlaylist = await FileIO.ReadTextAsync(filename);
 			XmlSerializer x = new XmlSerializer(typeof(PlaylistRetroPass));
+			PlaylistRetroPass playlistRetroPass = null;
 
 			using (TextReader textReader = new StringReader(xmlPlaylist))
 			{
-				var playlistRetroPass = (PlaylistRetroPass)x.Deserialize(textReader);
+				try
+				{
+					playlistRetroPass = (PlaylistRetroPass)x.Deserialize(textReader);
+				}
+				catch (Exception e)
+				{
+					//if xml is invalid, just delete it and return
+					Trace.TraceWarning("PlaylistPlayLater: Delete invalid xml {0}", filename.Path);
+					await this.Delete();
+				}
+			}
 
+			if (playlistRetroPass != null)
+			{
 				foreach (var game in playlistRetroPass.games)
 				{
 					game.DataRootFolder = dataRootfolder;
 					//game.GamePlatform = p;//platform read directly from file
+					game.GamePlatform.BoxFrontPath = game.GamePlatform.BoxFrontPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.BoxFrontPath));
+					game.GamePlatform.ScreenshotGameplayPath = game.GamePlatform.ScreenshotGameplayPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.ScreenshotGameplayPath));
+					game.GamePlatform.ScreenshotGameSelectPath = game.GamePlatform.ScreenshotGameSelectPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.ScreenshotGameSelectPath));
+					game.GamePlatform.ScreenshotGameTitlePath = game.GamePlatform.ScreenshotGameTitlePath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.ScreenshotGameTitlePath));
+					game.GamePlatform.VideoPath = game.GamePlatform.VideoPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.VideoPath));
+					game.ApplicationPathFull = Path.GetFullPath(Path.Combine(dataRootfolder, game.ApplicationPath));
 					game.Init();
+
 					PlaylistItem playlistItem = AddPlaylistItem(game);
 					PlaylistItemsDict.Add(PlaylistItemKey(playlistItem), playlistItem);
 				}
@@ -99,6 +141,8 @@ namespace RetroPass
 
 			StorageFile filename = await StorageUtils.GetFileAsync(folder, fileName);
 			await filename.DeleteAsync(StorageDeleteOption.PermanentDelete);
+			//clear recent playlist
+			this.ClearLastPlayedSettings();
 		}
 
 		private void RemoveFromGames(PlaylistItem plItem)
@@ -118,11 +162,11 @@ namespace RetroPass
 		private void AddToGames(PlaylistItem plItem)
 		{
 			//need to convert game into GameRetroPass
-			PlaylistItem playlistItem = new PlaylistItem();
 			//this copies values from specific Game subclass to GameRetroPass
-			playlistItem.game = new GameRetroPass(plItem.game);
+			var game = new GameRetroPass(plItem.game);
+			game.GamePlatform = plItem.game.GamePlatform.Copy(); //keep copies of GamePlatform object, because it is manipulated on Save()
 
-			PlaylistItems.Add(playlistItem);
+			PlaylistItem playlistItem = AddPlaylistItem(game);
 			PlaylistItemsDict.Add(PlaylistItemKey(playlistItem), playlistItem);
 
 			//refresh landing page

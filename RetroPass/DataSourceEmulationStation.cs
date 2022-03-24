@@ -273,6 +273,8 @@ namespace RetroPass
 					playlistTmp.Name = platform.Name;
 					foreach (var game in platformGames.games)
 					{
+						game.ApplicationPath = game.ApplicationPathFull;
+
 						//if user wants to use roms from retroarch, create a proper path from RetroPass config settings
 						if (string.IsNullOrEmpty(retroArchRomPlatformPath) == false)
 						{
