@@ -34,6 +34,7 @@ namespace RetroPass
 		}
 		[XmlElement(ElementName = "ApplicationPath")] public override string ApplicationPath { get; set; }
 		[XmlElement(ElementName = "Title")] public override string Title { get; set; }
+		[XmlElement(ElementName = "CoreName")] public override string CoreName { get; set; }
 		[XmlElement(ElementName = "Notes")] public override string Description { get; set; }
 		[XmlElement(ElementName = "ReleaseDate")] public override string ReleaseDate { get; set; }
 		[XmlElement(ElementName = "Developer")] public override string Developer { get; set; }

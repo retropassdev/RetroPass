@@ -14,6 +14,7 @@ namespace RetroPass
 	public class GameLaunchBox : Game
 	{
 		[XmlElement(ElementName = "ApplicationPath")] public override string ApplicationPath { get; set; }
+		[XmlElement(ElementName = "CommandLine")] public string CommandLine { get; set; }
 		[XmlElement(ElementName = "Title")] public override string Title { get; set; }
 		[XmlElement(ElementName = "Notes")] public override string Description { get; set; }
 		[XmlElement(ElementName = "ReleaseDate")] public override string ReleaseDate { get; set; }
@@ -167,6 +168,18 @@ namespace RetroPass
 			return assets;
 		}
 
+		private string ParseCommandLine(string commandLine)
+		{
+			string coreName = "";
+
+			if (string.IsNullOrEmpty(commandLine) == false)
+			{
+				coreName = Path.GetFileName(commandLine).Replace("\"", "");
+			}
+
+			return coreName;
+		}
+
 		public override async Task Load()
 		{
 			///////////////////load Play later playlist///////////////////////////////////////////////
@@ -235,11 +248,7 @@ namespace RetroPass
 					continue;
 				}
 
-				string coreName = "";
-				if (string.IsNullOrEmpty(emulatorPlatform.CommandLine) == false)
-				{
-					coreName = Path.GetFileName(emulatorPlatform.CommandLine).Replace("\"", "");
-				}
+				string coreName = ParseCommandLine(emulatorPlatform.CommandLine);
 
 				//////////////////////////////////create platform/////////////////////////
 				var platform = new Platform();
@@ -310,7 +319,17 @@ namespace RetroPass
 
 						game.DataRootFolder = rootFolder;
 						game.GamePlatform = platform;
-						game.CoreName = coreName;
+
+						//override core per game
+						if (string.IsNullOrEmpty(game.CommandLine) == false)
+						{
+							game.CoreName = ParseCommandLine(game.CommandLine);
+						}
+						else
+						{
+							game.CoreName = coreName;
+						}
+
 						game.Init();
 						Trace.TraceInformation("DataSourceLaunchBox: Add game: {0}", game.ApplicationPath);
 						playlistTmp.AddPlaylistItem(game);

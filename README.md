@@ -36,7 +36,9 @@ RetroPass can't be configured directly from Xbox because it doesn't have a built
 
 ## Setup with LaunchBox
 
-LaunchBox is a preferred option, because it gives the best results when properly set up. Mainly, it has support for multiple title and gameplay screenshots.
+LaunchBox is a preferred option, because it gives the best results when properly set up. Mainly:
+ - It has support for multiple title and gameplay screenshots. 
+ - Setup specific core for a game, if needed.
 
 1. Install LaunchBox directly to external storage.
 2. Setup and configure LaunchBox to work with RetroArch.
@@ -47,7 +49,7 @@ LaunchBox is a preferred option, because it gives the best results when properly
   - "Screenshot - Game Select"
   - "Video"
 
-  ![](/Docs/media_types.png)
+  	![](/Docs/media_types.png)
 
 
 4. Make sure that **\<CommandLine>** property for each emulator is properly configured in **LaunchBox/Data/Emulators.xml**. The path is not important, as long as the core name is properly specified. RetroPass ignores the path part and gets only the name of the core. It knows how to properly pass it to RetroArch.
@@ -56,8 +58,10 @@ LaunchBox is a preferred option, because it gives the best results when properly
 	<CommandLine>-L "cores\<core_name>.dll"</CommandLine>
 	```
 	Where **\<core_name>** is the name of the core you wish to use for particular emulator.
-5. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
-6. Edit **RetroPass.xml** configuration file. 
+5. Optionally, if you need to set up a different core for a game, go to Launchbox, open "Edit Metadata/Media" and modify command line under Emulation.
+ 	![](/Docs/core_per_game.png)
+6. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
+7. Edit **RetroPass.xml** configuration file. 
 	
 	**\<relativePath>** points to LaunchBox directory on the external storage. Do not put absolute path like "E:\LaunchBox", because when external storage is plugged into Xbox, it might be recognized under a different letter. For example, if LaunchBox folder is in the root of external storage, then it should be configured like this:
 
@@ -68,7 +72,7 @@ LaunchBox is a preferred option, because it gives the best results when properly
 		<relativePath>./LaunchBox</relativePath>
 	</dataSource>
 	```
-7. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
+8. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
 
 ## Setup with Emulation Station
 
