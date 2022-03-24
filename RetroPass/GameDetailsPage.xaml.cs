@@ -187,7 +187,7 @@ namespace RetroPass
 		{
 			var game = playlistItem.game;
 			playlistItem.playlist.SetLastPlayed(playlistItem);
-			
+
 			string args = "cmd=" + "retroarch";
 			args += " -L";
 			args += " cores\\" + game.CoreName;
