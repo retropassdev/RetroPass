@@ -187,13 +187,9 @@ namespace RetroPass
 				return null;
 			}
 
-			StorageFolder folder;
-			//find folder
-			try
-			{
-				folder = await StorageUtils.GetFolderFromPathAsync(GamePlatform.VideoPath);
-			}
-			catch (Exception)
+			StorageFolder folder = await StorageUtils.GetFolderFromPathAsync(GamePlatform.VideoPath);
+
+			if (folder == null)
 			{
 				return null;
 			}
