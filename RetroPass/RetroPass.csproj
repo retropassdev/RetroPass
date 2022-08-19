@@ -165,6 +165,7 @@
     </Compile>
     <Compile Include="StorageUtils.cs" />
     <Compile Include="ThumbnailCache.cs" />
+    <Compile Include="UrlSchemeGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

@@ -96,12 +96,23 @@ namespace RetroPass
 	{
 		public class EmulatorPlatform
 		{
+			public string Emulator;
+			[NonSerialized]
+			public string EmulatorPath;
 			public string Platform;
 			public string CommandLine;
+			public bool Default;
+		}
+		public class Emulator
+		{
+			public string ApplicationPath;
+			public string ID;
 		}
 
 		[XmlElement("EmulatorPlatform")]
 		public List<EmulatorPlatform> emulatorPlatforms;
+		[XmlElement("Emulator")]
+		public List<Emulator> emulators;
 	}
 
 	//for loading LaunchBox emulator definitions, in Data/Emulators.xml
@@ -212,12 +223,32 @@ namespace RetroPass
 			StorageFile xmlEmulatorsFile = await StorageUtils.GetFileAsync(dataFolder, "Emulators.xml");
 			string xmlEmulators = await FileIO.ReadTextAsync(xmlEmulatorsFile);
 			List<EmulatorsLaunchBox.EmulatorPlatform> emulatorPlatforms = null;
+
 			using (TextReader reader = new StringReader(xmlEmulators))
 			{
 				XmlSerializer serializer = new XmlSerializer(typeof(EmulatorsLaunchBox));
 				// Call the Deserialize method to restore the object's state.
 				EmulatorsLaunchBox emulators = serializer.Deserialize(reader) as EmulatorsLaunchBox;
 				emulatorPlatforms = emulators.emulatorPlatforms;
+
+				if (emulatorPlatforms != null)
+				{
+					emulators.emulatorPlatforms.RemoveAll(t => t.Default == false);
+
+					foreach (var platform in emulatorPlatforms)
+					{
+						EmulatorsLaunchBox.Emulator emulator = emulators.emulators.Find(t => t.ID == platform.Emulator);
+
+						if(emulator != null)
+						{
+							platform.EmulatorPath = emulator.ApplicationPath;
+						}
+						else
+						{
+							Trace.TraceWarning("DataSourceLaunchBox: Emulator for " + platform.Platform + " not specified.");
+						}
+					}
+				}
 			}
 
 			if (emulatorPlatforms == null)
@@ -254,6 +285,7 @@ namespace RetroPass
 				var platform = new Platform();
 				platform.Name = platformName;
 				platform.SourceName = platform.Name;
+				platform.SetEmulatorType(emulatorPlatform.EmulatorPath);
 
 				platform.BoxFrontPath = platforms.platformFolders.Where(t => t.Platform == platformName && t.MediaType == "Box - Front").Select(t => t.FolderPath).DefaultIfEmpty(string.Empty).First();
 				platform.BoxFrontPath = platform.BoxFrontPath == "" ? "" : Path.GetFullPath(Path.Combine(rootFolder, platform.BoxFrontPath));

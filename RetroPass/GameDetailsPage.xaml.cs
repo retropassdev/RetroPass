@@ -187,13 +187,8 @@ namespace RetroPass
 		{
 			var game = playlistItem.game;
 			playlistItem.playlist.SetLastPlayed(playlistItem);
-
-			string args = "cmd=" + "retroarch";
-			args += " -L";
-			args += " cores\\" + game.CoreName;
-			args += " \"" + game.ApplicationPathFull + "\"";
-			args += "&launchOnExit=" + "retropass:";
-			Uri uri = new Uri("retroarch:?" + args);
+			string urlScheme = UrlSchemeGenerator.GetUrl(game);
+			Uri uri = new Uri(urlScheme);
 			Trace.TraceInformation("GameDetailsPage: LaunchUriAsync: {0}", uri.ToString());
 
 			//check if it exists

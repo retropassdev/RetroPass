@@ -203,7 +203,7 @@ namespace RetroPass
 				{
 					continue;
 				}
-				string coreName = system.command.Substring(indexStart + 1, index + 4 - indexStart);
+				string coreName = system.command.Substring(indexStart + 1, index + 3 - indexStart);
 
 
 				//////////////////////////////////import platform games as playlist/////////////////////////
@@ -224,6 +224,7 @@ namespace RetroPass
 						platform = new Platform();
 						platform.Name = system.fullname;
 						platform.SourceName = system.name;
+						platform.SetEmulatorType(system.command);
 
 						string platformPath = dataFolder.Path;
 
