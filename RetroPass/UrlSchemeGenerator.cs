@@ -27,7 +27,7 @@ namespace RetroPass
 			string args = "cmd=" + "retroarch";
 			args += " -L";
 			args += " cores\\" + game.CoreName;
-			args += " \"" + game.ApplicationPathFull + "\"";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
@@ -38,7 +38,7 @@ namespace RetroPass
 			string args = "cmd=" + "retroarch";
 			args += " -L";
 			args += " cores\\" + game.CoreName;
-			args += " \"" + game.ApplicationPathFull + "\"";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += " &launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}

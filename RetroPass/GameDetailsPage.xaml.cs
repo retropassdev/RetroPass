@@ -187,14 +187,14 @@ namespace RetroPass
 		{
 			var game = playlistItem.game;
 			playlistItem.playlist.SetLastPlayed(playlistItem);
-			string urlScheme = UrlSchemeGenerator.GetUrl(game);
-			Uri uri = new Uri(urlScheme);
-			Trace.TraceInformation("GameDetailsPage: LaunchUriAsync: {0}", uri.ToString());
 
 			//check if it exists
 			try
 			{
 				StorageFile file = await StorageFile.GetFileFromPathAsync(game.ApplicationPathFull);
+				string urlScheme = UrlSchemeGenerator.GetUrl(game);
+				Uri uri = new Uri(urlScheme);
+				Trace.TraceInformation("GameDetailsPage: LaunchUriAsync: {0}", uri.ToString());
 				Launcher.LaunchUriAsync(uri);
 			}
 			catch (Exception)
