@@ -16,12 +16,16 @@ namespace RetroPass
 				case Platform.EEmulatorType.rgx:
 					url = GetUrlRetrix(game);
 					break;
+				case Platform.EEmulatorType.xbsx2:
+					url = GetUrlXBSX2(game);
+					break;
 				default:
 					break;
 			}
 
 			return url;
 		}
+
 		private static string GetUrlRetroarch(Game game)
 		{
 			string args = "cmd=" + "retroarch";
@@ -40,6 +44,14 @@ namespace RetroPass
 			args += " cores\\" + game.CoreName;
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += " &launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+		private static string GetUrlXBSX2(Game game)
+		{
+			string args = "cmd=" + "pcsx2.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
 	}
