@@ -10,6 +10,7 @@ namespace RetroPass
 			retroarch,
 			rgx,
 			xbsx2,
+			dolphin,
 		}
 		public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -40,6 +41,10 @@ namespace RetroPass
 			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("retrix", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				EmulatorType = EEmulatorType.rgx;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("dolphin", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.dolphin;
 			}
 			else
 			{
