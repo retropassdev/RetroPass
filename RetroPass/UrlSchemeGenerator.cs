@@ -19,6 +19,9 @@ namespace RetroPass
 				case Platform.EEmulatorType.xbsx2:
 					url = GetUrlXBSX2(game);
 					break;
+				case Platform.EEmulatorType.dolphin:
+					url = GetUrlDolphin(game);
+					break;
 				default:
 					break;
 			}
@@ -50,6 +53,14 @@ namespace RetroPass
 		private static string GetUrlXBSX2(Game game)
 		{
 			string args = "cmd=" + "pcsx2.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+		private static string GetUrlDolphin(Game game)
+		{
+			string args = "cmd=" + "dolphin.exe";
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
