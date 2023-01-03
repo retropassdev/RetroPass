@@ -214,5 +214,10 @@ namespace RetroPass
 			await StartContent(playlistItem);
 			Hide();
 		}
-	}
+
+        private void ScrollViewer1_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+
+        }
+    }
 }

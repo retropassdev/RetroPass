@@ -14,7 +14,8 @@
     </Page.Background>
     <Page.Resources>
         <Style TargetType="Button">
-            <Setter Property="Width" Value="155"/>            
+            <Setter Property="Width" Value="155"/>
+            <Setter Property="CornerRadius" Value="4,4,4,4"/>
         </Style>
     </Page.Resources>
     <Grid Margin="0,14,0,0" Padding="0,0,0,0">

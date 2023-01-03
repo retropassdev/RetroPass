@@ -5,20 +5,23 @@
     xmlns:local="using:RetroPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    CornerRadius="6,6,6,6">
 
     <ContentDialog.Resources>
-        <x:Double x:Key="ContentDialogMaxWidth">960</x:Double>
-        <x:Double x:Key="ContentDialogMaxHeight">540</x:Double>
+        <x:Double x:Key="ContentDialogMaxWidth">667</x:Double>
+        <x:Double x:Key="ContentDialogMaxHeight">423</x:Double>
         <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
         <Thickness x:Key="ContentDialogBorderWidth">0</Thickness>
         <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
+        <CornerRadius x:Key="OverlayCornerRadius">4</CornerRadius>
+        <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
 
         <DataTemplate x:Key="GameTemplate"
                     x:DataType="local:PlaylistItem">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="155"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Button Click="GameButton_Click" Grid.Row="0" x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
@@ -37,32 +40,41 @@
                         Margin="0,0,0,0" Padding="1,5,5,0"
                         Text="{x:Bind game.GamePlatform.Name}" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="10" Style="{StaticResource CaptionTextBlockStyle}"/>
                 </StackPanel>
-            </Grid>           
+            </Grid>
         </DataTemplate>
     </ContentDialog.Resources>
 
 
-    <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="960" Height="478" Background="#1E1E1E">
+    <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="667" Height="423" Background="#1E1E1E">
         <Grid.RowDefinitions>
-            <RowDefinition Height="75" />
-            <RowDefinition Height="403" />
-            <RowDefinition Height="20" />
-            <RowDefinition />
+            <RowDefinition Height="50.4" />
+            <RowDefinition Height="5.6"/>
+            <RowDefinition Height="409.6" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="0*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="50,18,50,0" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <Grid Grid.Row="0" Margin="29,17,27,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" VerticalAlignment="Top" Height="39" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0*"/>
+                <RowDefinition Height="16.8"/>
+                <RowDefinition Height="5.6"/>
+                <RowDefinition Height="2.633"/>
+                <RowDefinition Height="10.167"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="130.4"/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" HorizontalAlignment="Stretch">
+            <ComboBox x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,0,6,0" Height="36" CornerRadius="4,4,4,4" Grid.Row="1" Grid.RowSpan="4">
                 <x:String>Title</x:String>
                 <x:String>Developer</x:String>
                 <x:String>Year</x:String>
             </ComboBox>
-            <TextBox x:Name="SearchText" Grid.Column="1" Margin="20,0,0,0" PlaceholderText="Search RetroPass" TextChanged="TextBox_TextChanged"/>
+            <TextBox x:Name="SearchText" Grid.Column="2" Margin="13,0,0,0" CornerRadius="4,4,4,4" PlaceholderText="Search RetroPass" TextChanged="TextBox_TextChanged" Grid.Row="1" Grid.RowSpan="4"/>
         </Grid>
 
-        <GridView Grid.Row="1"  x:Name="SearchGridView"
+        <GridView  x:Name="SearchGridView"
               XYFocusKeyboardNavigation="Enabled"
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
               SelectionMode="Single"
@@ -70,25 +82,25 @@
               IsItemClickEnabled="False"                  
               IsTabStop="False"
               ContainerContentChanging="SearchGridView_ContainerContentChanging"
-              ItemTemplate="{StaticResource GameTemplate}"              
-              Margin="0,0,0,0"
-              Padding="0,0,0,0">
+              ItemTemplate="{StaticResource GameTemplate}"
+              Padding="0,0,0,0" Margin="1,5,-1,4" CornerRadius="4,4,4,4" Grid.RowSpan="2" SelectionChanged="SearchGridView_SelectionChanged" RenderTransformOrigin="0.5,0.316" Grid.Row="2">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="Width" Value="100" />
-                    <Setter Property="Height" Value="180" />
+                    <Setter Property="Width" Value="116" />
+                    <Setter Property="Height" Value="154" />
                     <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Margin" Value="4,4,4,20" />
+                    <Setter Property="Margin" Value="4,4,4,14" />
                     <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="Margin" Value="4,4,4,4" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
-
                     <Setter Property="IsFocusEngagementEnabled" Value="False"/>
                     <Setter Property="IsTabStop" Value="False"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="GridViewItem">
                                 <ListViewItemPresenter
+                                CornerRadius="4,4,4,4"   
                                 SelectedBackground="Transparent"
                                 SelectedPointerOverBackground="Transparent"
                                 PressedBackground="Transparent"
@@ -101,13 +113,13 @@
             </GridView.ItemContainerStyle>
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Margin="40,15,0,40" Orientation="Horizontal" 
+                    <ItemsWrapGrid Margin="23,15,0,40" Orientation="Horizontal" 
                                    BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"                                   
 							   HorizontalAlignment="Left"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>
-        <TextBox Grid.Row="2" Width="960" GettingFocus="DummyReturnFocusTextBox_GettingFocus" FocusVisualPrimaryThickness="0" Margin="0,0,0,0" />
+        <TextBox Grid.Row="3" GettingFocus="DummyReturnFocusTextBox_GettingFocus" FocusVisualPrimaryThickness="0" Margin="0,7,-1,-1" Grid.RowSpan="2" />
 
     </Grid>
 </ContentDialog>

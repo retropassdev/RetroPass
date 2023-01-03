@@ -243,5 +243,15 @@ namespace RetroPass
 			//To prevent that, a dummy text box exists below SearchGridView to catch focus and cancel it.
 			args.TryCancel();
 		}
-	}
+
+        private void SearchGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SearchCriteria_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+    }
 }

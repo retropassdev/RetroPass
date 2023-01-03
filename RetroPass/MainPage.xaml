@@ -19,10 +19,10 @@
         <ListView x:Name="ListViewPlatformTemplate">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="Width" Value="136" />
-                    <Setter Property="Height" Value="280" />
-                    <Setter Property="Background" Value="#3E3E3E"/>
-                    <Setter Property="Margin" Value="4,14,4,14" />
+                    <Setter Property="Width" Value="143" />
+                    <Setter Property="Height" Value="190" />
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Margin" Value="4,8,4,8" />
                     <Setter Property="Padding" Value="0,0,0,0" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -35,16 +35,16 @@
             <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                     Margin="0,0,0,0" Padding="0,0,0,0" 
                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                    BorderThickness="0" >
-                <Grid Background="#292929">
+                    BorderThickness="0"  CornerRadius="4,4,4,4">
+                <Grid Background="Transparent"> 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="210"/>
+                        <RowDefinition Height="191"/>
                         <RowDefinition Height="72"/>
                     </Grid.RowDefinitions>
                     <Image Grid.Row="0" x:Name="ItemImage"
                        Stretch="Uniform"
                        Opacity="0" VerticalAlignment="Top" />
-                    <TextBlock Grid.Row="1" x:Name="TextTitle" Text="{x:Bind game.Title}" x:Phase="0" Margin="8,0,8,0" TextWrapping="Wrap" MaxLines="3" TextTrimming="WordEllipsis"/>
+                    <TextBlock Grid.Row="1" x:Name="TextTitle" Text="{x:Bind game.Title}" x:Phase="0" Margin="8,0,4,0" TextWrapping="Wrap" MaxLines="3" TextTrimming="WordEllipsis"/>
                 </Grid>
             </Button>
         </DataTemplate>
@@ -68,15 +68,15 @@
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="0,14,5,14"/>
+            <Setter Property="Margin" Value="0,8,5,8"/>
             <Setter Property="Padding" Value="0,0,0,0"/>
             <Setter Property="Width" Value="136"/>
-            <Setter Property="Height" Value="280"/>
+            <Setter Property="Height" Value="190"/>
             <Setter Property="ContentTemplate" Value="{StaticResource PlatformFirstItemButtonContent}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                        <Grid x:Name="RootGrid" CornerRadius="4,4,4,4" Background="{TemplateBinding Background}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
@@ -141,23 +141,23 @@
     </Page.Resources>
     <Grid Margin="0,0,0,0" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled">
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" 			
-				  HorizontalAlignment="Left" Margin="48,0,48,0">
+				  HorizontalAlignment="Left" Margin="28,0,28,0">
             <StackPanel XYFocusKeyboardNavigation="Enabled" Name="StackPanelMain" Spacing="0" 
                         XYFocusUpNavigationStrategy="RectilinearDistance" 
                         XYFocusDownNavigationStrategy="RectilinearDistance">
                 <StackPanel x:Name = "StackPanelMenu" Orientation="Horizontal" Spacing="8" Margin="0,20,0,6">
-                    <Button x:Name="Search" Width="155" XYFocusRight="{x:Bind Settings}" Click="Search_Click" HorizontalContentAlignment="Left" >
+                    <Button x:Name="Search" Width="98" CornerRadius="4,4,4,4" XYFocusRight="{x:Bind Settings}" Click="Search_Click" HorizontalContentAlignment="Center" >
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Border VerticalAlignment="Center">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE721;" FontSize="17"/>
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE721;" FontSize="19"/>
                             </Border>
                             <TextBlock Text="Search"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="Settings" Width="155" Height="32" Click="Settings_Click" HorizontalContentAlignment="Left" >
+                    <Button x:Name="Settings" Width="98" Height="32" CornerRadius="4,4,4,4" Click="Settings_Click" HorizontalContentAlignment="Center" >
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Border VerticalAlignment="Center">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE115;" FontSize="17"/>
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE115;" FontSize="19"/>
                             </Border>
                             <TextBlock Text="Settings"/>
                         </StackPanel>
@@ -166,13 +166,13 @@
             </StackPanel>
         </ScrollViewer>
         <local:PlayLaterControl x:Name="PlayLaterControl"></local:PlayLaterControl>
-        <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,20,28,0" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" >
+        <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,20,28,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" >
             <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>
             <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="#FFD000" FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CC;" FontSize="20"/>
             <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  
-                   Text="Search All Games" FontSize="12" CharacterSpacing="40"></TextBlock>
+                   Text="Search Games" FontSize="12" CharacterSpacing="40"></TextBlock>
         </Grid>
     </Grid>
 </Page>
