@@ -10,7 +10,8 @@ namespace RetroPass
 			retroarch,
 			rgx,
 			xbsx2,
-			dolphin,
+            aethersx2,
+            dolphin,
 		}
 		public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -20,7 +21,7 @@ namespace RetroPass
 		public string ScreenshotGameplayPath { get; set; }
 		public string ScreenshotGameSelectPath { get; set; }
 		public string VideoPath { get; set; }
-        public string BackgroundImagePath { get; set; }
+        public string BackgroundPath { get; set; }
 
         [XmlIgnoreAttribute]
 		public StorageFolder BoxFrontFolder { get; set; }
@@ -39,7 +40,11 @@ namespace RetroPass
 			{
 				EmulatorType = EEmulatorType.xbsx2;
 			}
-			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("retrix", System.StringComparison.CurrentCultureIgnoreCase))
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("aethersx2", System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                EmulatorType = EEmulatorType.aethersx2;
+            }
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("retrix", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				EmulatorType = EEmulatorType.rgx;
 			}
