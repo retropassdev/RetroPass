@@ -5,47 +5,60 @@
     xmlns:local="using:RetroPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Height="589"
+    CornerRadius="6,6,6,6">
 
     <ContentDialog.Resources>
-        <x:Double x:Key="ContentDialogMaxWidth">960</x:Double>
-        <x:Double x:Key="ContentDialogMaxHeight">540</x:Double>
+        <x:Double x:Key="ContentDialogMaxWidth">844</x:Double>
+        <x:Double x:Key="ContentDialogMaxHeight">474</x:Double>
         <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
         <Thickness x:Key="ContentDialogBorderWidth">0</Thickness>
         <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
+        <CornerRadius x:Key="OverlayCornerRadius">4</CornerRadius>
+        <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
     </ContentDialog.Resources>
 
 
     <RelativePanel>
-        <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="960" Height="478" Background="#1E1E1E">
+        <Grid Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="854" Height="335" Background="#1E1E1E">
+            <Grid.Resources>
+                <CornerRadius x:Key="OverlayCornerRadius">4</CornerRadius>
+            </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="110" />
+                <RowDefinition Height="52.8" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="88"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="70,15,0,0" Padding="0,0,0,0" HorizontalAlignment="Left">
+            <Grid Grid.Row="0" Margin="27,0,0,2" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Left" Width="769">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="34" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="7.45" />
+                    <RowDefinition Height="8.511"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="800" Text="{x:Bind playlistItem.game.Title}" TextWrapping="Wrap"></TextBlock>
-                <TextBlock Grid.Row="1" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="500"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="#909090"></TextBlock>
+                <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="844" Text="{x:Bind playlistItem.game.Title}" TextWrapping="Wrap" Margin="0,4,0,8" Grid.RowSpan="3"></TextBlock>
+                <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="500"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="#909090" Margin="0,34,0,0" Grid.RowSpan="3"/>
             </Grid>
-            <ScrollViewer Margin="0,0,0,0" Grid.Row="1" Name="ScrollViewer1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" Height="280"  
-                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                <StackPanel Padding="0,0,0,0" Background="Transparent" XYFocusKeyboardNavigation="Enabled" Orientation="Horizontal" Height="280" Spacing="8" BringIntoViewRequested="StackPanel_BringIntoViewRequested">
-                    <Border Margin="0,0,0,0" Padding="0,0,0,0" Width="62"></Border>
+            <ScrollViewer Margin="0,-8,0,0" Name="ScrollViewer1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden"  
+                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.RowSpan="3" ViewChanged="ScrollViewer1_ViewChanged" Height="391" VerticalAlignment="Top">
+                <StackPanel Padding="0,0,0,0" Background="Transparent" XYFocusKeyboardNavigation="Enabled" Orientation="Horizontal" Height="249" Spacing="8" BringIntoViewRequested="StackPanel_BringIntoViewRequested">
+                    <Border Margin="0,0,0,0" Padding="0,0,0,0" Width="6"></Border>
 
-                    <Button x:Name="ButtonPlay" Margin="0,0,0,0" Padding="0,0,0,0" Width="190" Background="#292929"
-                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Click="ButtonPlay_Click">
+                    <Button x:Name="ButtonPlay" Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" Width="180" Background="#292929" VerticalAlignment="Stretch"
+                            Click="ButtonPlay_Click" Height="240">
                         <Grid>
-                            <TextBlock Text="Play" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
-                            <Image x:Name="ItemImage" Stretch="Uniform"  Margin="0,0,0,0"/>
+                            <TextBlock Text="Play" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                            <Image x:Name="ItemImage" Stretch="Uniform" Height="240" Width="180"  Margin="-2,-3,-2,-3" />
+                            <Grid.Resources>
+                                <CornerRadius x:Key="OverlayCornerRadius">4</CornerRadius>
+                            </Grid.Resources>
                         </Grid>
                     </Button>
+                    <Button x:Name="ButtonDescription" Visibility="Visible" Padding="6,0,0,0" CornerRadius="4,4,4,4" Width="189" Background="#292929" Click="ButtonDescription_Click" Height="240">
+                        <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind Path=playlistItem.game.Description}" TextWrapping="Wrap"/>
+                    </Button>
 
-                    <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="0,0,0,0" Width="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#292929" Click="ButtonVideo_Click">
-                        <MediaPlayerElement  Margin="0,0,0,0" Padding="0,0,0,0" x:Name="mediaPlayerElement" Stretch="Uniform"
+                    <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" Width="427" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#292929" Click="ButtonVideo_Click">
+                        <MediaPlayerElement  Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" x:Name="mediaPlayerElement" Stretch="Uniform"
                                  AutoPlay="False"
                                  AreTransportControlsEnabled="False">
                             <MediaPlayerElement.TransportControls>
@@ -67,30 +80,27 @@
                         </MediaPlayerElement>
                     </Button>
 
-                    <Button x:Name="ButtonDescription" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" Width="245" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#292929" Click="ButtonDescription_Click">
-                        <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind playlistItem.game.Description}" TextWrapping="Wrap"></TextBlock>
-                    </Button>
 
-                    
 
                     <GridView x:Name="GameDetailsGridView"             
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
-              Margin="0,0,0,0" Padding="0,0,0,0"  Height="560"
+              Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4"  Height="560"
               SelectionMode="None">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="local:DetailImage">
-                                <Button Name="ButtonDetail" BorderThickness="0" Margin="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ButtonDetail_Click">
+                                <Button Name="ButtonDetail" BorderThickness="0" Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ButtonDetail_Click">
                                     <Image Margin="0,0,0,0"  Stretch="UniformToFill" Source="{Binding image}"/>
                                 </Button>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                         <GridView.ItemContainerStyle>
                             <Style TargetType="GridViewItem">
-                                <Setter Property="Width" Value="244" />
-                                <Setter Property="Height" Value="135" />
+                                <Setter Property="Width" Value="207" />
+                                <Setter Property="Height" Value="116" />
                                 <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Margin" Value="4,4,4,4" />
+                                <Setter Property="Margin" Value="4,4,3,4" />
                                 <Setter Property="Padding" Value="0,0,0,0" />
+                                <Setter Property="CornerRadius" Value="4,4,4,4" />
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
                                 <Setter Property="IsTabStop" Value="False"/>
@@ -102,24 +112,28 @@
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                     </GridView>
-                    <Border Margin="0,0,0,0" Padding="0,0,0,0" Width="5"></Border>
+                    <Border Margin="-10,0,0,0" Padding="0,0,0,0" Width="1"></Border>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-        <Border x:Name="ImageOverlay" Visibility="Collapsed" Background="#1E1E1E">
-            <Image x:Name="OverlayImage" Stretch="Uniform" Width="960" Height="478"/>
+        <Border x:Name="ImageOverlay" Visibility="Collapsed" CornerRadius="4,4,4,4" Background="#1E1E1E">
+            <Image x:Name="OverlayImage" Stretch="Uniform" Width="844" Height="474"/>
         </Border>
-        <Border x:Name="DescriptionOverlay" Visibility="Collapsed" Background="#1E1E1E">
-            <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="960" Height="478" TextWrapping="Wrap"></TextBlock>
+        <Border x:Name="DescriptionOverlay" Visibility="Collapsed" Background="#1E1E1E" CornerRadius="4,4,4,4">
+            <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="844" Height="330" TextWrapping="Wrap"></TextBlock>
         </Border>
-        <Grid RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"
-              Width="143" Height="34" Margin="0,0,0,50" Padding="0,0,0,0" >
-            <Border Opacity="0.7" Background="#1E1E1E"></Border>            
-            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="16,2,0,0"
+        <Grid RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"  CornerRadius="4,4,4,4"
+              Width="143" Height="34" Padding="0,0,0,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="122*"/>
+                <ColumnDefinition Width="21*"/>
+            </Grid.ColumnDefinitions>
+            <Border Opacity="0.7" Background="Transparent" CornerRadius="4,4,4,4" Grid.ColumnSpan="2" Margin="0,25,0,-25"></Border>
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,35,0,0"
                        FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CD;" FontSize="20"/>
-            <TextBlock Margin="45,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"  Text="Close"></TextBlock>
-        </Grid>        
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top"  Text="Close" Margin="0,38,0,0"/>
+        </Grid>
     </RelativePanel>
 
 </ContentDialog>
