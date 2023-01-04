@@ -20,8 +20,9 @@ namespace RetroPass
 		public string ScreenshotGameplayPath { get; set; }
 		public string ScreenshotGameSelectPath { get; set; }
 		public string VideoPath { get; set; }
+        public string BackgroundImagePath { get; set; }
 
-		[XmlIgnoreAttribute]
+        [XmlIgnoreAttribute]
 		public StorageFolder BoxFrontFolder { get; set; }
 
 		public void SetEmulatorType(string emulatorPath)
