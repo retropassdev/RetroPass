@@ -16,11 +16,11 @@
             <Button x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                     Margin="0,0,0,0" Padding="0,0,0,0" 
                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                    BorderThickness="0">
-                <RelativePanel Background="#111111">
+                    BorderThickness="0" Background="Transparent">
+                <RelativePanel Background="Transparent">
                     <Image x:Name="ItemImage"
                            Stretch="Uniform"
-                           HorizontalAlignment="Center"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
                            Opacity="1" RelativePanel.AlignTopWithPanel="True" />
                     <Border x:Name="GameNameDisplayEmpty"                            
                             Visibility="Visible"
@@ -74,7 +74,6 @@
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Width" Value="140" />
-                    <Setter Property="Height" Value="187" />
                     <Setter Property="Background" Value="#272926"/>
                     <Setter Property="Margin" Value="4,4,4,4" />
                     <Setter Property="Padding" Value="0,0,0,0" />
