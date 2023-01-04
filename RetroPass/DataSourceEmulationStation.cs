@@ -134,7 +134,12 @@ namespace RetroPass
 				{
 					assets.Add(platform.VideoPath.Substring(rootFolderLength));
 				}
-			}
+
+                if (platform.BackgroundPath.Length > rootFolderLength)
+                {
+                    assets.Add(platform.BackgroundPath.Substring(rootFolderLength));
+                }
+            }
 			return assets;
 		}
 
@@ -251,8 +256,9 @@ namespace RetroPass
 
 						platform.ScreenshotGameplayPath = "";
 						platform.ScreenshotGameSelectPath = "";
+                        platform.BackgroundPath = "";
 
-						platform.VideoPath = platformGames.games.Where(t => string.IsNullOrEmpty(t.Video) == false).Select(t => t.Video).DefaultIfEmpty(string.Empty).First();
+                        platform.VideoPath = platformGames.games.Where(t => string.IsNullOrEmpty(t.Video) == false).Select(t => t.Video).DefaultIfEmpty(string.Empty).First();
 						platform.VideoPath = platform.VideoPath == "" ? "" : Path.GetFullPath(platformPath + Path.GetDirectoryName(platform.VideoPath));
 						Trace.TraceInformation("DataSourceEmulationStation: Platform VideoPath: {0}", platform.VideoPath);
 
