@@ -11,7 +11,6 @@ namespace RetroPass
 			rgx,
 			xbsx2,
             dolphin,
-            aethersx2,
             flycast,
         }
 		public string Name { get; set; }
@@ -37,10 +36,6 @@ namespace RetroPass
 			{
 				EmulatorType = EEmulatorType.xbsx2;
 			}
-            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("aethersx2", System.StringComparison.CurrentCultureIgnoreCase))
-            {
-                EmulatorType = EEmulatorType.aethersx2;
-            }
             else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("flycast", System.StringComparison.CurrentCultureIgnoreCase))
             {
                 EmulatorType = EEmulatorType.flycast;
