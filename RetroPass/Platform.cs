@@ -10,9 +10,10 @@ namespace RetroPass
 			retroarch,
 			rgx,
 			xbsx2,
-            aethersx2,
             dolphin,
-		}
+            aethersx2,
+            flycast,
+        }
 		public string Name { get; set; }
 		public string SourceName { get; set; }
 		public EEmulatorType EmulatorType { get; set; }
@@ -28,11 +29,7 @@ namespace RetroPass
 
 		public void SetEmulatorType(string emulatorPath)
 		{
-			/*if((string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("retroarch", System.StringComparison.InvariantCultureIgnoreCase))
-			{
-				EmulatorType = EEmulatorType.retroarch;
-			}
-			else */
+
 			if (string.IsNullOrEmpty(emulatorPath) == false && 
 					(emulatorPath.Contains("pcsx2", System.StringComparison.CurrentCultureIgnoreCase) || 
 					emulatorPath.Contains("xbsx2", System.StringComparison.CurrentCultureIgnoreCase))
@@ -43,6 +40,10 @@ namespace RetroPass
             else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("aethersx2", System.StringComparison.CurrentCultureIgnoreCase))
             {
                 EmulatorType = EEmulatorType.aethersx2;
+            }
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("flycast", System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                EmulatorType = EEmulatorType.flycast;
             }
             else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("retrix", System.StringComparison.CurrentCultureIgnoreCase))
 			{
