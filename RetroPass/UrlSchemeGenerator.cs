@@ -22,7 +22,10 @@ namespace RetroPass
 				case Platform.EEmulatorType.dolphin:
 					url = GetUrlDolphin(game);
 					break;
-				default:
+                case Platform.EEmulatorType.edge:
+                    url = GetUrlEdge(game);
+                    break;
+                default:
 					break;
 			}
 
@@ -65,5 +68,12 @@ namespace RetroPass
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
-	}
+
+        private static string GetUrlEdge(Game game)
+        {
+            string args = "microsoft-edge:https://discord.com";
+            args += "&launchOnExit=" + "retropass:";
+            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+        }
+    }
 }

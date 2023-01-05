@@ -11,6 +11,7 @@ namespace RetroPass
 			rgx,
 			xbsx2,
 			dolphin,
+			edge,
 		}
 		public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -45,6 +46,10 @@ namespace RetroPass
 			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("dolphin", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				EmulatorType = EEmulatorType.dolphin;
+            }
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("edge", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.edge;
 			}
 			else
 			{

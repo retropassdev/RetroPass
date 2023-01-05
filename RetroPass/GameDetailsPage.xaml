@@ -43,7 +43,7 @@
                 <StackPanel Padding="0,0,0,0" Background="Transparent" XYFocusKeyboardNavigation="Enabled" Orientation="Horizontal" Height="249" Spacing="8" BringIntoViewRequested="StackPanel_BringIntoViewRequested">
                     <Border Margin="0,0,0,0" Padding="0,0,0,0" Width="6"></Border>
 
-                    <Button x:Name="ButtonPlay" Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" Width="180" Background="#292929" VerticalAlignment="Stretch"
+                    <Button x:Name="ButtonPlay" Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" Width="180" Background="#1E1E1E" VerticalAlignment="Stretch"
                             Click="ButtonPlay_Click" Height="240">
                         <Grid>
                             <TextBlock Text="Play" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
