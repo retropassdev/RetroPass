@@ -20,7 +20,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Width" Value="143" />
-                    <Setter Property="Height" Value="190" />
+                    <Setter Property="Height" Value="Auto" />
                     <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="Margin" Value="4,8,4,8" />
                     <Setter Property="Padding" Value="0,0,0,0" />
@@ -38,13 +38,11 @@
                     BorderThickness="0"  CornerRadius="4,4,4,4">
                 <Grid Background="Transparent"> 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="191"/>
-                        <RowDefinition Height="72"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Image Grid.Row="0" x:Name="ItemImage"
-                       Stretch="Uniform"
-                       Opacity="0" VerticalAlignment="Top" />
-                    <TextBlock Grid.Row="1" x:Name="TextTitle" Text="{x:Bind game.Title}" x:Phase="0" Margin="8,0,4,0" TextWrapping="Wrap" MaxLines="3" TextTrimming="WordEllipsis"/>
+                       Stretch="Uniform"/>
+
                 </Grid>
             </Button>
         </DataTemplate>
@@ -71,7 +69,6 @@
             <Setter Property="Margin" Value="0,8,5,8"/>
             <Setter Property="Padding" Value="0,0,0,0"/>
             <Setter Property="Width" Value="136"/>
-            <Setter Property="Height" Value="190"/>
             <Setter Property="ContentTemplate" Value="{StaticResource PlatformFirstItemButtonContent}"/>
             <Setter Property="Template">
                 <Setter.Value>
