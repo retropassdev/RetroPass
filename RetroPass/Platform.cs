@@ -10,10 +10,12 @@ namespace RetroPass
 			retroarch,
 			rgx,
 			xbsx2,
-			dolphin,
-			edge,
-		}
-		public string Name { get; set; }
+            dolphin,
+            flycast,
+			ppsspp,
+			duckstation,
+        }
+        public string Name { get; set; }
 		public string SourceName { get; set; }
 		public EEmulatorType EmulatorType { get; set; }
 		public string BoxFrontPath { get; set; }
@@ -21,25 +23,27 @@ namespace RetroPass
 		public string ScreenshotGameplayPath { get; set; }
 		public string ScreenshotGameSelectPath { get; set; }
 		public string VideoPath { get; set; }
+        public string BackgroundPath { get; set; }
 
-		[XmlIgnoreAttribute]
+        [XmlIgnoreAttribute]
 		public StorageFolder BoxFrontFolder { get; set; }
 
 		public void SetEmulatorType(string emulatorPath)
 		{
-			/*if((string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("retroarch", System.StringComparison.InvariantCultureIgnoreCase))
-			{
-				EmulatorType = EEmulatorType.retroarch;
-			}
-			else */
+
 			if (string.IsNullOrEmpty(emulatorPath) == false && 
 					(emulatorPath.Contains("pcsx2", System.StringComparison.CurrentCultureIgnoreCase) || 
-					emulatorPath.Contains("xbsx2", System.StringComparison.CurrentCultureIgnoreCase))
+					emulatorPath.Contains("xbsx2", System.StringComparison.CurrentCultureIgnoreCase
+					))
 				)
 			{
 				EmulatorType = EEmulatorType.xbsx2;
 			}
-			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("retrix", System.StringComparison.CurrentCultureIgnoreCase))
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("flycast", System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                EmulatorType = EEmulatorType.flycast;
+            }
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("retrix", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				EmulatorType = EEmulatorType.rgx;
 			}
@@ -47,10 +51,14 @@ namespace RetroPass
 			{
 				EmulatorType = EEmulatorType.dolphin;
             }
-			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("edge", System.StringComparison.CurrentCultureIgnoreCase))
-			{
-				EmulatorType = EEmulatorType.edge;
-			}
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("ppsspp", System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                EmulatorType = EEmulatorType.ppsspp;
+            }
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("duckstation", System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                EmulatorType = EEmulatorType.duckstation;
+            }
 			else
 			{
 				//let it just be default retroarch
