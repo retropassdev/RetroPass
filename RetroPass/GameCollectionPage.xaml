@@ -16,8 +16,8 @@
             <Button x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                     Margin="0,0,0,0" Padding="0,0,0,0" 
                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                    BorderThickness="0" Background="Transparent">
-                <RelativePanel Background="Transparent">
+                    BorderThickness="0">
+                <RelativePanel Background="#1F1F1F">
                     <Image x:Name="ItemImage"
                            Stretch="Uniform"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -73,8 +73,8 @@
             </GridView.Header>
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="Width" Value="143" />
-                    <Setter Property="Background" Value="#272926"/>
+                    <Setter Property="Width" Value="140" />
+                    <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="Margin" Value="4,4,4,4" />
                     <Setter Property="Padding" Value="0,0,0,0" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

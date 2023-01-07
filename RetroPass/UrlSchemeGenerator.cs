@@ -22,7 +22,16 @@ namespace RetroPass
 				case Platform.EEmulatorType.dolphin:
 					url = GetUrlDolphin(game);
 					break;
-				default:
+                case Platform.EEmulatorType.ppsspp:
+                    url = GetUrlPpsspp(game);
+                    break;
+                case Platform.EEmulatorType.duckstation:
+                    url = GetUrlDuckstation(game);
+                    break;
+                case Platform.EEmulatorType.flycast:
+                    url = GetUrlFlycast(game);
+                    break;
+                default:
 					break;
 			}
 
@@ -64,6 +73,30 @@ namespace RetroPass
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
-		}
-	}
+        }
+
+        private static string GetUrlPpsspp(Game game)
+        {
+            string args = "cmd=" + "ppsspp.exe";
+            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+            args += "&launchOnExit=" + "retropass:";
+            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+        }
+
+        private static string GetUrlDuckstation(Game game)
+        {
+            string args = "cmd=" + "duckstation.exe";
+            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+            args += "&launchOnExit=" + "retropass:";
+            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+        }
+
+        private static string GetUrlFlycast(Game game)
+        {
+            string args = "cmd=" + "flycast.exe";
+            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+            args += "&launchOnExit=" + "retropass:";
+            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+        }
+    }
 }

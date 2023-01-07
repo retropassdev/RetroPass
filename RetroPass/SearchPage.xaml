@@ -71,6 +71,7 @@
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
               SelectionMode="Single"
               SingleSelectionFollowsFocus="True"
+              
               IsItemClickEnabled="False"                  
               IsTabStop="False"
               ContainerContentChanging="SearchGridView_ContainerContentChanging"

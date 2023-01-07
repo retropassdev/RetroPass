@@ -20,7 +20,6 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Width" Value="143" />
-                    <Setter Property="Height" Value="Auto" />
                     <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="Margin" Value="4,8,4,8" />
                     <Setter Property="Padding" Value="0,0,0,0" />
@@ -33,16 +32,17 @@
         <DataTemplate x:Key="PlaylistItemTemplate"
                       x:DataType="local:PlaylistItem">
             <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                    Margin="0,0,0,0" Padding="0,0,0,0" Background="Transparent"  
-                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    Margin="0,0,0,0" Padding="0,0,0,0" 
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  Background="Transparent"  
                     BorderThickness="0"  CornerRadius="4,4,4,4" IsEnabled="True">
-                <Grid Background="Transparent" Opacity="100"> <!--<Game Grid Image Background Opacity/>-->
+                <Grid Background="Transparent" Opacity="100">
+                    <!--<Game Grid Image Background Opacity/>-->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Image Grid.Row="0" x:Name="ItemImage"
-                       Stretch="Uniform"/>
-
+                       Stretch="Uniform">
+                    </Image>
                 </Grid>
             </Button>
         </DataTemplate>
