@@ -41,7 +41,7 @@ LaunchBox is a preferred option, because it gives the best results when properly
  - It has support for multiple title and gameplay screenshots. 
  - Setup specific core for a game, if needed.
 
-1. Install LaunchBox directly to external storage.www
+1. Install LaunchBox directly to external storage
 2. Setup and configure LaunchBox to work with RetroArch or [RetriX Gold](/Docs/SetupRetriXGold.md), [XBSX2](https://github.com/TheRhysWyrill/XBSX2/blob/xbsx2).
 3. **IMPORTANT!!!** When you import your content, it will ask you to select which media type to download. If you are using LaunchBox just to configure RetroPass, there is no need to download all the media types because RetroPass needs only a subset. (It will speed up your setup process and it will make less burden on LaunchBox database)
 
