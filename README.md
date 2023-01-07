@@ -8,7 +8,7 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 ## Limitations
  - Xbox only
  - Optimized for Gamepad Only
- - No Custom Themes
+ - No Custom Themes *(yet)*
  - Zipped content supported only if RetroArch or RetriX Gold cores support it
  - No Automatic Scrapper
   
@@ -62,9 +62,15 @@ You only need to check these media types:
 	<CommandLine>-L "cores\<core_name>.dll"</CommandLine>
 	```
 	Where **\<core_name>** is the name of the core you wish to use for particular emulator.
-5. Optionally, if you need to set up a different core or emulator for a game, Open Launchbox and right-click a game, choose "Edit Metadata/Media" and modify command line under Emulation.
+5. Optional, if you need to set up a different core or emulator for a game, Run Launchbox and right-click a game, choose "Edit Metadata/Media" and modify command line under Emulation.
  	![](/Docs/core_per_game.png)
-6.
+6.Optional, if you wish to add/setup other supported emulator types, Open LaunchBox and click ![](/Docs/lbaeg04.png) > Tools > Manage > Emulators
+** Adding new Emulators
+![](/Docs/lbaeg01.png)
+![](/Docs/lbaeg02.png)
+**Example of pre configuration for *some* supported emulators**
+![](/Docs/lbaeg03.png)
+
 7. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
 8. Edit **RetroPass.xml** configuration file. 
 	
