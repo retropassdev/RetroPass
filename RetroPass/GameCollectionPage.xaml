@@ -14,17 +14,18 @@
         <DataTemplate x:Key="GameTemplate"
                       x:DataType="local:PlaylistItem">
             <Button x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            <Button x:Name="GameButton" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
                     Margin="0,0,0,0" Padding="0,0,0,0" 
                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                    BorderThickness="0">
-                <RelativePanel Background="#1F1F1F">
+                    BorderThickness="0" Background="Transparent" Opacity="100">
+                <RelativePanel Background="Transparent">
                     <Image x:Name="ItemImage"
                            Stretch="Uniform"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Opacity="1" RelativePanel.AlignTopWithPanel="True" />
+                           Opacity="100" RelativePanel.AlignTopWithPanel="True" />
                     <Border x:Name="GameNameDisplayEmpty"                            
                             Visibility="Visible"
-                            Background="Transparent"
+                            Background="Transparent" Opacity="100"
                             RelativePanel.AlignLeftWithPanel="True" 
                             RelativePanel.AlignRightWithPanel="True"
                             RelativePanel.AlignVerticalCenterWithPanel="True">
@@ -49,6 +50,7 @@
     </Page.Resources>
     <Grid Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4">
         <GridView x:Name="PlatformGridView"
+              Background="Transparent"
               XYFocusKeyboardNavigation="Enabled"
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
               SelectionMode="Single"
@@ -100,7 +102,7 @@
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsWrapGrid Margin="37,20,0,40"  GotFocus="Grid_GotFocus" LostFocus="Grid_LostFocus" Orientation="Horizontal" BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
-							   HorizontalAlignment="Left"/>
+							   HorizontalAlignment="Left" Background="Transparent"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>        
