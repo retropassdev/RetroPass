@@ -59,7 +59,7 @@ namespace RetroPass
 
 			//if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
 			{
-				this.FocusVisualKind = FocusVisualKind.Reveal;
+				this.FocusVisualKind = FocusVisualKind.HighVisibility;
 			}
 
 			Frame rootFrame = Window.Current.Content as Frame;

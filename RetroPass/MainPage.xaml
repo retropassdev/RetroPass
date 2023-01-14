@@ -16,21 +16,22 @@
         </LinearGradientBrush>
     </Page.Background>
     <Page.Resources>
-        <ListView x:Name="ListViewPlatformTemplate">
+        <ListView x:Name="ListViewPlatformTemplate" CornerRadius="4,4,4,4">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Width" Value="143" />
                     <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="Margin" Value="4,8,4,8" />
                     <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="CornerRadius" Value="4,4,4,4"/>
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <DataTemplate x:Key="PlaylistItemTemplate"
-                      x:DataType="local:PlaylistItem">
+        <DataTemplate x:Key="PlaylistItemTemplate" 
+        x:DataType="local:PlaylistItem">
             <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                     Margin="0,0,0,0" Padding="0,0,0,0" 
                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  Background="Transparent"  
@@ -66,6 +67,7 @@
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="CornerRadius" Value="4"/>
             <Setter Property="Margin" Value="0,8,5,8"/>
             <Setter Property="Padding" Value="0,0,0,0"/>
             <Setter Property="Width" Value="136"/>
@@ -121,7 +123,7 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter x:Name="ContentPresenter"  CornerRadius="4,4,4,4" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -136,7 +138,7 @@
         </ItemsPanelTemplate>
 
     </Page.Resources>
-    <Grid Margin="0,0,0,0" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled">
+    <Grid Margin="0,0,0,0"  CornerRadius="4,4,4,4" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled">
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" 			
 				  HorizontalAlignment="Left" Margin="28,0,28,0">
             <StackPanel XYFocusKeyboardNavigation="Enabled" Name="StackPanelMain" Spacing="0" 

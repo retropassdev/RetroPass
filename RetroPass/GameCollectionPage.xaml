@@ -2,96 +2,131 @@
     x:Class="RetroPass.GameCollectionPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:RetroPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:RetroPass"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    NavigationCacheMode="Required"    
     Background="#1F1F1F"
-    CornerRadius="4,4,4,4">
+    CornerRadius="4,4,4,4"
+    NavigationCacheMode="Required"
+    mc:Ignorable="d">
 
     <Page.Resources>
-        <DataTemplate x:Key="GameTemplate"
-                      x:DataType="local:PlaylistItem">
-            <Button x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                    Margin="0,0,0,0" Padding="0,0,0,0" 
-                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                    BorderThickness="0">
-                <RelativePanel Background="#1F1F1F">
-                    <Image x:Name="ItemImage"
-                           Stretch="Uniform"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Opacity="1" RelativePanel.AlignTopWithPanel="True" />
-                    <Border x:Name="GameNameDisplayEmpty"                            
-                            Visibility="Visible"
-                            Background="Transparent"
-                            RelativePanel.AlignLeftWithPanel="True" 
-                            RelativePanel.AlignRightWithPanel="True"
-                            RelativePanel.AlignVerticalCenterWithPanel="True">
-                        <TextBlock MaxLines="10" TextTrimming="WordEllipsis" x:Name="TextTitleEmpty" 
-                                   TextAlignment="Center" Text="{x:Bind game.Title}" 
-                                   TextWrapping="Wrap" Padding="5,0,5,0" Style="{StaticResource  BaseTextBlockStyle}"/>
+        <DataTemplate x:Key="GameTemplate" x:DataType="local:PlaylistItem">
+            <Button
+                x:Name="GameButton"
+                Margin="0,0,0,0"
+                Padding="0,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                BorderThickness="0"
+                CornerRadius="4,4,4,4">
+                <RelativePanel Background="#1F1F1F" CornerRadius="4,4,4,4">
+                    <Image
+                        x:Name="ItemImage"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Opacity="1"
+                        RelativePanel.AlignTopWithPanel="True"
+                        Stretch="Uniform" />
+                    <Border
+                        x:Name="GameNameDisplayEmpty"
+                        Background="Transparent"
+                        CornerRadius="4,4,4,4"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                        Visibility="Visible">
+                        <TextBlock
+                            x:Name="TextTitleEmpty"
+                            Padding="5,0,5,0"
+                            MaxLines="10"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            Text="{x:Bind game.Title}"
+                            TextAlignment="Center"
+                            TextTrimming="WordEllipsis"
+                            TextWrapping="Wrap" />
                     </Border>
-                    <Border x:Name="GameNameDisplay"
-                            Visibility="Collapsed" 
-                            RelativePanel.AlignLeftWithPanel="True" 
-                            RelativePanel.AlignRightWithPanel="True" 
-                            RelativePanel.AlignBottomWithPanel="True"                          
-                            Background="Black" Opacity="0.74">
-                        <TextBlock x:Name="TextTitle"
-                                   TextAlignment="Left"
-                                   Text="{x:Bind game.Title}" 
-                                   TextWrapping="Wrap" Padding="10,10,5,10" Style="{StaticResource  BaseTextBlockStyle}"/>
-                    </Border>                  
+                    <Border
+                        x:Name="GameNameDisplay"
+                        Background="Black"
+                        Opacity="0.74"
+                        RelativePanel.AlignBottomWithPanel="True"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="TextTitle"
+                            Padding="10,10,5,10"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            Text="{x:Bind game.Title}"
+                            TextAlignment="Left"
+                            TextWrapping="Wrap" />
+                    </Border>
                 </RelativePanel>
             </Button>
         </DataTemplate>
     </Page.Resources>
-    <Grid Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4">
-        <GridView x:Name="PlatformGridView"
-              XYFocusKeyboardNavigation="Enabled"
-              ScrollViewer.VerticalScrollBarVisibility="Hidden"
-              SelectionMode="Single"
-              SingleSelectionFollowsFocus="True"
-              IsItemClickEnabled="True"
-              IsTabStop="True"
-              ContainerContentChanging="GamesListView_ContainerContentChanging"
-              ItemTemplate="{StaticResource GameTemplate}"
-              ItemClick="PlatformGridView_ItemClick"              
-              Margin="0,10,0,0"
-              CornerRadius="4"
-              Padding="0,0,0,0">
+    <Grid
+        Margin="0,0,0,0"
+        Padding="0,0,0,0"
+        CornerRadius="4,4,4,4">
+        <GridView
+            x:Name="PlatformGridView"
+            Margin="0,10,0,0"
+            Padding="0,0,0,0"
+            ContainerContentChanging="GamesListView_ContainerContentChanging"
+            CornerRadius="4"
+            IsItemClickEnabled="True"
+            IsTabStop="True"
+            ItemClick="PlatformGridView_ItemClick"
+            ItemTemplate="{StaticResource GameTemplate}"
+            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            SelectionMode="Single"
+            SingleSelectionFollowsFocus="True"
+            XYFocusKeyboardNavigation="Enabled">
             <GridView.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <TextBlock x:Name="NameCollection" Margin="46,0,0,0" Text="" Grid.Row="0" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                    <TextBlock x:Name="NumGamesCollectionText" Margin="46,4,0,0" Text="" Grid.Row="1" Style="{StaticResource BaseTextBlockStyle}"/>
+                    <TextBlock
+                        x:Name="NameCollection"
+                        Grid.Row="0"
+                        Margin="46,0,0,0"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text="" />
+                    <TextBlock
+                        x:Name="NumGamesCollectionText"
+                        Grid.Row="1"
+                        Margin="46,4,0,0"
+                        Style="{StaticResource BaseTextBlockStyle}"
+                        Text="" />
                 </Grid>
             </GridView.Header>
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Width" Value="140" />
-                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Margin" Value="4,4,4,4" />
                     <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="CornerRadius" Value="4,4,4,4" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
                     <!--<Setter Property="IsFocusEngagementEnabled" Value="False"/>-->
                     <!--<Setter Property="IsTabStop" Value="False"/>-->
-                   
+
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="GridViewItem">
                                 <ListViewItemPresenter
-                                CornerRadius="4,4,4,4"   
-                                SelectedBackground="Transparent"
-                                SelectedPointerOverBackground="Transparent"
-                                PressedBackground="Transparent"
-                                SelectedPressedBackground="Transparent"
-                                />
+                                    CornerRadius="4,4,4,4"
+                                    PressedBackground="Transparent"
+                                    SelectedBackground="Transparent"
+                                    SelectedPointerOverBackground="Transparent"
+                                    SelectedPressedBackground="Transparent" />
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -99,19 +134,45 @@
             </GridView.ItemContainerStyle>
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Margin="37,20,0,40"  GotFocus="Grid_GotFocus" LostFocus="Grid_LostFocus" Orientation="Horizontal" BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
-							   HorizontalAlignment="Left"/>
+                    <ItemsWrapGrid
+                        Margin="37,20,0,40"
+                        HorizontalAlignment="Left"
+                        BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
+                        GotFocus="Grid_GotFocus"
+                        LostFocus="Grid_LostFocus"
+                        Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
-        </GridView>        
-        <local:PlayLaterControl x:Name="PlayLaterControl"></local:PlayLaterControl>
-        <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,20,28,0" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" >
-            <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>
-            <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="#FFD000" FontFamily="Segoe Xbox MDL2 Symbol" 
-                   Text="&#xE3CC;" FontSize="20"/>
-            <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
-                   HorizontalAlignment="Right" VerticalAlignment="Center"  
-                   Text="Search Collection" FontSize="12" CharacterSpacing="40"></TextBlock>
+        </GridView>
+        <local:PlayLaterControl x:Name="PlayLaterControl" />
+        <Grid
+            x:Name="OverlaySearch"
+            Height="32"
+            MaxWidth="300"
+            Margin="0,20,28,0"
+            Padding="0,0,0,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="Visible">
+            <Border
+                Background="Black"
+                CornerRadius="5"
+                Opacity="0.78" />
+            <TextBlock
+                Margin="9,2,0,0"
+                VerticalAlignment="Center"
+                FontFamily="Segoe Xbox MDL2 Symbol"
+                FontSize="20"
+                Foreground="#FFD000"
+                Text="&#xE3CC;" />
+            <TextBlock
+                x:Name="StatusText"
+                Margin="38,0,9,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                CharacterSpacing="40"
+                FontSize="12"
+                Text="Search Collection" />
         </Grid>
     </Grid>
 </Page>
