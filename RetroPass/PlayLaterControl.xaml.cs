@@ -5,32 +5,32 @@ using Windows.UI.Xaml.Controls;
 
 namespace RetroPass
 {
-	public sealed partial class PlayLaterControl : UserControl
-	{
-		public PlayLaterControl()
-		{
-			this.InitializeComponent();
-		}
+    public sealed partial class PlayLaterControl : UserControl
+    {
+        public PlayLaterControl()
+        {
+            this.InitializeComponent();
+        }
 
-		public void UpdatePlayLaterControl(PlaylistItem playlistItem, PlaylistPlayLater playlistPlayLater)
-		{
-			if (playlistPlayLater != null && playlistItem != null)
-			{
-				OverlayPlayLater.Visibility = Visibility.Visible;
+        public void UpdatePlayLaterControl(PlaylistItem playlistItem, PlaylistPlayLater playlistPlayLater)
+        {
+            if (playlistPlayLater != null && playlistItem != null)
+            {
+                OverlayPlayLater.Visibility = Visibility.Visible;
 
-				if (playlistPlayLater.GameExists(playlistItem))
-				{
-					StatusText.Text = "Remove from Play later";
-				}
-				else
-				{
-					StatusText.Text = "Add to Play later";
-				}
-			}
-			else
-			{
-				OverlayPlayLater.Visibility = Visibility.Collapsed;
-			}
-		}
-	}
+                if (playlistPlayLater.GameExists(playlistItem))
+                {
+                    StatusText.Text = "Remove from Play later";
+                }
+                else
+                {
+                    StatusText.Text = "Add to Play later";
+                }
+            }
+            else
+            {
+                OverlayPlayLater.Visibility = Visibility.Collapsed;
+            }
+        }
+    }
 }
