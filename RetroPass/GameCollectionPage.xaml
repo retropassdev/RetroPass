@@ -6,11 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    NavigationCacheMode="Required"    
-    Background="#1F1F1F"
+    NavigationCacheMode="Required"
     CornerRadius="4,4,4,4">
 
     <Page.Resources>
+        
+        <ImageBrush x:Key="BackgroundBrush" ImageSource="{Binding BackgroundPath}"/>
+        
         <DataTemplate x:Key="GameTemplate"
                       x:DataType="local:PlaylistItem">
             <Button x:Name="GameButton" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
@@ -47,6 +49,11 @@
             </Button>
         </DataTemplate>
     </Page.Resources>
+    
+    <Page.Background>
+        <StaticResource ResourceKey="BackgroundBrush"/>
+    </Page.Background>
+    
     <Grid Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4">
         <GridView x:Name="PlatformGridView"
               Background="Transparent"
