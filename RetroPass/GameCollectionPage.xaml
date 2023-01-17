@@ -5,12 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:RetroPass"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="#1F1F1F"
     CornerRadius="4,4,4,4"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
     <Page.Resources>
+        
+        <ImageBrush x:Key="BackgroundBrush" ImageSource="{Binding BackgroundPath}"/>
+        
         <DataTemplate x:Key="GameTemplate" x:DataType="local:PlaylistItem">
             <Button
                 x:Name="GameButton"
@@ -68,6 +70,11 @@
             </Button>
         </DataTemplate>
     </Page.Resources>
+
+    <Page.Background>
+        <StaticResource ResourceKey="BackgroundBrush"/>
+    </Page.Background>
+
     <Grid
         Margin="0,0,0,0"
         Padding="0,0,0,0"
