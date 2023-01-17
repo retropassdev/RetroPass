@@ -324,4 +324,10 @@ namespace RetroPass
             popup.OnNavigatedFrom();
         }
     }
+
+    public class BackgroundPath
+    {
+        public BitmapImage image { get; set; }
+        public string path { get; set; }
+    }
 }

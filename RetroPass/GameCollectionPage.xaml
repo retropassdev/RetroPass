@@ -10,9 +10,7 @@
     CornerRadius="4,4,4,4">
 
     <Page.Resources>
-        
-        <ImageBrush x:Key="BackgroundBrush" ImageSource="{Binding BackgroundPath}"/>
-        
+       
         <DataTemplate x:Key="GameTemplate"
                       x:DataType="local:PlaylistItem">
             <Button x:Name="GameButton" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
@@ -51,7 +49,7 @@
     </Page.Resources>
     
     <Page.Background>
-        <StaticResource ResourceKey="BackgroundBrush"/>
+        <ImageBrush x:Name="BackgroundPath" ImageSource="{Binding Image}"/>
     </Page.Background>
     
     <Grid Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4">
