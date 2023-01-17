@@ -139,7 +139,6 @@ namespace RetroPass
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            //CoreWindow.GetForCurrentThread().KeyDown -= OnKeyDown;
             SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
             base.OnNavigatedFrom(e);
         }
@@ -245,7 +244,6 @@ namespace RetroPass
                 BitmapImage imageTmp = await item.game.GetImageThumbnailAsync();
                 ////Trace.TraceInformation("Loaded " + hash + " Image Name:" + imageName);
 
-                //image.Opacity = 0;
                 image.Source = imageTmp;
                 if (image.Source != null)
                 {

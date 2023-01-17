@@ -22,7 +22,6 @@ namespace RetroPass
 
         public SettingsPage()
         {
-            //Instance = this;
             InitializeComponent();
             Loaded += SettingsPage_Loaded;
 
@@ -59,11 +58,10 @@ namespace RetroPass
                 StackPanelRemovableStorage.Visibility = Visibility.Visible;
                 ButtonActivateRemovableStorage.Visibility = Visibility.Visible;
                 ButtonClearRemovableCache.Visibility = Visibility.Visible;
-                //ButtonImport.Visibility = Visibility.Visible;
 
                 if (dataSourceManager.IsImportInProgress())
                 {
-                    //ButtonImport.Visibility = Visibility.Collapsed;
+                    // Method intentionally left empty.
                 }
             }
 
@@ -202,16 +200,17 @@ namespace RetroPass
 
         public void OnImportError()
         {
+            // Method intentionally left empty.
         }
 
         private async void ButtonImport_Click(object sender, RoutedEventArgs e)
         {
-            //await dataSourceManager.CopyToLocalFolder();
+            // Method intentionally left empty.
         }
 
         private void ButtonImportCancel_Click(object sender, RoutedEventArgs e)
         {
-            //dataSourceManager.CancelImport();
+            // Method intentionally left empty.
         }
 
         private void ButtonActivateLocalStorage_Click(object sender, RoutedEventArgs e)

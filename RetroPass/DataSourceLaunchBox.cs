@@ -49,7 +49,7 @@ namespace RetroPass
             }
 
             VideoTitle = sb.ToString();
-            BoxFrontFileName = sb.ToString();// + "-";
+            BoxFrontFileName = sb.ToString();
             BoxFrontContentName = Path.GetFileNameWithoutExtension(ApplicationPath);
 
             //split multiple genre
@@ -138,7 +138,6 @@ namespace RetroPass
         {
             List<string> assets = new List<string>
             {
-                //assets.Add("LaunchBox.exe");
                 "Emulators.xml",
                 "Data\\Emulators.xml",
                 "Data\\Platforms.xml",
@@ -306,7 +305,7 @@ namespace RetroPass
                 }
                 catch (Exception)
                 {
-                    //return null;
+                    //Just ignore the exception.
                 }
 
                 platform.ScreenshotGameTitlePath = platforms.platformFolders.Where(t => t.Platform == platformName && t.MediaType == "Screenshot - Game Title").Select(t => t.FolderPath).DefaultIfEmpty(string.Empty).First();
@@ -325,14 +324,14 @@ namespace RetroPass
                 platform.VideoPath = platform.VideoPath == "" ? "" : Path.GetFullPath(Path.Combine(rootFolder, platform.VideoPath));
                 Trace.TraceInformation("DataSourceLaunchBox: Platform VideoPath: {0}", platform.VideoPath);
 
-                platform.BackgroundPath = platforms.platformFolders.Where(t => t.Platform == platformName && t.MediaType == "Fanart").Select(t => t.FolderPath).DefaultIfEmpty(string.Empty).First();
-                platform.BackgroundPath = platform.BackgroundPath == "" ? "" : Path.GetFullPath(Path.Combine(rootFolder, platform.BackgroundPath));
+                platform.BackgroundPath = "Images\\Platforms" + platform.Name + "Fanart";
+                platform.BackgroundPath = Path.GetFullPath(Path.Combine(rootFolder, platform.BackgroundPath));
                 Trace.TraceInformation("DataSourceLaunchBox: Platform BackgroundPath: {0}", platform.BackgroundPath);
 
                 Platforms.Add(platform);
                 PlatformImported?.Invoke(platform);
 
-                //////////////////////////////////import platform games as playlist/////////////////////////
+                //////////////////////////////////import platform games as play-list/////////////////////////
                 var playlistTmp = new Playlist();
                 using (TextReader reader = new StringReader(xmlPlatform))
                 {
@@ -402,7 +401,6 @@ namespace RetroPass
                     {
                         Name = playlistLaunchBox._Playlist.Name
                     };
-                    //playlistTmp.LoadFromLaunchboxPlatform(dataPlatforms);
                     foreach (var playlistGameLaunchBox in playlistLaunchBox.PlaylistGames)
                     {
                         var gamePlatform = playlistGameLaunchBox.GamePlatform;
@@ -428,7 +426,6 @@ namespace RetroPass
                     {
                         playlistTmp.UpdateGamesLandingPage();
                         Playlists.Add(playlistTmp);
-                        //_playlists.Insert(0, playlistTmp);
                         PlaylistImported?.Invoke(playlistTmp);
                     }
                 }

@@ -115,7 +115,7 @@ namespace RetroPass
             else
             {
                 Trace.TraceInformation("Get Box Front File: {0}", boxFrontFile.Path);
-                return boxFrontFile;// thumbnailStorageFile.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                return boxFrontFile;
             }
         }
 
@@ -123,7 +123,6 @@ namespace RetroPass
         {
             StorageFile ImageFile = null;
             StorageItemThumbnail thumbnail = null;
-            //BitmapImage bitmapImage = null;
 
             Trace.TraceInformation("Game: GetImageThumbnailAsync {0}", BoxFrontFileName);
 
@@ -166,9 +165,7 @@ namespace RetroPass
                     // Set the image source to the selected bitmap
                     bitmapImage = new BitmapImage();
                     // Decode pixel sizes are optional
-                    // It's generally a good optimisation to decode to match the size you'll display
-                    //bitmapImage.DecodePixelHeight = decodePixelHeight;
-                    //bitmapImage.DecodePixelWidth = decodePixelWidth;
+                    // It's generally a good optimization to decode to match the size you'll display
 
                     await bitmapImage.SetSourceAsync(fileStream);
                     Trace.TraceInformation("Game: GetMainImageAsync SUCCESS {0}", BoxFrontFilePath);
@@ -262,9 +259,7 @@ namespace RetroPass
                         // Set the image source to the selected bitmap
                         BitmapImage bitmapImage = new BitmapImage();
                         // Decode pixel sizes are optional
-                        // It's generally a good optimisation to decode to match the size you'll display
-                        //bitmapImage.DecodePixelHeight = decodePixelHeight;//478
-                        //bitmapImage.DecodePixelWidth = decodePixelWidth;
+                        // It's generally a good optimization to decode to match the size you'll display
 
                         await bitmapImage.SetSourceAsync(fileStream);
                         DetailImage dt = new DetailImage();
