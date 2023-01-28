@@ -325,7 +325,7 @@ namespace RetroPass
 
     public class BackgroundPath
     {
-        public BitmapImage image { get; set; }
+        public BitmapImage IMAGE { get; set; }
         public string path { get; set; }
     }
 }
