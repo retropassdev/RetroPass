@@ -7,19 +7,19 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 
 ## Limitations
  - Xbox only
- - optimized for gamepad only
- - no custom themes
- - zipped content supported only if RetroArch or RetriX Gold cores support it
- - no scrapper
+ - Optimized for Gamepad Only
+ - No Custom Themes *(yet)*
+ - Zipped content supported only if RetroArch or RetriX Gold cores support it
+ - No Automatic Scrapper
   
 ## Prerequisites
 
-- Xbox developer account and console configured for Developer Mode
+- Xbox developer account and console configured for Developer Mode...
 - If using RetroArch - version **v1.10.1.** or **higher**
 - If using RetriX Gold - version **3.0.19.** or **higher**
 - For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
 - External storage of any type used for setting up content library
-- Additional computer for setting up content library
+- PC/Laptop for setting up content library
 
 ## Installation
 
@@ -32,8 +32,8 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 
 RetroPass can't be configured directly from Xbox because it doesn't have a built in scraper and doing all the configuration directly on Xbox would be fairly difficult. Instead, RetroPass is made compatible with:
 
-1. LaunchBox
-2. EmulationStation
+1. LaunchBox (Recommended)
+2. Emulation Station
 
 ## Setup with LaunchBox
 
@@ -41,9 +41,11 @@ LaunchBox is a preferred option, because it gives the best results when properly
  - It has support for multiple title and gameplay screenshots. 
  - Setup specific core for a game, if needed.
 
-1. Install LaunchBox directly to external storage.
-2. Setup and configure LaunchBox to work with RetroArch or [RetriX Gold](/Docs/SetupRetriXGold.md).
-3. **IMPORTANT!!!** When you import your content, it will ask you to select which media type to download. If you are using LaunchBox just to configure RetroPass, there is no need to download all the media types because RetroPass needs only a subset. It will speed up your setup process and it will make less burden on LaunchBox database. You only need to check these media types:
+1. Install LaunchBox directly to external storage
+2. Setup and configure LaunchBox to work with RetroArch or [RetriX Gold](/Docs/SetupRetriXGold.md), [XBSX2](https://github.com/TheRhysWyrill/XBSX2/blob/xbsx2).
+3. **IMPORTANT!!!** When you import your content, it will ask you to select which media type to download. If you are using LaunchBox just to configure RetroPass, there is no need to download all the media types because RetroPass needs only a subset. (It will speed up your setup process and it will make less burden on LaunchBox database)
+
+You only need to check these media types:
   - "Box - Front" 
   - "Screenshot - Game Title"
   - "Screenshot - Gameplay"
@@ -53,27 +55,39 @@ LaunchBox is a preferred option, because it gives the best results when properly
   	![](/Docs/media_types.png)
 
 
-4. Make sure that **\<CommandLine>** property for each emulator is properly configured in **LaunchBox/Data/Emulators.xml**. The path is not important, as long as the core name is properly specified. RetroPass ignores the path part and gets only the name of the core. It knows how to properly pass it to RetroArch or RetriX Gold.
+4. Make sure that **\<CommandLine>** property for each emulator is properly configured in **LaunchBox/Data/Emulators.xml**. The **path is not important, as long as the core name is properly specified**. RetroPass ignores the path part and gets only the name of the core. It knows how to properly pass it to RetroArch or RetriX Gold, XBSX2, Dolphin Stand-alone Xbox UWP.
 
-	```XML
+	```xml
 	<CommandLine>-L "cores\<core_name>.dll"</CommandLine>
 	```
 	Where **\<core_name>** is the name of the core you wish to use for particular emulator.
-5. Optionally, if you need to set up a different core for a game, go to Launchbox, open "Edit Metadata/Media" and modify command line under Emulation.
+5. Optional, if you need to set up a different core or emulator for a game, Run Launchbox and right-click a game, choose "Edit Metadata/Media" and modify command line under Emulation.
  	![](/Docs/core_per_game.png)
-6. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
-7. Edit **RetroPass.xml** configuration file. 
-	
-	**\<relativePath>** points to LaunchBox directory on the external storage. Do not put absolute path like "E:\LaunchBox", because when external storage is plugged into Xbox, it might be recognized under a different letter. For example, if LaunchBox folder is in the root of external storage, then it should be configured like this:
+6.Optional, if you wish to add/setup other supported emulator types, Open LaunchBox and click ![](/Docs/lbaeg04.png) > Tools > Manage > Emulators
+** Adding new Emulators
+![](/Docs/lbaeg01.png)
+![](/Docs/lbaeg02.png)
+**Example of pre configuration for *some* supported emulators**
+![](/Docs/lbaeg03.png)
 
-	```XML
+7. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
+8. Edit **RetroPass.xml** configuration file. 
+	
+	**\<relativePath>** points to LaunchBox directory on the external storage. You may change location by removing **./** 
+Example: **RetroPass/LaunchBox**, however, ***do NOT put absolute path like "E:\LaunchBox"***, because when external storage is plugged into Xbox, it might be recognized under a different letter!
+
+For example, if LaunchBox folder is in the root of external storage, then it should be configured like this:
+
+	```xml
 	<?xml version="1.0"?>
 	<dataSource>
 		<type>LaunchBox</type>
 		<relativePath>./LaunchBox</relativePath>
 	</dataSource>
 	```
-8. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
+9. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section!
+
+
 
 ## Setup with Emulation Station
 
@@ -135,15 +149,17 @@ If you do not wish to use LaunchBox, it is also possible to create Emulation Sta
 6. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
 
 
+
+
 ## First Run and Settings
 
 1. If RetroPass configuration file is found and properly configured, Settings screen is shown:
 
 	![](/Docs/first_settings.png)
-2. Click **Activate** button and then Back
-3. You should see a list of platforms and content
+2. Click **Activate** button and then Back.
+3. You should see a list of platforms and content.
 
-- **Delete Cache** deletes all cached thumbnails, but also **Play Later** playlist.
+- **Delete Cache** Deletes all cached thumbnails, but also **Play Later** playlist.
 - **Auto Play Video** automatically plays a video when content is selected.
 - **Enable Logging** enables logging. See [Troubleshooting](#troubleshooting) section for more info.
 
@@ -162,7 +178,7 @@ If after installation and setup you don't see your content:
 2. Quit RetroPass and restart it again.
 3. Go to Settings and press View (Back) button on Xbox gamepad.
 4. View log and notice yellow warning and red error log entries.
-5. Log file is also generated in the local RetroPass folder on Xbox
+5. Log file is also generated in the local RetroPass folder on Xbox.
 
 Make sure to **turn off** logging after troubleshooting, because writing to a log file slows down app performance.
 
@@ -195,6 +211,8 @@ Make sure to **turn off** logging after troubleshooting, because writing to a lo
 	- TelemetryDependencies
 	- Add-AppDevPackage.ps1
 	- Install.ps1
+
+
 
 ## Roadmap and Contributing
 
