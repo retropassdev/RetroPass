@@ -173,6 +173,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Background\Default.gif" />
+    <Content Include="Assets\Background\SettingsPage.png" />
     <Content Include="Assets\empty.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />

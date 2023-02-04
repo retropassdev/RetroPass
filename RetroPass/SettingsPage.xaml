@@ -17,8 +17,9 @@
             <Setter Property="Width" Value="155"/>
             <Setter Property="CornerRadius" Value="4,4,4,4"/>
         </Style>
+        <ImageBrush x:Key="GridBackgroundImage" ImageSource="Assets/Background/SettingsPage.png" Stretch="Fill" />
     </Page.Resources>
-    <Grid Margin="0,14,0,0" Padding="0,0,0,0">
+    <Grid Margin="0,14,0,0" Padding="0,0,0,0" Background="{StaticResource GridBackgroundImage}" >
         <Grid Margin="46,14,0,0" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="180"></RowDefinition>
