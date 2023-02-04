@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RetroPassEX")]
-[assembly: AssemblyDescription("Retro Pass EX is a simple front-end for emulators on XBOX One/ Series S|X")]
+[assembly: AssemblyTitle("RetroPass Ultimate")]
+[assembly: AssemblyDescription("RetroPass Ultimate is a simple front-end for emulators on XBOX One/ Series S|X")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RetroPassEX")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyProduct("RetroPass Ultimate")]
+[assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

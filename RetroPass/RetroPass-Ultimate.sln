@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPass-EX", "RetroPass-EX.csproj", "{674D331B-19AD-4E76-8D83-0F0473BC4F22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPass-Ultimate", "RetroPass-Ultimate.csproj", "{674D331B-19AD-4E76-8D83-0F0473BC4F22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

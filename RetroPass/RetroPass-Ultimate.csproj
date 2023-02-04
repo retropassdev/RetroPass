@@ -7,8 +7,8 @@
     <ProjectGuid>{674D331B-19AD-4E76-8D83-0F0473BC4F22}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RetroPassEX</RootNamespace>
-    <AssemblyName>RetroPassEX</AssemblyName>
+    <RootNamespace>RetroPassUltimate</RootNamespace>
+    <AssemblyName>RetroPassUltimate</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
@@ -19,7 +19,7 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>
     </PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>88E7354BE24AF9BC10887AB6917E7F0083D11A73</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>80C55D31CA29F2D96D2C517C0A7D6F81D9A114B6</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -272,6 +272,7 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <None Include="RetroPass-EX_TemporaryKey.pfx" />
     <None Include="RetroPass_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
