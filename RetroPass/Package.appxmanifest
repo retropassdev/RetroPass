@@ -5,11 +5,11 @@
 		 xmlns:control="using:Microsoft.UI.Xaml.Controls"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" 
          IgnorableNamespaces="uap mp rescap">
-  <Identity Name="23dd9619-e5f5-42f7-858e-13d0fa3bd336" Publisher="CN=river" Version="1.0.999.0" />
+  <Identity Name="93bc0193-ad86-417d-84c4-27c672f772bc" Publisher="CN=RetroPassEX" Version="1.1.2.0" />
   <mp:PhoneIdentity PhoneProductId="23dd9619-e5f5-42f7-858e-13d0fa3bd336" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>RetroPass</DisplayName>
-    <PublisherDisplayName>RetroPass</PublisherDisplayName>
+    <DisplayName>RetroPassEX</DisplayName>
+    <PublisherDisplayName>RetroPassEX</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -19,8 +19,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="RetroPass.App">
-      <uap:VisualElements DisplayName="Retro Pass" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Retro Pass is a simple frontend for RetroArch on XBOX." BackgroundColor="transparent">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="RetroPassEX.App">
+      <uap:VisualElements DisplayName="Retro Pass EX" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Retro Pass EX is a simple front-end for emulators on XBOX One/ Series S|X" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Retro Pass" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -32,8 +32,8 @@
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="retropass">
-            <uap:DisplayName>retropass</uap:DisplayName>
+          <uap:Protocol Name="retropass-ex">
+            <uap:DisplayName>retropass-ex</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
       </Extensions>
