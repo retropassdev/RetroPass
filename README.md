@@ -51,7 +51,6 @@ You only need to check these media types:
   - "Screenshot - Gameplay"
   - "Screenshot - Game Select"
   - "Video"
-  - "Fanart-Background"
 
   	![](/Docs/media_types.png)
 
