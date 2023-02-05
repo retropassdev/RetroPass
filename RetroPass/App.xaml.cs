@@ -57,10 +57,10 @@ namespace RetroPass
         {
             Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
 
-            //if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
-            {
-                this.FocusVisualKind = FocusVisualKind.Reveal;
-            }
+			//if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
+			{
+				this.FocusVisualKind = FocusVisualKind.HighVisibility;
+			}
 
             Frame rootFrame = Window.Current.Content as Frame;
 

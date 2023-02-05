@@ -8,20 +8,20 @@ namespace RetroPass
         {
             string url = "";
 
-            switch (game.GamePlatform.EmulatorType)
-            {
-                case Platform.EEmulatorType.retroarch:
-                    url = GetUrlRetroarch(game);
-                    break;
-                case Platform.EEmulatorType.rgx:
-                    url = GetUrlRetrix(game);
-                    break;
-                case Platform.EEmulatorType.xbsx2:
-                    url = GetUrlXBSX2(game);
-                    break;
-                case Platform.EEmulatorType.dolphin:
-                    url = GetUrlDolphin(game);
-                    break;
+			switch (game.GamePlatform.EmulatorType)
+			{
+				case Platform.EEmulatorType.retroarch:
+					url = GetUrlRetroarch(game);
+					break;
+				case Platform.EEmulatorType.rgx:
+					url = GetUrlRetrix(game);
+					break;
+				case Platform.EEmulatorType.xbsx2:
+					url = GetUrlXBSX2(game);
+					break;
+				case Platform.EEmulatorType.dolphin:
+					url = GetUrlDolphin(game);
+					break;
                 case Platform.EEmulatorType.ppsspp:
                     url = GetUrlPpsspp(game);
                     break;
@@ -32,8 +32,8 @@ namespace RetroPass
                     url = GetUrlFlycast(game);
                     break;
                 default:
-                    break;
-            }
+					break;
+			}
 
             return url;
         }
@@ -67,12 +67,12 @@ namespace RetroPass
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 
-        private static string GetUrlDolphin(Game game)
-        {
-            string args = "cmd=" + "dolphin.exe";
-            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += "&launchOnExit=" + "retropass:";
-            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		private static string GetUrlDolphin(Game game)
+		{
+			string args = "cmd=" + "dolphin.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 
         private static string GetUrlPpsspp(Game game)

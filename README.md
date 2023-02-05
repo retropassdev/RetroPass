@@ -14,7 +14,7 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
   
 ## Prerequisites
 
-- Xbox developer account and console configured for Developer Mode ;).. or whatever.
+- Xbox developer account and console configured for Developer Mode...
 - If using RetroArch - version **v1.10.1.** or **higher**
 - If using RetriX Gold - version **3.0.19.** or **higher**
 - For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.

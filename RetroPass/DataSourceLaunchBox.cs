@@ -325,7 +325,7 @@ namespace RetroPass
                 platform.VideoPath = platform.VideoPath == "" ? "" : Path.GetFullPath(Path.Combine(rootFolder, platform.VideoPath));
                 Trace.TraceInformation("DataSourceLaunchBox: Platform VideoPath: {0}", platform.VideoPath);
 
-                platform.BackgroundPath = platforms.platformFolders.Where(t => t.Platform == platformName && t.MediaType == "Fanart - Background").Select(t => t.FolderPath).DefaultIfEmpty(string.Empty).First();
+                platform.BackgroundPath = platforms.platformFolders.Where(t => t.Platform == platformName && t.MediaType == "Fanart").Select(t => t.FolderPath).DefaultIfEmpty(string.Empty).First();
                 platform.BackgroundPath = platform.BackgroundPath == "" ? "" : Path.GetFullPath(Path.Combine(rootFolder, platform.BackgroundPath));
                 Trace.TraceInformation("DataSourceLaunchBox: Platform BackgroundPath: {0}", platform.BackgroundPath);
 
