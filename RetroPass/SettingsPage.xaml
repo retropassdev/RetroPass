@@ -41,7 +41,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel x:Name="StackPanelRemovableStorage" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="0" Orientation="Horizontal" Spacing="10">
+                <StackPanel x:Name="StackPanelRemovableStorage" Visibility="Visible" Margin="0,-20,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="0" Orientation="Horizontal" Spacing="10" Grid.RowSpan="2">
                     <Border>
                         <TextBlock Width="160" Text="  " VerticalAlignment="Center"></TextBlock>
                     </Border>
@@ -69,7 +69,7 @@
             <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" Margin="372,111,0,0" VerticalAlignment="Top" Width="127" FontFamily="Assets/Fonts/Xbox.ttf#Xbox"/>
             <TextBlock Grid.Row="4" x:Name ="TextStatus" Text=""
                        HorizontalAlignment="Left"
-                       TextWrapping="Wrap" VerticalAlignment="Top" Width="800" Style="{StaticResource TitleTextBlockStyle}" Margin="34,147,0,0" Height="20"/>
+                       TextWrapping="Wrap" VerticalAlignment="Top" Width="800" Style="{StaticResource TitleTextBlockStyle}" Margin="34,156,0,0" Height="20"/>
         </Grid>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>
