@@ -58,12 +58,12 @@
                 <ColumnDefinition Width="130.4"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,0,6,0" Height="36" CornerRadius="4,4,4,4" Grid.Row="1" Grid.RowSpan="4" FontFamily="Xbox">
+            <ComboBox x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,0,6,0" Height="36" CornerRadius="4,4,4,4" Grid.Row="1" Grid.RowSpan="4" FontFamily="Assets/Fonts/Xbox.ttf#Xbox">
                 <x:String>Title</x:String>
                 <x:String>Developer</x:String>
                 <x:String>Year</x:String>
             </ComboBox>
-            <TextBox x:Name="SearchText" Grid.Column="2" Margin="13,0,0,0" CornerRadius="4,4,4,4" PlaceholderText="Search RetroPass" TextChanged="TextBox_TextChanged" Grid.Row="1" Grid.RowSpan="4" FontSize="13" FontFamily="Xbox"/>
+            <TextBox x:Name="SearchText" Grid.Column="2" Margin="13,0,0,0" CornerRadius="4,4,4,4" PlaceholderText="Search RetroPass" TextChanged="TextBox_TextChanged" Grid.Row="1" Grid.RowSpan="4" FontSize="13" FontFamily="Assets/Fonts/Xbox.ttf#Xbox"/>
         </Grid>
 
         <GridView  x:Name="SearchGridView"

@@ -240,7 +240,7 @@
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE721;" FontSize="19"/>
                             </Border>
                             <!-- Top Left Search Button-->
-                            <TextBlock FontFamily="Xbox" Text="Search"/>
+                            <TextBlock FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Text="Search"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="Settings" Width="143" Height="32" CornerRadius="4,4,4,4" Click="Settings_Click" HorizontalContentAlignment="Center" >
@@ -248,7 +248,7 @@
                             <Border VerticalAlignment="Center">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE115;" FontSize="19"/>
                             </Border>
-                            <TextBlock FontFamily="Xbox" Text="Settings"/>
+                            <TextBlock FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Text="Settings"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -260,7 +260,7 @@
             <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="#FFD000" FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CC;" FontSize="14"/>
             <!-- Top Right Search Button-->
-            <TextBlock FontFamily="Xbox" x:Name="StatusText" Margin="38,0,9,4 " 
+            <TextBlock FontFamily="Assets/Fonts/Xbox.ttf#Xbox" x:Name="StatusText" Margin="38,0,9,4 " 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  
                    Text="Search Games" FontSize="12" CharacterSpacing="40"></TextBlock>
         </Grid>
