@@ -1,14 +1,13 @@
-<Page
+﻿<Page
 	x:Name="page"
     x:Class="RetroPass.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:RetroPass" AllowDrop="True"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Drop="page_Drop" 
-    NavigationCacheMode="Required"  DragOver="page_DragOver" 
+    xmlns:local="using:RetroPass"
+    mc:Ignorable="d"
+    NavigationCacheMode="Required"
     FontFamily="Segoe UI">
     <Page.Background>
         <LinearGradientBrush EndPoint="0.5,0.27" StartPoint="0.5,0">
@@ -78,7 +77,6 @@
                                             <VisualState x:Name="PointerOverSelected">
                                                 <VisualState.Setters>
                                                     <Setter Target="Root.(RevealBrush.State)" Value="PointerOver" />
-
                                                 </VisualState.Setters>
                                             </VisualState>
                                             <VisualState x:Name="PointerOverPressed">

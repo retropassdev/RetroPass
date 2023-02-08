@@ -1,11 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage.Streams;
-using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -453,41 +450,9 @@ namespace RetroPass
             Frame.Navigate(typeof(SettingsPage), dataSourceManager);
         }
 
-		private async void Search_Click(object sender, RoutedEventArgs e)
-		{
-			await ShowSearch();
-		}
-
-		private async void page_Drop(object sender, DragEventArgs e)
-		{
-			if (e.DataView.Contains(StandardDataFormats.StorageItems))
-			{
-				var items = await e.DataView.GetStorageItemsAsync();
-				if (items.Any())
-				{
-					var storageFile = items[0] as StorageFile;
-					var contentType = storageFile.ContentType;
-					StorageFolder folder = ApplicationData.Current.LocalFolder;
-					if (contentType == "image/jpg" || contentType == "image/png" || contentType == "image/jpeg")
-					{
-						StorageFile newFile = await storageFile.CopyAsync(folder, storageFile.Name, NameCollisionOption.GenerateUniqueName);
-						var bitmapImg = new BitmapImage();
-						bitmapImg.SetSource(await storageFile.OpenAsync(FileAccessMode.Read));
-						//imgMain.Source = bitmapImg;
-						this.Background = new ImageBrush { ImageSource = bitmapImg, Stretch = Stretch.None };
-					}
-				}
-			}
-			e.AcceptedOperation = DataPackageOperation.None;
-		}
-
-		private async void page_DragOver(object sender, DragEventArgs e)
-		{
-			e.AcceptedOperation = DataPackageOperation.Copy;
-			// To display the data which is dragged    
-			e.DragUIOverride.IsGlyphVisible = true;
-			e.DragUIOverride.IsContentVisible = true;
-			e.DragUIOverride.IsCaptionVisible = true;
-		}
-	}
+        private async void Search_Click(object sender, RoutedEventArgs e)
+        {
+            await ShowSearch();
+        }
+    }
 }
