@@ -7,8 +7,8 @@
     <ProjectGuid>{674D331B-19AD-4E76-8D83-0F0473BC4F22}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RetroPass</RootNamespace>
-    <AssemblyName>RetroPass</AssemblyName>
+    <RootNamespace>RetroPass_Ultimate</RootNamespace>
+    <AssemblyName>RetroPass_Ultimate</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
