@@ -17,10 +17,8 @@
             <Setter Property="Width" Value="155"/>
             <Setter Property="CornerRadius" Value="4,4,4,4"/>
         </Style>
-        <!-- Background Resource />-->
         <ImageBrush x:Key="GridBackgroundImage" ImageSource="Assets/Background/SettingsPage.png" Stretch="Fill" />
     </Page.Resources>
-
     <Grid Margin="0,14,0,0" Padding="0,0,0,0" Background="{StaticResource GridBackgroundImage}" >
         <Grid Margin="46,14,0,0" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -31,9 +29,9 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Margin="0,0,0,0" Text="Settings" Style="{StaticResource SubheaderTextBlockStyle}" Foreground="Black" TextAlignment="Center" FontFamily="XBold"/>
+            <TextBlock Grid.Row="0" Margin="0,0,0,0" Text="Settings" Style="{StaticResource SubheaderTextBlockStyle}"/>
 
-            <Grid Grid.Row="4" Margin="269,26,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RowSpacing="10" >
+            <Grid Grid.Row="1" Margin="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RowSpacing="10" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
@@ -43,12 +41,18 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel x:Name="StackPanelRemovableStorage" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="0" Orientation="Horizontal" Spacing="10">
-                    <Button x:Name="ButtonActivateRemovableStorage" Click="ButtonActivateRemovableStorage_Click" Content="Enabled USB" FontFamily="Xbox"></Button>
-                    <Button x:Name="ButtonClearRemovableCache" Click="ButtonClearRemovableCache_Click" Content="Delete Cache" FontFamily="Xbox"></Button>
+                    <Border>
+                        <TextBlock Width="160" Text="Removable Storage" VerticalAlignment="Center"></TextBlock>
+                    </Border>
+                    <Button x:Name="ButtonActivateRemovableStorage" Click="ButtonActivateRemovableStorage_Click" Content="Activate"></Button>
+                    <Button x:Name="ButtonClearRemovableCache" Click="ButtonClearRemovableCache_Click" Content="Delete Cache"></Button>
                     <Button Visibility="Collapsed"  x:Name="ButtonImport" Content="Copy To Xbox" Click="ButtonImport_Click"></Button>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Left" x:Name="StackPanelLocalStorage" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="1" Orientation="Horizontal" >
+                    <Border>
+                        <TextBlock Width="160" TextWrapping="Wrap" Text="Local Xbox" VerticalAlignment="Center"></TextBlock>
+                    </Border>
                     <StackPanel Visibility="Collapsed" x:Name="StackPanelLocalXboxProgress" Margin="10,0,0,0" Padding="0,0,0,0" Orientation="Horizontal" >
                         <Grid Width="330">
                             <ProgressBar x:Name="ProgressSync" Height="30"  HorizontalAlignment="Left" Width="328"/>
@@ -56,14 +60,15 @@
                         </Grid>
                         <Button Margin="10,0,0,0" x:Name="ButtonImportCancel" Content="Cancel" Click="ButtonImportCancel_Click" ></Button>
                     </StackPanel>
-                    <Button Margin="10,0,0,0" Visibility="Collapsed" x:Name="ButtonActivateLocalStorage" Click="ButtonActivateLocalStorage_Click" Content="USB Active"></Button>
+                    <Button Margin="10,0,0,0" Visibility="Collapsed" x:Name="ButtonActivateLocalStorage" Click="ButtonActivateLocalStorage_Click" Content="Activate"></Button>
+                    <Button Margin="10,0,0,0" x:Name="ButtonDeleteLocalStorage" Click="ButtonDeleteLocalStorage_Click" Content="Delete" ></Button>
                 </StackPanel>
             </Grid>
-            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" Margin="365,103,0,0" VerticalAlignment="Top" FontFamily="Xbox"/>
-            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" Margin="0,135,0,0" VerticalAlignment="Top" FontFamily="Xbox" HorizontalAlignment="Center"/>
+            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="2" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
+            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="3" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked"/>            
             <TextBlock Grid.Row="4" x:Name ="TextStatus" Text=""
-                       HorizontalAlignment="Left"
-                       TextWrapping="Wrap" VerticalAlignment="Top" Width="800" Style="{StaticResource TitleTextBlockStyle}" Margin="34,162,0,0" Height="10"/>
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap" VerticalAlignment="Center" Width="800" Style="{StaticResource TitleTextBlockStyle}"/>            
         </Grid>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>
@@ -71,7 +76,7 @@
                    Text="&#xE3CD;" FontSize="20"/>
             <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  
-                   Text="Back" FontSize="12" CharacterSpacing="40" FontFamily="Xbox"></TextBlock>
+                   Text="Back" FontSize="12" CharacterSpacing="40"></TextBlock>
         </Grid>
     </Grid>
 </Page>
