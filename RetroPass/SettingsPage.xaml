@@ -43,7 +43,7 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel x:Name="StackPanelRemovableStorage" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="0" Orientation="Horizontal" Spacing="10">
-                    <Button x:Name="ButtonActivateRemovableStorage" Click="ButtonActivateRemovableStorage_Click" Content="Activate" FontFamily="Xbox"></Button>
+                    <Button x:Name="ButtonActivateRemovableStorage" Click="ButtonActivateRemovableStorage_Click" Content="Enabled USB" FontFamily="Xbox"></Button>
                     <Button x:Name="ButtonClearRemovableCache" Click="ButtonClearRemovableCache_Click" Content="Delete Cache" FontFamily="Xbox"></Button>
                     <Button Visibility="Collapsed"  x:Name="ButtonImport" Content="Copy To Xbox" Click="ButtonImport_Click"></Button>
                 </StackPanel>
@@ -56,7 +56,7 @@
                         </Grid>
                         <Button Margin="10,0,0,0" x:Name="ButtonImportCancel" Content="Cancel" Click="ButtonImportCancel_Click" ></Button>
                     </StackPanel>
-                    <Button Margin="10,0,0,0" Visibility="Collapsed" x:Name="ButtonActivateLocalStorage" Click="ButtonActivateLocalStorage_Click" Content="Activate"></Button>
+                    <Button Margin="10,0,0,0" Visibility="Collapsed" x:Name="ButtonActivateLocalStorage" Click="ButtonActivateLocalStorage_Click" Content="USB Active"></Button>
                 </StackPanel>
             </Grid>
             <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" Margin="365,103,0,0" VerticalAlignment="Top" FontFamily="Xbox"/>
@@ -71,7 +71,7 @@
                    Text="&#xE3CD;" FontSize="20"/>
             <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  
-                   Text="Back" FontSize="12" CharacterSpacing="40"></TextBlock>
+                   Text="Back" FontSize="12" CharacterSpacing="40" FontFamily="Xbox"></TextBlock>
         </Grid>
     </Grid>
 </Page>
