@@ -489,10 +489,5 @@ namespace RetroPass
 			e.DragUIOverride.IsContentVisible = true;
 			e.DragUIOverride.IsCaptionVisible = true;
 		}
-
-        private void PlayLaterControl_Loaded()
-        {
-
-        }
-    }
+	}
 }
