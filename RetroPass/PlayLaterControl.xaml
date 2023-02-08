@@ -30,12 +30,14 @@
             Foreground="#318DAC"
             Text="&#xE3CB;" />
         <TextBlock
+            Height="19"
             x:Name="StatusText"
             Margin="38,0,9,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             CharacterSpacing="40"
             FontSize="12"
+            FontFamily="Xbox"
             Text="" />
     </Grid>
 </UserControl>
