@@ -172,6 +172,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Background\Default.gif" />
+    <Content Include="Assets\Background\SettingsPage.png" />
     <Content Include="Assets\empty.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
@@ -272,6 +274,8 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <Content Include="Assets\Fonts\Xbox.ttf" />
+    <Content Include="Assets\Fonts\XBold.ttf" />
     <None Include="RetroPass_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

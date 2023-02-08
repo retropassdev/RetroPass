@@ -18,15 +18,13 @@ namespace RetroPass
     public sealed partial class SettingsPage : Page
     {
         DataSourceManager dataSourceManager;
-        Brush defaultForeground;
+        readonly Brush defaultForeground;
 
         public SettingsPage()
         {
             //Instance = this;
             InitializeComponent();
             Loaded += SettingsPage_Loaded;
-
-            defaultForeground = ButtonActivateLocalStorage.Foreground;
         }
 
         protected async override void OnKeyDown(KeyRoutedEventArgs e)
@@ -48,41 +46,17 @@ namespace RetroPass
 
         private void RefreshDataSourceUI()
         {
-            StackPanelRemovableStorage.Visibility = Visibility.Collapsed;
-            StackPanelLocalStorage.Visibility = Visibility.Collapsed;
-
             bool hasLocalDataSource = dataSourceManager.HasDataSource(DataSourceManager.DataSourceLocation.Local);
             bool hasRemovableDataSource = dataSourceManager.HasDataSource(DataSourceManager.DataSourceLocation.Removable);
 
             if (hasRemovableDataSource)
             {
-                StackPanelRemovableStorage.Visibility = Visibility.Visible;
-                ButtonActivateRemovableStorage.Visibility = Visibility.Visible;
                 ButtonClearRemovableCache.Visibility = Visibility.Visible;
                 //ButtonImport.Visibility = Visibility.Visible;
 
                 if (dataSourceManager.IsImportInProgress())
                 {
                     //ButtonImport.Visibility = Visibility.Collapsed;
-                }
-            }
-
-            if (hasLocalDataSource || dataSourceManager.IsImportInProgress())
-            {
-                StackPanelLocalStorage.Visibility = Visibility.Visible;
-                ButtonActivateLocalStorage.Visibility = Visibility.Visible;
-                ButtonDeleteLocalStorage.Visibility = Visibility.Visible;
-                StackPanelLocalXboxProgress.Visibility = Visibility.Collapsed;
-
-                if (dataSourceManager.IsImportInProgress())
-                {
-                    ButtonActivateLocalStorage.Visibility = Visibility.Collapsed;
-                    ButtonDeleteLocalStorage.Visibility = Visibility.Collapsed;
-                    StackPanelLocalXboxProgress.Visibility = Visibility.Visible;
-                }
-                else if (dataSourceManager.ImportFinished == false)
-                {
-                    ButtonActivateLocalStorage.Visibility = Visibility.Collapsed;
                 }
             }
 
@@ -220,13 +194,7 @@ namespace RetroPass
             RefreshDataSourceUI();
         }
 
-        private async void ButtonDeleteLocalStorage_Click(object sender, RoutedEventArgs e)
-        {
-            await dataSourceManager.DeleteLocalDataSource();
-            StackPanelLocalStorage.Visibility = Visibility.Collapsed;
-        }
-
-        private async void ButtonClearRemovableCache_Click(object sender, RoutedEventArgs e)
+        async void ButtonClearRemovableCache_Click(object sender, RoutedEventArgs e)
         {
             await ThumbnailCache.Instance.Delete(DataSourceManager.DataSourceLocation.Removable);
         }
