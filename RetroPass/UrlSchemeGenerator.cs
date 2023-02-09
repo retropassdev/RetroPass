@@ -31,6 +31,9 @@ namespace RetroPass
                 case Platform.EEmulatorType.flycast:
                     url = GetUrlFlycast(game);
                     break;
+                case Platform.EEmulatorType.xenia:
+                    url = GetUrlXenia(game);
+                    break;
                 default:
 					break;
 			}
@@ -94,6 +97,13 @@ namespace RetroPass
         private static string GetUrlFlycast(Game game)
         {
             string args = "cmd=" + "flycast.exe";
+            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+            args += "&launchOnExit=" + "retropass:";
+            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+        }
+        private static string GetUrlXenia(Game game)
+        {
+            string args = "cmd=" + "xenia.exe";
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
             args += "&launchOnExit=" + "retropass:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;

@@ -14,6 +14,7 @@ namespace RetroPass
             flycast,
 			ppsspp,
 			duckstation,
+            xenia,
         }
         public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -59,7 +60,11 @@ namespace RetroPass
             {
                 EmulatorType = EEmulatorType.duckstation;
             }
-			else
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("xenia", System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                EmulatorType = EEmulatorType.xenia;
+            }
+            else
 			{
 				//let it just be default retroarch
 				EmulatorType = EEmulatorType.retroarch;
