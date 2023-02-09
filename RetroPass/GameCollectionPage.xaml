@@ -68,15 +68,16 @@
             </Button>
         </DataTemplate>
         <!-- Background Resource />-->
-        <ImageBrush x:Key="GridBackgroundImage" ImageSource="Assets/Background/Default.gif" Stretch="Fill" />
+        <!-- <ImageBrush x:Key="GridBackgroundImage" ImageSource="Assets/Background/Default.gif" Stretch="Fill" /> -->
     </Page.Resources>
 
     <Grid
         Margin="0,0,0,0"
         Padding="0,0,0,0"
         CornerRadius="4,4,4,4"
-        Background="{StaticResource GridBackgroundImage}">
-
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <MediaPlayerElement x:Name="mediaPlayer" AutoPlay="True" Source="ms-appx:///Assets/Background/SettingsPage-Animated.mp4"/>
+        
         <GridView
             x:Name="PlatformGridView"
             Background="Transparent"

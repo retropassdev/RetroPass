@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Background\Default.gif" />
+    <Content Include="Assets\Background\SettingsPage-Animated.mp4" />
     <Content Include="Assets\Background\SettingsPage.png" />
     <Content Include="Assets\empty.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
