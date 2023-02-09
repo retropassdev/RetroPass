@@ -65,8 +65,8 @@
                     <Button Margin="10,0,0,0" x:Name="ButtonDeleteLocalStorage" Click="ButtonDeleteLocalStorage_Click" Content="Delete" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" ></Button>
                 </StackPanel>
             </Grid>
-            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" Margin="372,0,0,0" FontFamily="Assets/Fonts/Xbox.ttf#Xbox"/>
-            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" Margin="372,111,0,0" VerticalAlignment="Top" Width="127" FontFamily="Assets/Fonts/Xbox.ttf#Xbox"/>
+            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" HorizontalAlignment="Center" Width="171"/>
+            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" Margin="0,111,0,0" VerticalAlignment="Top" Width="172" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="4" x:Name ="TextStatus" Text=""
                        HorizontalAlignment="Left"
                        TextWrapping="Wrap" VerticalAlignment="Top" Width="800" Style="{StaticResource TitleTextBlockStyle}" Margin="34,156,0,0" Height="20"/>
