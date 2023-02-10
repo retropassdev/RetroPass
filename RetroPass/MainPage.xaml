@@ -227,8 +227,8 @@
         <!-- <ImageBrush x:Key="GridBackgroundImage" ImageSource="Assets/Background/Default.gif" Stretch="Fill"/> -->
     </Page.Resources>
 
-    <Grid Margin="0,0,0,0"  CornerRadius="4,4,4,4" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <MediaPlayerElement x:Name="mediaPlayer" AutoPlay="True" Source="ms-appx:///Assets/Background/SettingsPage-Animated.mp4"/>
+    <Grid Margin="0,0,0,0" CornerRadius="4,4,4,4" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" Source="ms-appx:///Assets/Background/SettingsPage-Animated.mp4"/>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" 			
 				  HorizontalAlignment="Left" Margin="28,0,28,0">
             <StackPanel XYFocusKeyboardNavigation="Enabled" Name="StackPanelMain" Spacing="0" CornerRadius="4" 
