@@ -228,7 +228,7 @@
     </Page.Resources>
 
     <Grid Margin="0,0,0,0" CornerRadius="4,4,4,4" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" Source="ms-appx:///Assets/Background/SettingsPage-Animated.mp4"/>
+        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" Source="ms-appx:///Assets/Background/Menu-Animation.mp4"/>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" 			
 				  HorizontalAlignment="Left" Margin="28,0,28,0">
             <StackPanel XYFocusKeyboardNavigation="Enabled" Name="StackPanelMain" Spacing="0" CornerRadius="4" 
@@ -256,10 +256,10 @@
             </StackPanel>
         </ScrollViewer>
         <local:PlayLaterControl x:Name="PlayLaterControl"></local:PlayLaterControl>
-        <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="20" Margin="0,20,28,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" >
+        <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="20" Margin="0,20,100,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" >
             <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>
             <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="#FFD000" FontFamily="Segoe Xbox MDL2 Symbol" 
-                   Text="&#xE3CC;" FontSize="14"/>
+                   Text="&#xE3CC;" FontSize="16"/>
             <!-- Top Right Search Button-->
             <TextBlock FontFamily="Assets/Fonts/Xbox.ttf#Xbox" x:Name="StatusText" Margin="38,0,9,4 " 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  
