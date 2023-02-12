@@ -353,4 +353,4 @@ MigrationBackup/
 .ionide/
 
 # Video Assets
-RetroPass/Assets/Background/*.mp4
+# RetroPass/Assets/Background/*.mp4
