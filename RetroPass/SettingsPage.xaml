@@ -20,9 +20,12 @@
         <!-- Background Resource -->
         <!-- <ImageBrush x:Key="GridBackgroundImage" ImageSource="Assets/Background/SettingsPage.png" Stretch="Fill" />-->
     </Page.Resources>
-    <Grid Margin="0,14,0,0" Padding="0,0,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" Source="ms-appx:///Assets/Background/SettingsPage-Animated.mp4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-        <Grid Margin="46,14,0,0" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid Margin="0,0,0,0" Padding="0,0,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" 
+              Source="ms-appx:///Assets/Background/SettingsPage-Animated.mp4"
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              Margin="0"/>
+        <Grid Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled">
             <Grid.RowDefinitions>
                 <RowDefinition Height="180"></RowDefinition>
                 <RowDefinition Height="150"></RowDefinition>
@@ -33,7 +36,7 @@
 
             <TextBlock Grid.Row="0" Margin="0,80,0,0" Text="        " Style="{StaticResource SubheaderTextBlockStyle}" FontFamily="XBold" TextAlignment="Center"/>
 
-            <Grid Grid.Row="4" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RowSpacing="10" Margin="104,37,0,0" >
+            <Grid Grid.Row="4" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RowSpacing="10" Margin="150,49,0,0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
@@ -55,6 +58,7 @@
                     <Border>
                         <TextBlock Width="160" TextWrapping="Wrap" Text="  " VerticalAlignment="Center"></TextBlock>
                     </Border>
+                    <Button x:Name="ButtonDeleteLocalStorage" Click="ButtonDeleteLocalStorage_Click" Content="Delete" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Width="90" />
                     <StackPanel Visibility="Collapsed" x:Name="StackPanelLocalXboxProgress" Margin="10,0,0,0" Padding="0,0,0,0" Orientation="Horizontal" >
                         <Grid Width="330">
                             <ProgressBar x:Name="ProgressSync" Height="30"  HorizontalAlignment="Left" Width="328"/>
@@ -63,14 +67,13 @@
                         <Button Margin="10,0,0,0" x:Name="ButtonImportCancel" Content="Cancel" Click="ButtonImportCancel_Click" ></Button>
                     </StackPanel>
                     <Button Margin="10,0,0,0" Visibility="Collapsed" x:Name="ButtonActivateLocalStorage" Click="ButtonActivateLocalStorage_Click" Content="Activate"></Button>
-                    <Button Margin="10,0,0,0" x:Name="ButtonDeleteLocalStorage" Click="ButtonDeleteLocalStorage_Click" Content="Delete" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" ></Button>
                 </StackPanel>
             </Grid>
-            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" HorizontalAlignment="Center" Width="171"/>
-            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" Margin="0,111,0,0" VerticalAlignment="Top" Width="172" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" HorizontalAlignment="Center"/>
+            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Width="143" Margin="417,0,0,0" IsChecked="True"/>
+            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" Margin="417,130,0,0" VerticalAlignment="Top" Width="143" FontFamily="Assets/Fonts/Xbox.ttf#Xbox"/>
             <TextBlock Grid.Row="4" x:Name ="TextStatus" Text=""
                        HorizontalAlignment="Left"
-                       TextWrapping="Wrap" VerticalAlignment="Top" Width="800" Style="{StaticResource TitleTextBlockStyle}" Margin="34,156,0,0" Height="20"/>
+                       TextWrapping="Wrap" VerticalAlignment="Top" Width="800" Style="{StaticResource TitleTextBlockStyle}" Margin="85,168,0,0" Height="33"/>
         </Grid>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>
