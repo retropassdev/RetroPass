@@ -76,7 +76,10 @@
         Padding="0,0,0,0"
         CornerRadius="4,4,4,4"
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" Source="ms-appx:///Assets/Background/Menu-Animation.mp4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" 
+              Source="ms-appx:///Assets/Background/Menu-Animation.mp4"
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              Margin="0"/>
         
         <GridView
             x:Name="PlatformGridView"
