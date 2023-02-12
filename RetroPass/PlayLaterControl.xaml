@@ -5,38 +5,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:RetroPass"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
+    d:DesignHeight="200"
+    d:DesignWidth="370"
     mc:Ignorable="d">
 
     <Grid
         x:Name="OverlayPlayLater"
-        Height="32"
-        MaxWidth="300"
-        Margin="0,0,28,26"
+        Height="19"
+        MaxWidth="220"
+        Margin="0,0,18,16"
         Padding="0,0,0,0"
         HorizontalAlignment="Right"
         VerticalAlignment="Bottom"
         Visibility="Collapsed">
         <Border
-            Background="Black"
+            Background="White"
             CornerRadius="5"
-            Opacity="0.78" />
+            Opacity="0.08" />
         <TextBlock
-            Margin="9,2,0,0"
+            Margin="4,0,0,0"
             VerticalAlignment="Center"
             FontFamily="Segoe Xbox MDL2 Symbol"
-            FontSize="20"
+            FontSize="14"
             Foreground="#318DAC"
             Text="&#xE3CB;" />
         <TextBlock
-            Height="19"
+            Height="13"
             x:Name="StatusText"
-            Margin="38,0,9,0"
+            Margin="22,0,4,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            CharacterSpacing="40"
-            FontSize="12"
+            CharacterSpacing="18"
+            FontSize="10"
             FontFamily="Assets/Fonts/Xbox.ttf#Xbox"
             Text="" />
     </Grid>

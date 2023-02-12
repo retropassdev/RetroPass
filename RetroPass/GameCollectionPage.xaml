@@ -16,23 +16,23 @@
                 x:Name="GameButton"
                 Margin="0,0,0,0"
                 Padding="0,0,0,0"
+                Background="Transparent"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
                 BorderThickness="0"
                 CornerRadius="4,4,4,4">
-                <RelativePanel Background="Transparent" CornerRadius="4,4,4,4" Opacity="100">
+                <RelativePanel CornerRadius="4,4,4,4" Background="Transparent">
                     <Image
                         x:Name="ItemImage"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Opacity="100"
                         RelativePanel.AlignTopWithPanel="True"
                         Stretch="Uniform" />
                     <Border
                         x:Name="GameNameDisplayEmpty"
-                        Background="Transparent" Opacity="100"
+                        Background="Transparent"
                         CornerRadius="4,4,4,4"
                         RelativePanel.AlignLeftWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True"
@@ -135,8 +135,8 @@
                                 <ListViewItemPresenter
                                     CornerRadius="4,4,4,4"
                                     PressedBackground="Transparent"
-                                    SelectedBackground="Transparent"
                                     SelectedPointerOverBackground="Transparent"
+                                    SelectedBackground="Transparent"
                                     SelectedPressedBackground="Transparent" />
                             </ControlTemplate>
                         </Setter.Value>
@@ -148,7 +148,6 @@
                     <ItemsWrapGrid
                         Margin="37,20,0,40"
                         HorizontalAlignment="Left"
-                        Background="Transparent"
                         BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
                         GotFocus="Grid_GotFocus"
                         LostFocus="Grid_LostFocus"
@@ -159,32 +158,32 @@
         <local:PlayLaterControl x:Name="PlayLaterControl" />
         <Grid
             x:Name="OverlaySearch"
-            Height="32"
-            MaxWidth="300"
+            Height="19"
+            MaxWidth="200"
             Margin="0,20,28,0"
             Padding="0,0,0,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
             Visibility="Visible">
             <Border
-                Background="Black"
+                Background="White"
                 CornerRadius="5"
-                Opacity="0.78" />
+                Opacity="0.08" />
             <TextBlock
-                Margin="9,2,0,0"
+                Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 FontFamily="Segoe Xbox MDL2 Symbol"
-                FontSize="20"
+                FontSize="14"
                 Foreground="#FFD000"
                 Text="&#xE3CC;" />
             <TextBlock
                 x:Name="StatusText"
-                Margin="38,0,9,0"
+                Margin="22,4,9,0"
                 Height="19"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                CharacterSpacing="40"
-                FontSize="12"
+                CharacterSpacing="18"
+                FontSize="10"
                 Text="Search Collection"
                 FontFamily="Assets/Fonts/Xbox.ttf#Xbox" />
         </Grid>
