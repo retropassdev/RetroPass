@@ -113,7 +113,7 @@ namespace RetroPass
         }
         private static string GetUrlXeniaCanary(Game game)
         {
-            string args = "cmd=" + "xenia-canary.exe";
+            string args = "cmd=" + "xenia-canary-uwp.exe";
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
             args += "&launchOnExit=" + "retropass:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
