@@ -22,6 +22,12 @@ namespace RetroPass
 				case Platform.EEmulatorType.dolphin:
 					url = GetUrlDolphin(game);
 					break;
+				case Platform.EEmulatorType.xenia:
+					url = GetUrlXenia(game);
+					break;
+				case Platform.EEmulatorType.xenia_canary:
+					url = GetUrlXeniaCanary(game);
+					break;
 				default:
 					break;
 			}
@@ -64,6 +70,22 @@ namespace RetroPass
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+		private static string GetUrlXenia(Game game)
+		{
+			string args = "cmd=" + "xenia.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+		private static string GetUrlXeniaCanary(Game game)
+		{
+			string args = "cmd=" + "xenia-canary.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return "xenia-canary" + ":?" + args;
 		}
 	}
 }

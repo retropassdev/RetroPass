@@ -11,6 +11,8 @@ namespace RetroPass
 			rgx,
 			xbsx2,
 			dolphin,
+			xenia,
+			xenia_canary,
 		}
 		public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -45,6 +47,14 @@ namespace RetroPass
 			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("dolphin", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				EmulatorType = EEmulatorType.dolphin;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("xenia-canary", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.xenia_canary;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("xenia", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.xenia;
 			}
 			else
 			{
