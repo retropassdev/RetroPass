@@ -15,6 +15,7 @@ namespace RetroPass
 			ppsspp,
 			duckstation,
             xenia,
+            xeniacanary,
         }
         public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -24,7 +25,6 @@ namespace RetroPass
 		public string ScreenshotGameplayPath { get; set; }
 		public string ScreenshotGameSelectPath { get; set; }
 		public string VideoPath { get; set; }
-        public string BackgroundPath { get; set; }
 
         [XmlIgnoreAttribute]
         public StorageFolder BoxFrontFolder { get; set; }
@@ -62,7 +62,11 @@ namespace RetroPass
             }
             else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("xenia", System.StringComparison.CurrentCultureIgnoreCase))
             {
-                EmulatorType = EEmulatorType.xenia;
+                EmulatorType = EEmulatorType.xeniacanary;
+            }
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("xeniacanary", System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                EmulatorType = EEmulatorType.xeniacanary;
             }
             else
 			{
