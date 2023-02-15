@@ -5,7 +5,7 @@
 		 xmlns:control="using:Microsoft.UI.Xaml.Controls"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" 
          IgnorableNamespaces="uap mp rescap">
-  <Identity Name="f3a28ab5-9cd3-480a-86e5-58ecbeba4015" Publisher="CN=RetroPass_Ultimate" Version="1.1.99.0" />
+  <Identity Name="f3a28ab5-9cd3-480a-86e5-58ecbeba4015" Publisher="CN=RetroPass_Ultimate" Version="1.1.101.0" />
   <mp:PhoneIdentity PhoneProductId="23dd9619-e5f5-42f7-858e-13d0fa3bd336" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Retro Pass Ultimate</DisplayName>
@@ -20,7 +20,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="RetroPass.App">
-      <uap:VisualElements DisplayName="RetroPass Ultimate" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="RetroPass Ultimate is a simple front-end for emulators on XBOX One/ Series S|X" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="RetroPass Ultimate" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="RetroPass Ultimate is a fork of RetroPass a  simple front-end for emulators on XBOX One/ Series S|X" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Retro Pass" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />

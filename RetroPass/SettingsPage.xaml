@@ -36,7 +36,7 @@
 
             <TextBlock Grid.Row="0" Margin="0,80,0,0" Text="        " Style="{StaticResource SubheaderTextBlockStyle}" FontFamily="XBold" TextAlignment="Center"/>
 
-            <Grid Grid.Row="4" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RowSpacing="10" Margin="150,49,0,0" >
+            <Grid Grid.Row="4" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RowSpacing="10" Margin="165,64,0,0" Height="11" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
@@ -56,9 +56,9 @@
 
                 <StackPanel HorizontalAlignment="Left" x:Name="StackPanelLocalStorage" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="1" Orientation="Horizontal" >
                     <Border>
-                        <TextBlock Width="160" TextWrapping="Wrap" Text="  " VerticalAlignment="Center"></TextBlock>
+                        <TextBlock Width="80" TextWrapping="Wrap" Text="  " VerticalAlignment="Center"></TextBlock>
                     </Border>
-                    <Button x:Name="ButtonDeleteLocalStorage" Click="ButtonDeleteLocalStorage_Click" Content="Delete" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Width="90" />
+                    <Button x:Name="ButtonDeleteLocalStorage" Click="ButtonDeleteLocalStorage_Click" Content="Delete" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Width="80" />
                     <StackPanel Visibility="Collapsed" x:Name="StackPanelLocalXboxProgress" Margin="10,0,0,0" Padding="0,0,0,0" Orientation="Horizontal" >
                         <Grid Width="330">
                             <ProgressBar x:Name="ProgressSync" Height="30"  HorizontalAlignment="Left" Width="328"/>
