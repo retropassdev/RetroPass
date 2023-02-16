@@ -1,16 +1,17 @@
-# RetroPass
-Retro Pass is a simple frontend for RetroArch and RetriX Gold running on Xbox. 
-
+# RetroPass Ultimate
+RetroPass Ultimate is a fork of RetroPass frontend for RetroArch and RetriX Gold, Xenia Cannary UWP, Dolphin UWP on Xbox One & Xbox Series S|X. 
+![Video](/Docs/retropassultimate.gif)
 ![Video](/Docs/menu.gif)
 
-This frontend is made specifically for Xbox console and hopefully, should feel familiar to Xbox users right from the start.
+This is made specifically for Xbox console and hopefully, should feel familiar to Xbox users right from the start with its classic xbox theme meets Game Pass Ultimate vibe.
 
 ## Limitations
- - Xbox only
+
+ - Xbox Only
  - Optimized for Gamepad Only
  - No Custom Themes *(yet)*
- - Zipped content supported only if RetroArch or RetriX Gold cores support it
- - No Automatic Scrapper
+ - Zipped content supported only if RetroArch or RetriX Gold and other supported cores/emulators support that.
+ - No Automatic Scrapper, you must use Launchbox or EmulationStation (more info below)
   
 ## Prerequisites
 
@@ -22,18 +23,20 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 - PC/Laptop for setting up content library
 
 ## Installation
-
  1. [Download](../../releases/) latest RetroPass binaries
  2. Connect to Xbox through Xbox Device portal and install:
 	- RetroPass_x.y.z.0_x64.msix
 	- 3 appx dependencies in /Dependencies/x64/ folder. 
 
- ## Setup
 
+
+ ## Setup
+ 
 RetroPass can't be configured directly from Xbox because it doesn't have a built in scraper and doing all the configuration directly on Xbox would be fairly difficult. Instead, RetroPass is made compatible with:
 
 1. LaunchBox (Recommended)
 2. Emulation Station
+
 
 ## Setup with LaunchBox
 
