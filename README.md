@@ -19,6 +19,8 @@ This is made specifically for Xbox console and hopefully, should feel familiar t
 - Xbox developer account and console configured for Developer Mode...
 - If using RetroArch - version **v1.10.1.** or **higher**
 - If using RetriX Gold - version **3.0.19.** or **higher**
+- If using Dolphin UWP - version **v1.1.0.** or **higher**
+- If using Xenia Cannary UWP - version **v1.0.1.** or **higher**
 - For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
 - External storage of any type used for setting up content library
 - PC/Laptop for setting up content library
