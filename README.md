@@ -1,5 +1,5 @@
 # RetroPass
-Retro Pass is a simple frontend for RetroArch and RetriX Gold running on Xbox. 
+Retro Pass is a simple frontend for RetroArch, RetriX Gold, Dolphin, XBSX2 and Xenia Canary running on Xbox. 
 
 ![Video](/Docs/menu.gif)
 
@@ -9,7 +9,7 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
  - Xbox only
  - optimized for gamepad only
  - no custom themes
- - zipped content supported only if RetroArch or RetriX Gold cores support it
+ - zipped content supported only if specific emulator supports it
  - no scrapper
   
 ## Prerequisites
@@ -17,6 +17,9 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 - Xbox developer account and console configured for Developer Mode
 - If using RetroArch - version **v1.10.1.** or **higher**
 - If using RetriX Gold - version **3.0.19.** or **higher**
+- If using Dolphin - version **1.0.1.** or **higher**
+- If using XBSX2 - version **19-09-2022.** or **higher**
+- If using Xenia Canary - version **1.1.0** or **higher**
 - For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
 - External storage of any type used for setting up content library
 - Additional computer for setting up content library
@@ -42,7 +45,12 @@ LaunchBox is a preferred option, because it gives the best results when properly
  - Setup specific core for a game, if needed.
 
 1. Install LaunchBox directly to external storage.
-2. Setup and configure LaunchBox to work with RetroArch or [RetriX Gold](/Docs/SetupRetriXGold.md).
+2. Setup and configure LaunchBox to work with any of:
+ * RetroArch
+ * [RetriX Gold](/Docs/SetupRetriXGold.md)
+ * [Dolphin](/Docs/SetupDolphin.md)
+ * [XBSX2](/Docs/SetupXBSX2.md)
+ * [Xenia Canary](/Docs/SetupXeniaCanary.md)
 3. **IMPORTANT!!!** When you import your content, it will ask you to select which media type to download. If you are using LaunchBox just to configure RetroPass, there is no need to download all the media types because RetroPass needs only a subset. It will speed up your setup process and it will make less burden on LaunchBox database. You only need to check these media types:
   - "Box - Front" 
   - "Screenshot - Game Title"
