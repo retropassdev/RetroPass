@@ -25,7 +25,7 @@ namespace RetroPass
 				case Platform.EEmulatorType.xenia:
 					url = GetUrlXenia(game);
 					break;
-				case Platform.EEmulatorType.xenia_canary:
+				case Platform.EEmulatorType.xeniacanary:
 					url = GetUrlXeniaCanary(game);
 					break;
 				default:
@@ -82,10 +82,10 @@ namespace RetroPass
 
 		private static string GetUrlXeniaCanary(Game game)
 		{
-			string args = "cmd=" + "xenia-canary.exe";
+			string args = "cmd=" + "xeniacanary.exe";
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += "&launchOnExit=" + "retropass:";
-			return "xenia-canary" + ":?" + args;
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
 	}
 }
