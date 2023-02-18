@@ -5,6 +5,9 @@ RetroPass Ultimate is a fork of RetroPass frontend for RetroArch and RetriX Gold
 ![Video](/Docs/menu.gif)
 
 This is made specifically for Xbox console and hopefully, should feel familiar to Xbox users right from the start with its classic xbox theme meets Game Pass Ultimate vibe.
+## Usage
+[Check out our Wiki for setup and usage intructions](https://github.com/Misunderstood-Wookiee/RetroPassUltimate/wiki)
+
 
 ## Limitations
 
