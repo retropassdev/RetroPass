@@ -1,4 +1,4 @@
-﻿using System.Xml.Serialization;
+using System.Xml.Serialization;
 using Windows.Storage;
 
 namespace RetroPass
@@ -14,7 +14,8 @@ namespace RetroPass
             flycast,
 			ppsspp,
 			duckstation,
-            xeniacanary,
+			xenia,
+			xeniacanary,
         }
         public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -59,11 +60,18 @@ namespace RetroPass
             {
                 EmulatorType = EEmulatorType.duckstation;
             }
-            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("xeniacanary", System.StringComparison.CurrentCultureIgnoreCase))
-            {
-                EmulatorType = EEmulatorType.xeniacanary;
-            }
-            else
+			else if (string.IsNullOrEmpty(emulatorPath) == false &&	
+				(emulatorPath.Contains("xenia-canary", System.StringComparison.CurrentCultureIgnoreCase) ||
+				emulatorPath.Contains("xeniacanary", System.StringComparison.CurrentCultureIgnoreCase))
+				)
+			{
+				EmulatorType = EEmulatorType.xeniacanary;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("xenia", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.xenia;
+			}
+			else
 			{
 				//let it just be default retroarch
 				EmulatorType = EEmulatorType.retroarch;

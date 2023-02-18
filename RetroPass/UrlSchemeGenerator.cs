@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace RetroPass
 {
@@ -31,12 +31,15 @@ namespace RetroPass
                 case Platform.EEmulatorType.flycast:
                     url = GetUrlFlycast(game);
                     break;
-                case Platform.EEmulatorType.xeniacanary:
-                    url = GetUrlXeniaCanary(game);
-                    break;
-                default:
-                    break;
-            }
+				case Platform.EEmulatorType.xenia:
+					url = GetUrlXenia(game);
+					break;
+				case Platform.EEmulatorType.xeniacanary:
+					url = GetUrlXeniaCanary(game);
+					break;
+				default:
+					break;
+			}
 
             return url;
         }
@@ -101,12 +104,20 @@ namespace RetroPass
             args += "&launchOnExit=" + "retropass:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
-        private static string GetUrlXeniaCanary(Game game)
-        {
-            string args = "cmd=" + "xenia-canary.exe";
-            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += "&launchOnExit=" + "retropass:";
-            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
-        }
-    }
+		private static string GetUrlXenia(Game game)
+		{
+			string args = "cmd=" + "xenia.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+		private static string GetUrlXeniaCanary(Game game)
+		{
+			string args = "cmd=" + "xeniacanary.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+	}
 }
