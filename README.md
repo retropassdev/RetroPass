@@ -19,8 +19,9 @@ This is made specifically for Xbox console and hopefully, should feel familiar t
 - Xbox developer account and console configured for Developer Mode...
 - If using RetroArch - version **v1.10.1.** or **higher**
 - If using RetriX Gold - version **3.0.19.** or **higher**
-- If using Dolphin UWP - version **v1.1.0.** or **higher**
-- If using Xenia Cannary UWP - version **v1.0.1.** or **higher**
+- If using Dolphin - version **1.0.1.** or **higher**
+- If using XBSX2 - version **19-09-2022.** or **higher**
+- If using Xenia Canary - version **1.1.0** or **higher**
 - For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
 - External storage of any type used for setting up content library
 - PC/Laptop for setting up content library
@@ -47,11 +48,14 @@ LaunchBox is a preferred option, because it gives the best results when properly
  - It has support for multiple title and gameplay screenshots. 
  - Setup specific core for a game, if needed.
 
-1. Install LaunchBox directly to external storage
-2. Setup and configure LaunchBox to work with RetroArch or [RetriX Gold](/Docs/SetupRetriXGold.md), [XBSX2](https://github.com/TheRhysWyrill/XBSX2), [Xenia](https://github.com/SirMangler/xenia), [Xenia Canary](https://github.com/SirMangler/xenia/tree/canary_experimental), or [Dolphin](https://github.com/SirMangler/dolphin/tree/uwp)  
-3. **IMPORTANT!!!** When you import your content, it will ask you to select which media type to download. If you are using LaunchBox just to configure RetroPass, there is no need to download all the media types because RetroPass needs only a subset. (It will speed up your setup process and it will make less burden on LaunchBox database)
-
-You only need to check these media types:
+1. Install LaunchBox directly to external storage.
+2. Setup and configure LaunchBox to work with any of:
+ * RetroArch
+ * [RetriX Gold](/Docs/SetupRetriXGold.md)
+ * [Dolphin](/Docs/SetupDolphin.md)
+ * [XBSX2](/Docs/SetupXBSX2.md)
+ * [Xenia Canary](/Docs/SetupXeniaCanary.md)
+3. **IMPORTANT!!!** When you import your content, it will ask you to select which media type to download. If you are using LaunchBox just to configure RetroPass, there is no need to download all the media types because RetroPass needs only a subset. It will speed up your setup process and it will make less burden on LaunchBox database. You only need to check these media types:
   - "Box - Front" 
   - "Screenshot - Game Title"
   - "Screenshot - Gameplay"
