@@ -17,18 +17,6 @@ This is made specifically for Xbox console and hopefully, should feel familiar t
  - Zipped content supported only if RetroArch or RetriX Gold and other supported cores/emulators support that.
  - No Automatic Scrapper, you must use Launchbox or EmulationStation (more info below)
   
-## Prerequisites
-
-- Xbox developer account and console configured for Developer Mode...
-- If using RetroArch - version **v1.10.1.** or **higher**
-- If using RetriX Gold - version **3.0.19.** or **higher**
-- If using Dolphin - version **1.0.1.** or **higher**
-- If using XBSX2 - version **19-09-2022.** or **higher**
-- If using Xenia Canary - version **1.1.0** or **higher**
-- For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
-- External storage of any type used for setting up content library
-- PC/Laptop for setting up content library
-
 ## Installation
  1. [Download](../../releases/) latest RetroPass binaries
  2. Connect to Xbox through Xbox Device portal and install:
