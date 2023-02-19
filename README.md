@@ -18,19 +18,11 @@ This is made specifically for Xbox console and hopefully, should feel familiar t
  - No Automatic Scrapper, you must use Launchbox or EmulationStation (more info below)
   
 ## Installation
- 1. [Download](../../releases/) latest RetroPass binaries
+ 1. [Download](../../releases/) latest RetroPass Ultimate.
  2. Connect to Xbox through Xbox Device portal and install:
-	- RetroPass_x.y.z.0_x64.msix
-	- 3 appx dependencies in /Dependencies/x64/ folder. 
-
-	```xml
-	<?xml version="1.0"?>
-	<dataSource>
-		<type>LaunchBox</type>
-		<relativePath>./LaunchBox</relativePath>
-	</dataSource>
-	```
-9. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#Basic-Usage#first-run-and-settings) section!
+	- RetroPass_Ultimate_x.y.z.0_x64.appxbundle
+	- The 3 appx dependencies in Dependencies.zip (if needed). 
+ At this point install is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#Basic-Usage#Setup) section!
 
 
 ## Build from source
