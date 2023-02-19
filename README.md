@@ -18,10 +18,10 @@ This is made specifically for Xbox console and hopefully, should feel familiar t
  - No Automatic Scrapper, you must use Launchbox or EmulationStation (more info below)
   
 ## Installation
- 1. [Download](../../releases/) latest RetroPass binaries
+ 1. [Download](../../releases/) latest RetroPass Ultimate.
  2. Connect to Xbox through Xbox Device portal and install:
-	- RetroPass_x.y.z.0_x64.msix
-	- 3 appx dependencies in /Dependencies/x64/ folder. 
+	- RetroPass_Ultimate_x.y.z.0_x64.appxbundle
+	- The 3 appx dependencies in Dependencies.zip. 
 
 	```xml
 	<?xml version="1.0"?>
