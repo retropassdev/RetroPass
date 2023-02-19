@@ -1,7 +1,7 @@
 # RetroPass Ultimate
 RetroPass Ultimate is a fork of RetroPass frontend for RetroArch and RetriX Gold, Xenia Cannary UWP, Dolphin UWP on Xbox One & Xbox Series S|X. 
 
-![Video](/Docs/retropassultimate.gif)
+![Video](https://github.com/Misunderstood-Wookiee/RetroPassUltimate/blob/cfb5c229a25da69934f0fc5180301f544f6cb592/Docs/retropassultimate.gif)
 ![Video](/Docs/menu.gif)
 
 This is made specifically for Xbox console and hopefully, should feel familiar to Xbox users right from the start with its classic xbox theme meets Game Pass Ultimate vibe.
@@ -21,14 +21,14 @@ This is made specifically for Xbox console and hopefully, should feel familiar t
  1. [Download](../../releases/) latest RetroPass Ultimate.
  2. Connect to Xbox through Xbox Device portal and install:
 	- RetroPass_Ultimate_x.y.z.0_x64.appxbundle
-	- The 3 appx dependencies in Dependencies.zip (if needed). 
- At this point install is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#Basic-Usage#Setup) section!
+	- The 3 appx dependencies in Dependencies.zip or Dependencies.7z.
+9. At this point Installation is finished. Proceed to and Follow [Setup](https://github.com/Misunderstood-Wookiee/RetroPassUltimate/wiki/Basic-Usage) Guide!
 
 
 ## Build from source
 
 1. Install Visual Studio 2019
-2. Get the latest source code from master branch or [release](../../releases/)
+2. Get the latest source code from Main/Dev branch or [release](../../releases/)
 3. Open **RetroPass.sln**
 4. Under **Package.appxmanifest** -> **Packing**, create and choose a different Certificate if needed.
 5. Set **Configuration** to **Release**
