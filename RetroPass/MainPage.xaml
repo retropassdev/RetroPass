@@ -128,8 +128,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Image Grid.Row="0" x:Name="ItemImage"
-                       Stretch="Uniform">
+                    <Image Grid.Row="0" x:Name="ItemImage" Stretch="Uniform">
                     </Image>
                 </Grid>
             </Button>
@@ -138,32 +137,34 @@
         <DataTemplate x:Key="PlatformFirstItemButtonContent"
                       x:DataType="local:Playlist">
             <Grid>
+                <Grid.Background>
+                    <ImageBrush x:Name="PlaylistImage" ImageSource="{x:Bind Thumbnail}" Stretch="Uniform"/>
+                </Grid.Background>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Name}" Margin="8,11,0,0" TextWrapping="Wrap" Style="{StaticResource BaseTextBlockStyle}"/>
+                <!--<Image Grid.Row="1" Source="{x:Bind Thumbnail}" Height="100" Width="100" Stretch="Uniform"/>-->
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Show All" Margin="8,0,0,11"/>
             </Grid>
         </DataTemplate>
 
         <Style x:Key="PlatformFirstItemButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="black"/>
-            <Setter Property="Opacity" Value="0.50"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
             <Setter Property="CornerRadius" Value="4"/>
             <Setter Property="Margin" Value="0,8,5,8"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="4,0,4,0"/>
             <Setter Property="Width" Value="136"/>
             <Setter Property="ContentTemplate" Value="{StaticResource PlatformFirstItemButtonContent}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Grid x:Name="RootGrid" CornerRadius="4,4,4,4" Background="{TemplateBinding Background}">
+                        <Grid x:Name="RootGrid" CornerRadius="10" Background="{TemplateBinding Background}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
@@ -211,7 +212,7 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="4,4,4,4" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="10" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>

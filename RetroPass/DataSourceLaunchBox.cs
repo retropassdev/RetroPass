@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
+using Windows.Storage.Search;
+using Windows.UI.Xaml.Controls;
 
 namespace RetroPass
 {
@@ -331,6 +333,19 @@ namespace RetroPass
                     PlaylistPlatformLaunchBox platformGames = serializer.Deserialize(reader) as PlaylistPlatformLaunchBox;
 
                     playlistTmp.Name = platformName;
+
+                    // GET PLAYLIST PLATFORM IMAGE
+                    StorageFolder platformImageFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Images\\Platforms\\" + platformName + "\\Clear Logo");
+                    List<string> fileTypeFilter = new List<string>();
+                    fileTypeFilter.Add(".jpg");
+                    fileTypeFilter.Add(".jpeg");
+                    fileTypeFilter.Add(".png");
+                    QueryOptions queryOptions = new QueryOptions(Windows.Storage.Search.CommonFileQuery.OrderByName, fileTypeFilter);
+                    StorageFileQueryResult queryResult = platformImageFolder.CreateFileQueryWithOptions(queryOptions);
+                    var files = await queryResult.GetFilesAsync();
+                    StorageFile imageFile = files != null && files.Count() > 0 ?  files[0] : null;
+                    if (imageFile != null)
+                        playlistTmp.Thumbnail = await ThumbnailCache.Instance.GetThumbnailAsync(imageFile);
 
                     string retroArchRomPlatformPath = "";
                     if (retroPassConfig.retroarch != null && string.IsNullOrEmpty(retroPassConfig.retroarch.romPath) == false)

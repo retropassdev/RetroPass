@@ -2,12 +2,15 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.Storage;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace RetroPass
 {
     public class Playlist
     {
         public string Name { get; set; }
+
+        public BitmapImage Thumbnail { get; set; }
         public ObservableCollection<PlaylistItem> PlaylistItems { get; set; } = new ObservableCollection<PlaylistItem>();
         public ObservableCollection<PlaylistItem> PlaylistItemsLandingPage { get; set; } = new ObservableCollection<PlaylistItem>();
 
