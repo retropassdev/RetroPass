@@ -21,7 +21,7 @@ This is made specifically for Xbox console and hopefully, should feel familiar t
  1. [Download](../../releases/) latest RetroPass Ultimate.
  2. Connect to Xbox through Xbox Device portal and install:
 	- RetroPass_Ultimate_x.y.z.0_x64.appxbundle
-	- The 3 appx dependencies in Dependencies.zip. 
+	- The 3 appx dependencies in Dependencies.zip (if needed). 
 
 	```xml
 	<?xml version="1.0"?>
