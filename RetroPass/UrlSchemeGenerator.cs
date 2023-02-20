@@ -50,7 +50,7 @@ namespace RetroPass
             args += " -L";
             args += " cores\\" + game.CoreName;
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += "&launchOnExit=" + "retropass:";
+            args += "&launchOnExit=" + "retropass_ultimate:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 
@@ -61,7 +61,7 @@ namespace RetroPass
             args += " -L";
             args += " cores\\" + game.CoreName;
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += " &launchOnExit=" + "retropass:";
+            args += " &launchOnExit=" + "retropass_ultimate:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 
@@ -69,7 +69,7 @@ namespace RetroPass
         {
             string args = "cmd=" + "pcsx2.exe";
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += "&launchOnExit=" + "retropass:";
+            args += "&launchOnExit=" + "retropass_ultimate:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 
@@ -77,7 +77,7 @@ namespace RetroPass
         {
             string args = "cmd=" + "dolphin.exe";
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += "&launchOnExit=" + "retropass:";
+            args += "&launchOnExit=" + "retropass_ultimate:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 
@@ -85,7 +85,7 @@ namespace RetroPass
         {
             string args = "cmd=" + "ppsspp.exe";
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += "&launchOnExit=" + "retropass:";
+            args += "&launchOnExit=" + "retropass_ultimate:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 
@@ -93,7 +93,7 @@ namespace RetroPass
         {
             string args = "cmd=" + "duckstation.exe";
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += "&launchOnExit=" + "retropass:";
+            args += "&launchOnExit=" + "retropass_ultimate:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 
@@ -101,14 +101,14 @@ namespace RetroPass
         {
             string args = "cmd=" + "flycast.exe";
             args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-            args += "&launchOnExit=" + "retropass:";
+            args += "&launchOnExit=" + "retropass_ultimate:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
 		private static string GetUrlXenia(Game game)
 		{
 			string args = "cmd=" + "xenia.exe";
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-			args += "&launchOnExit=" + "retropass:";
+			args += "&launchOnExit=" + "retropass_ultimate:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
 
@@ -116,7 +116,7 @@ namespace RetroPass
 		{
 			string args = "cmd=" + "xeniacanary.exe";
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-			args += "&launchOnExit=" + "retropass:";
+			args += "&launchOnExit=" + "retropass_ultimate:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
 	}
