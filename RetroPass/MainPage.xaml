@@ -136,16 +136,17 @@
 
         <DataTemplate x:Key="PlatformFirstItemButtonContent"
                       x:DataType="local:Playlist">
+
             <Grid>
                 <Grid.Background>
-                    <ImageBrush x:Name="PlaylistImage" ImageSource="{x:Bind Thumbnail}" Stretch="Uniform"/>
+                    <ImageBrush x:Name="PlaylistImage" ImageSource="{x:Bind Thumbnail}" Stretch="Uniform" Opacity="1.0"/>
                 </Grid.Background>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Name}" Margin="8,11,0,0" TextWrapping="Wrap" Style="{StaticResource BaseTextBlockStyle}"/>
+                <!--<TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Name}" Margin="8,11,0,0" TextWrapping="Wrap" Style="{StaticResource BaseTextBlockStyle}"/>-->
                 <!--<Image Grid.Row="1" Source="{x:Bind Thumbnail}" Height="100" Width="100" Stretch="Uniform"/>-->
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Show All" Margin="8,0,0,11"/>
             </Grid>

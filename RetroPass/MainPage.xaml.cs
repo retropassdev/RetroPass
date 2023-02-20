@@ -14,6 +14,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using System.IO;
+using Windows.Graphics.Imaging;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -388,100 +391,104 @@ namespace RetroPass
 			}
 		}
 
-		private async void ShowImage(ListViewBase sender, ContainerContentChangingEventArgs args)
-		{
-			if (args.Phase == 1)
-			{
-				// It's phase 1, so show this item's image.
-				var templateRoot = args.ItemContainer.ContentTemplateRoot as FrameworkElement;
-				var image = (Image)templateRoot.FindName("ItemImage");
-				image.Opacity = 100;
+        private async void ShowImage(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            if (args.Phase == 1)
+            {
+                var templateRoot = args.ItemContainer.ContentTemplateRoot as FrameworkElement;
+                var image = (Image)templateRoot.FindName("ItemImage");
+                image.Opacity = 100;
 
-				var item = args.Item as PlaylistItem;
+                var item = args.Item as PlaylistItem;
 
-				image.Source = await item.game.GetImageThumbnailAsync();
+                image.Source = await item.game.GetImageThumbnailAsync();
 
-				if (image.Source == null)
-				{
-					BitmapImage bitmapImage = new BitmapImage();
-					bitmapImage.UriSource = new Uri(image.BaseUri, "Assets/empty.png");
-					image.Source = bitmapImage;
-				}
-			}
-		}
+                if (image.Source == null)
+                {
+                    BitmapImage bitmapImage = new BitmapImage();
+                    var uri = new Uri("ms-appx:///Assets/empty.png", UriKind.RelativeOrAbsolute);
+                    bitmapImage.UriSource = uri;
+                    image.Source = bitmapImage;
+                }
+            }
+        }
 
-		public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
-		{
-			if (parent == null) return null;
-			T foundChild = null;
-			int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
 
-			for (int i = 0; i < childrenCount; i++)
-			{
-				var child = VisualTreeHelper.GetChild(parent, i);
-				T childType = child as T;
+        public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+        {
+            if (parent == null)
+            {
+                return null;
+            }
 
-				if (childType == null)
-				{
-					foundChild = FindChild<T>(child, childName);
-					if (foundChild != null) break;
-				}
-				else if (!string.IsNullOrEmpty(childName))
-				{
-					var frameworkElement = child as FrameworkElement;
-					if (frameworkElement != null && frameworkElement.Name == childName)
-					{
-						foundChild = (T)child;
-						break;
-					}
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
 
-					foundChild = FindChild<T>(child, childName);
-					if (foundChild != null) break;
-				}
-				else
-				{
-					foundChild = (T)child;
-					break;
-				}
-			}
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
 
-			return foundChild;
-		}
+                if (child is T childType && (!string.IsNullOrEmpty(childName) && child is FrameworkElement frameworkElement && frameworkElement.Name == childName || string.IsNullOrEmpty(childName)))
+                {
+                    return (T)child;
+                }
 
-		private void Settings_Click(object sender, RoutedEventArgs e)
-		{
-			Frame.Navigate(typeof(SettingsPage), dataSourceManager);
-		}
+                T foundChild = FindChild<T>(child, childName);
+                if (foundChild != null)
+                {
+                    return foundChild;
+                }
+            }
 
-		private async void Search_Click(object sender, RoutedEventArgs e)
-		{
-			await ShowSearch();
-		}
+            return null;
+        }
 
-		private async void page_Drop(object sender, DragEventArgs e)
-		{
-			if (e.DataView.Contains(StandardDataFormats.StorageItems))
-			{
-				var items = await e.DataView.GetStorageItemsAsync();
-				if (items.Any())
-				{
-					var storageFile = items[0] as StorageFile;
-					var contentType = storageFile.ContentType;
-					StorageFolder folder = ApplicationData.Current.LocalFolder;
-					if (contentType == "image/jpg" || contentType == "image/png" || contentType == "image/jpeg")
-					{
-						StorageFile newFile = await storageFile.CopyAsync(folder, storageFile.Name, NameCollisionOption.GenerateUniqueName);
-						var bitmapImg = new BitmapImage();
-						bitmapImg.SetSource(await storageFile.OpenAsync(FileAccessMode.Read));
-						//imgMain.Source = bitmapImg;
-						this.Background = new ImageBrush { ImageSource = bitmapImg, Stretch = Stretch.None };
-					}
-				}
-			}
-			e.AcceptedOperation = DataPackageOperation.None;
-		}
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingsPage), dataSourceManager);
+        }
 
-		private async void page_DragOver(object sender, DragEventArgs e)
+        private async void Search_Click(object sender, RoutedEventArgs e)
+        {
+            await ShowSearch();
+        }
+
+        private async void page_Drop(object sender, DragEventArgs e)
+{
+    e.AcceptedOperation = DataPackageOperation.None;
+
+    if (e.DataView.Contains(StandardDataFormats.StorageItems))
+    {
+        var items = await e.DataView.GetStorageItemsAsync();
+        if (items.FirstOrDefault() is StorageFile storageFile)
+        {
+            var fileExtension = Path.GetExtension(storageFile.Name);
+
+            if (fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".png")
+            {
+                StorageFolder folder = ApplicationData.Current.LocalFolder;
+                StorageFile newFile = await storageFile.CopyAsync(folder, storageFile.Name, NameCollisionOption.GenerateUniqueName);
+
+                using (var stream = await newFile.OpenAsync(FileAccessMode.Read))
+                {
+                    var decoder = await BitmapDecoder.CreateAsync(stream);
+                    var pixelData = await decoder.GetPixelDataAsync();
+                    var pixelFormat = decoder.BitmapPixelFormat;
+                    var alphaMode = decoder.BitmapAlphaMode;
+
+                    var bitmapImg = new WriteableBitmap((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+                    using (var bitmapStream = bitmapImg.PixelBuffer.AsStream())
+                    {
+                        await bitmapStream.WriteAsync(pixelData.DetachPixelData(), 0, (int)bitmapStream.Length);
+                    }
+
+                    this.Background = new ImageBrush { ImageSource = bitmapImg, Stretch = Stretch.None };
+                }
+            }
+        }
+    }
+}
+
+        private async void page_DragOver(object sender, DragEventArgs e)
 		{
 			e.AcceptedOperation = DataPackageOperation.Copy;
 			// To display the data which is dragged    
