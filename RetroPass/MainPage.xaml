@@ -19,7 +19,7 @@
         <ListView x:Name="ListViewPlatformTemplate" CornerRadius="4,4,4,4">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="Width" Value="145" />
+                    <Setter Property="Width" Value="145"/>
                     <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="Margin" Value="4,8,4,8" />
                     <Setter Property="Padding" Value="0,0,0,0" />
@@ -121,7 +121,7 @@
         x:DataType="local:PlaylistItem">
             <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                     Margin="0,0,0,0" Padding="0,0,0,0" 
-                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  Background="Transparent"  
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="Transparent"  
                     BorderThickness="0"  CornerRadius="4,4,4,4" IsEnabled="True">
                 <Grid Background="Transparent" Opacity="100">
                     <!--<Game Grid Image Background Opacity/>-->
@@ -165,7 +165,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Grid x:Name="RootGrid" CornerRadius="10" Background="{TemplateBinding Background}">
+                        <Grid x:Name="RootGrid" CornerRadius="4" Background="{TemplateBinding Background}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
@@ -213,7 +213,7 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="10" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="4" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -263,7 +263,7 @@
         </ScrollViewer>
         <local:PlayLaterControl x:Name="PlayLaterControl"></local:PlayLaterControl>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="20" Margin="0,20,100,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" >
-            <Border Opacity="0.08" Background="White" CornerRadius="5"></Border>
+            <Border Opacity="0.08" Background="White" CornerRadius="4"></Border>
         </Grid>
     </Grid>
 </Page>
