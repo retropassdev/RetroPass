@@ -45,13 +45,14 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel x:Name="StackPanelRemovableStorage" Visibility="Visible" Margin="0,-20,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="0" Orientation="Horizontal" Spacing="10" Grid.RowSpan="2">
-                    <Border>
-                        <TextBlock Width="160" Text="  " VerticalAlignment="Center"></TextBlock>
-                    </Border>
+                <StackPanel x:Name="StackPanelRemovableStorage" Visibility="Visible" Margin="69,-34,-69,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="0" Orientation="Horizontal" Spacing="10" Grid.RowSpan="2" Height="55">
+                    <Border/>
+                    <!-- Enable Removable Storage Button -->
                     <Button x:Name="ButtonActivateRemovableStorage" Click="ButtonActivateRemovableStorage_Click" Content="Activate" FontFamily="Assets/Fonts/Xbox.ttf#Xbox"></Button>
+                    <!-- Delete Cache Button (Wipes Thumbnail Cache -->
                     <Button x:Name="ButtonClearRemovableCache" Click="ButtonClearRemovableCache_Click" Content="Delete Cache" FontFamily="Assets/Fonts/Xbox.ttf#Xbox"></Button>
-                    <Button Visibility="Collapsed"  x:Name="ButtonImport" Content="Copy To Xbox" Click="ButtonImport_Click"></Button>
+                    <!-- User Guide Button (Opens URI in MS-EDGE -->
+                    <Button x:Name="ButtonHelp" Click="ButtonHelp_Click" Content="User Manual" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Width="155"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Left" x:Name="StackPanelLocalStorage" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="1" Orientation="Horizontal" >

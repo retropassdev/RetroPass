@@ -2,6 +2,7 @@
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -251,6 +252,26 @@ namespace RetroPass
         {
             ApplicationData.Current.LocalSettings.Values[App.SettingsLoggingEnabled] = false;
             LogPage.SetLogging();
+        }
+
+        private async void ButtonHelp_Click(object sender, RoutedEventArgs e)
+        {
+            // The URI to launch
+            var uri = new Uri("microsoft-edge:https://github.com/Misunderstood-Wookiee/RetroPassUltimate/wiki");
+
+            // Launch the URI
+            var success = await Windows.System.Launcher.LaunchUriAsync(uri);
+
+            if (success)
+            {
+                // URI launched
+            }
+            else
+            {
+                // URI launch failed
+                var dialog = new MessageDialog("Sorry, something went wrong! Check your connection and make sure you have MS-Edge browser.");
+                await dialog.ShowAsync();
+            }
         }
     }
 }
