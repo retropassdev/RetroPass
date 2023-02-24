@@ -7,7 +7,7 @@
     xmlns:local="using:RetroPass"
     CornerRadius="4,4,4,4"
     NavigationCacheMode="Required"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Background="#000000">
 
     <Page.Resources>
 <!-- PLayer Later Grid-->
@@ -75,7 +75,7 @@
         Margin="0,0,0,0"
         Padding="0,0,0,0"
         CornerRadius="4,4,4,4"
-        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        Background="#000000">
         <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" 
               Source="ms-appx:///Assets/Background/Menu-Animation.mp4"
               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
