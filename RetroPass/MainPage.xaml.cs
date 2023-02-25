@@ -225,7 +225,8 @@ namespace RetroPass
 			button.DataContext = playlist;
 			button.BringIntoViewRequested += Grid_BringIntoViewRequested;
 			button.Style = (Style)Resources["PlatformFirstItemButtonStyle"];
-			button.Click += Button_Click;
+            button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(70, 0, 0, 0));
+            button.Click += Button_Click;
 			button.GotFocus += Button_GotFocus;
 
 			stackPanel.Orientation = Orientation.Horizontal;

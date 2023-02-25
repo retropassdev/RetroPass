@@ -42,8 +42,10 @@ namespace RetroPass
 
             using (IRandomAccessStream stream = await outputFile.OpenAsync(FileAccessMode.ReadWrite))
             {
+                Guid encoderId = outputFile.FileType == ".png" ? BitmapEncoder.PngEncoderId : BitmapEncoder.JpegEncoderId;
+
                 // Create an encoder with the desired format
-                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(encoderId, stream);
 
                 // Set the software bitmap
                 encoder.SetSoftwareBitmap(softwareBitmap);
@@ -118,7 +120,7 @@ namespace RetroPass
                 numImagesProcessed++;
             }
 
-            string encodedName = Base64Encode(path) + ".jpg";
+            string encodedName = Base64Encode(path) + sourceFile.FileType;
 
             if (activeDataSourceLocation == DataSourceManager.DataSourceLocation.Local)
             {
