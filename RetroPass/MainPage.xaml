@@ -148,7 +148,7 @@
                 </Grid.RowDefinitions>
                 <!--<TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Name}" Margin="8,11,0,0" TextWrapping="Wrap" Style="{StaticResource BaseTextBlockStyle}"/>-->
                 <!--<Image Grid.Row="1" Source="{x:Bind Thumbnail}" Height="100" Width="100" Stretch="Uniform"/>-->
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Show All" Margin="8,0,0,11"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Show All" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" FontSize="9.5" Margin="8,0,0,11"/>
             </Grid>
         </DataTemplate>
 
@@ -241,7 +241,7 @@
                         XYFocusUpNavigationStrategy="RectilinearDistance" 
                         XYFocusDownNavigationStrategy="RectilinearDistance">
                 <StackPanel x:Name = "StackPanelMenu" Orientation="Horizontal" Spacing="8" Margin="0,20,0,6">
-                    <Button x:Name="Search" Width="120" CornerRadius="4,4,4,4" XYFocusRight="{x:Bind Settings}" Click="Search_Click" HorizontalContentAlignment="Center" >
+                    <Button x:Name="Search" Width="120" Background="Black" Opacity="0.40" CornerRadius="4,4,4,4" XYFocusRight="{x:Bind Settings}" Click="Search_Click" HorizontalContentAlignment="Center" >
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Border VerticalAlignment="Center">
                                 <TextBlock FontFamily="Segoe Xbox MDL2 Symbol" Text="&#xE3CC;" Foreground="#FFD000" FontSize="19"/>
@@ -250,7 +250,7 @@
                             <TextBlock FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Text="Search"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="Settings" Width="143" Height="32" CornerRadius="4,4,4,4" Click="Settings_Click" HorizontalContentAlignment="Center" >
+                    <Button x:Name="Settings" Width="143" Height="32" CornerRadius="4,4,4,4" Background="Black" Opacity="0.40" Click="Settings_Click" HorizontalContentAlignment="Center" >
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Border VerticalAlignment="Center">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE115;" FontSize="19"/>

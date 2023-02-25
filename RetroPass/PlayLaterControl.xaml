@@ -19,9 +19,9 @@
         VerticalAlignment="Bottom"
         Visibility="Collapsed">
         <Border
-            Background="White"
+            Background="Black"
             CornerRadius="5"
-            Opacity="0.08" />
+            Opacity="0.50" />
         <TextBlock
             Margin="4,0,0,0"
             VerticalAlignment="Center"
