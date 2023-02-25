@@ -138,8 +138,6 @@ namespace RetroPass
 
             switch (location)
             {
-                case DataSourceLocation.None:
-                    break;
                 case DataSourceLocation.Local:
                     if (localStorageFile != null)
                     {
@@ -153,7 +151,7 @@ namespace RetroPass
                     }
                     break;
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException(nameof(location), location, "Invalid data source location.");
             }
 
             return dataSource;

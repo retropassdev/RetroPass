@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
+using Windows.Storage.Search;
+using Windows.UI.Xaml.Controls;
 
 namespace RetroPass
 {
@@ -332,6 +334,19 @@ namespace RetroPass
 
                     playlistTmp.Name = platformName;
 
+                    // GET PLAYLIST PLATFORM IMAGE
+                    StorageFolder platformImageFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Images\\Platforms\\" + platformName + "\\Clear Logo");
+                    List<string> fileTypeFilter = new List<string>();
+                    fileTypeFilter.Add(".jpg");
+                    fileTypeFilter.Add(".jpeg");
+                    fileTypeFilter.Add(".png");
+                    QueryOptions queryOptions = new QueryOptions(Windows.Storage.Search.CommonFileQuery.OrderByName, fileTypeFilter);
+                    StorageFileQueryResult queryResult = platformImageFolder.CreateFileQueryWithOptions(queryOptions);
+                    var files = await queryResult.GetFilesAsync();
+                    StorageFile imageFile = files != null && files.Count() > 0 ? files[0] : null;
+                    if (imageFile != null)
+                        playlistTmp.Thumbnail = await ThumbnailCache.Instance.GetThumbnailAsync(imageFile);
+
                     string retroArchRomPlatformPath = "";
                     if (retroPassConfig.retroarch != null && string.IsNullOrEmpty(retroPassConfig.retroarch.romPath) == false)
                     {
@@ -393,6 +408,21 @@ namespace RetroPass
                     {
                         Name = playlistLaunchBox._Playlist.Name
                     };
+
+                    // GET PLAYLIST IMAGE
+                    StorageFolder platformImageFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Images\\Playlists\\" + playlistTmp.Name);
+                    List<string> fileTypeFilter = new List<string>();
+                    fileTypeFilter.Add(".jpg");
+                    fileTypeFilter.Add(".jpeg");
+                    fileTypeFilter.Add(".png");
+                    QueryOptions queryOptions = new QueryOptions(Windows.Storage.Search.CommonFileQuery.OrderByName, fileTypeFilter);
+                    StorageFileQueryResult queryResult = platformImageFolder.CreateFileQueryWithOptions(queryOptions);
+                    var files = await queryResult.GetFilesAsync();
+                    StorageFile imageFile = files != null && files.Count() > 0 ? files[0] : null;
+                    if (imageFile != null)
+                        playlistTmp.Thumbnail = await ThumbnailCache.Instance.GetThumbnailAsync(imageFile);
+
+
                     //playlistTmp.LoadFromLaunchboxPlatform(dataPlatforms);
                     foreach (var playlistGameLaunchBox in playlistLaunchBox.PlaylistGames)
                     {
