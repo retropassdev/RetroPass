@@ -65,7 +65,7 @@
                         <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind Path=playlistItem.game.Description}" TextWrapping="Wrap"/>
                     </Button>
 
-                    <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" Width="auto" Height="240" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#0F000000" Click="ButtonVideo_Click">
+                    <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="-1,-1,-1,-1" CornerRadius="4,4,4,4" Width="auto" Height="240" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#0F000000" Click="ButtonVideo_Click">
                         <MediaPlayerElement  Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" x:Name="mediaPlayerElement" Stretch="Fill"
                                  AutoPlay="False"
                                  AreTransportControlsEnabled="False">
@@ -96,8 +96,8 @@
               SelectionMode="None">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="local:DetailImage">
-                                <Button Name="ButtonDetail" BorderThickness="0" Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ButtonDetail_Click">
-                                    <Image Margin="0,0,0,0"  Stretch="Fill" Source="{Binding image}"/>
+                                <Button Name="ButtonDetail" BorderThickness="0" Margin="0,0,0,0" Padding="-1,-1,-1,-1" CornerRadius="4,4,4,4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ButtonDetail_Click">
+                                    <Image Margin="0,0,0,0" Stretch="Fill" Source="{Binding image}"/>
                                 </Button>
                             </DataTemplate>
                         </GridView.ItemTemplate>
@@ -127,7 +127,7 @@
             <Border.Background>
                 <ImageBrush ImageSource="/Assets/empty.png"/>
             </Border.Background>
-            <Image x:Name="OverlayImage" Stretch="Uniform" Width="852" Height="335"/>
+            <Image x:Name="OverlayImage" Stretch="Uniform" Width="852" Height="337"/>
         </Border>
         <Border x:Name="DescriptionOverlay" Visibility="Collapsed" CornerRadius="4,4,4,4">
             <Border.Background>
