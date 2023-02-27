@@ -17,9 +17,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>
-    </PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>AFCA0CDB497D9E8F8DF4108D0AEB9C47A5780041</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>RetroPass_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>B3DB3859BCD75E07034DE83D2D01977DA40C176C</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -174,6 +173,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Background\GameDetail-Pge.png" />
     <Content Include="Assets\Background\Menu-Animation.mp4" />
     <Content Include="Assets\Background\SettingsPage-Animated.mp4" />
     <Content Include="Assets\Background\stub.txt" />
