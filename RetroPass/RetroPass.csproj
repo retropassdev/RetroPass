@@ -18,7 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>RetroPass_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>B3DB3859BCD75E07034DE83D2D01977DA40C176C</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>5CFE5827AAAF99500D43C7ED640F6E05B6DD4497</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
