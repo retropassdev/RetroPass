@@ -351,5 +351,7 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# Video Assets
-*.mp4
+# Background Assets
+RetroPass/Assets/Background/*.mp4
+RetroPass/Assets/Background/*.png
+RetroPass/Assets/Background/*.jpg
