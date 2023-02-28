@@ -39,7 +39,7 @@
 
     <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="667" Height="423">
         <Grid.Background>
-            <ImageBrush ImageSource="/Assets/Background/SearchPage.jpg"/>
+            <ImageBrush ImageSource="/Assets/Background/SearchPage.png"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="50.4" />

@@ -176,7 +176,7 @@
   <ItemGroup>
     <Content Include="Assets\Background\GameDetail-Pge.png" />
     <Content Include="Assets\Background\Menu-Animation.mp4" />
-    <Content Include="Assets\Background\SearchPage.jpg" />
+    <Content Include="Assets\Background\SearchPage.png" />
     <Content Include="Assets\Background\SettingsPage-Animated.mp4" />
     <Content Include="Assets\Background\stub.txt" />
     <Content Include="Assets\empty.png" />
