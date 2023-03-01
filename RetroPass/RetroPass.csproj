@@ -19,7 +19,7 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>
     </PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>AFCA0CDB497D9E8F8DF4108D0AEB9C47A5780041</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>E69DC87F7825E2B2A8B21572139C4191AD240B56</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -174,7 +174,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Background\GameDetail-Pge.png" />
     <Content Include="Assets\Background\Menu-Animation.mp4" />
+    <Content Include="Assets\Background\SearchPage.png" />
     <Content Include="Assets\Background\SettingsPage-Animated.mp4" />
     <Content Include="Assets\Background\stub.txt" />
     <Content Include="Assets\empty.png" />
