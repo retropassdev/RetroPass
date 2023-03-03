@@ -82,14 +82,14 @@ namespace RetroPass
             }
             catch (Exception ex)
             {
-                // Handle exception (this will do for now, we should probably show the exception to the user instead.)
+                // Handle exception (this will do for now)
                 throw new NotImplementedException();
             }
 
             return files;
         }
 
-        // Filter only files used by the UI
+        // Filter only files used using method (List<StorageFile> files = await GetFilesAsync();)
         private async Task<List<StorageFile>> GetFilesInFolderAsync(StorageFolder folder)
         {
             List<string> fileTypes = new List<string> { ".tiff", ".png", ".jpg", ".mp4" };
