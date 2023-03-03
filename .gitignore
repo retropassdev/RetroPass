@@ -353,7 +353,3 @@ MigrationBackup/
 
 # Background Assets
 RetroPass/Assets/Background/*.mp4
-RetroPass/Assets/Background/*.png
-RetroPass/Assets/Background/*.jpg
-
-RetroPass/Assets/Background/
