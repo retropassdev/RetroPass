@@ -4,6 +4,7 @@ using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -123,7 +124,14 @@ namespace RetroPass
 
 			if (hasLocalDataSource == false && hasRemovableDataSource == false)
 			{
-				TextStatus.Text = "Couldn't locate RetroPass configuration file.\nMake sure a valid RetroPass.xml is in the root of your removable storage.";
+				Hyperlink hyperlink = new Hyperlink();
+				hyperlink.NavigateUri = new Uri("https://github.com/retropassdev/RetroPass#Setup");
+				hyperlink.Inlines.Add(new Run() { Text = "github.com/retropassdev/RetroPass" });
+
+				Run run1 = new Run() { Text = "RetroPass must be configured first. Follow the link for the setup guide:\n" };
+
+				TextStatus.Inlines.Add(run1);
+				TextStatus.Inlines.Add(hyperlink);
 			}
 
 			RefreshDataSourceUI();

@@ -65,7 +65,7 @@
             <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="2" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
             <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="3" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked"/>            
             <TextBlock Grid.Row="4" x:Name ="TextStatus" Text=""
-                       HorizontalAlignment="Center"
+                       HorizontalAlignment="Left"
                        TextWrapping="Wrap" VerticalAlignment="Center" Width="800" Style="{StaticResource TitleTextBlockStyle}"/>            
         </Grid>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
