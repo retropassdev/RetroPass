@@ -69,8 +69,9 @@ LaunchBox is a preferred option, because it gives the best results when properly
 	Where **\<core_name>** is the name of the core you wish to use for particular emulator.
 5. Optionally, if you need to set up a different core for a game, go to Launchbox, open "Edit Metadata/Media" and modify command line under Emulation.
  	![](/Docs/core_per_game.png)
-6. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
-7. Edit **RetroPass.xml** configuration file. 
+6. If you want to specify the order of your playlists and platforms, you can do so by checking the [LaunchBox playlist and platform sorting](/Docs/SetupLaunchBoxSorting.md) section.
+7. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
+8. Edit **RetroPass.xml** configuration file. 
 	
 	**\<relativePath>** points to LaunchBox directory on the external storage. Do not put absolute path like "E:\LaunchBox", because when external storage is plugged into Xbox, it might be recognized under a different letter. For example, if LaunchBox folder is in the root of external storage, then it should be configured like this:
 
@@ -81,7 +82,7 @@ LaunchBox is a preferred option, because it gives the best results when properly
 		<relativePath>./LaunchBox</relativePath>
 	</dataSource>
 	```
-8. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
+9. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
 
 ## Setup with Emulation Station
 
