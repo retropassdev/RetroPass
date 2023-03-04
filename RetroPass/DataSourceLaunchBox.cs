@@ -277,20 +277,29 @@ namespace RetroPass
 			return playlistLaunchBoxList;
 		}
 
-		public SortedDictionary<string, object> JoinPlaylists(PlatformsLaunchBox platformsLaunchBox, List<PlaylistLaunchBox> playlistsLaunchbox)
+		private void AddToDictionaryList<TKey, TValue>(IDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value)
 		{
-			//sort order of either PlaylistLaunchBox, PlaylistPlatformLaunchBox
-			SortedDictionary<string, object> joinedPlaylists = new SortedDictionary<string, object>();
+			if (!dictionary.ContainsKey(key))
+			{
+				dictionary.Add(key, new List<TValue>());
+			}
+
+			dictionary[key].Add(value);
+		}
+
+		public List<object> JoinPlaylists(PlatformsLaunchBox platformsLaunchBox, List<PlaylistLaunchBox> playlistsLaunchbox)
+		{
+			SortedDictionary<string, List<object>> sortedJoinedPlaylists = new SortedDictionary<string, List<object>>();
 
 			foreach (var platform in platformsLaunchBox.platforms)
 			{
 				if (string.IsNullOrEmpty(platform.SortTitle))
 				{
-					joinedPlaylists.Add(platform.Name, platform);
+					AddToDictionaryList(sortedJoinedPlaylists, platform.Name, platform);
 				}
 				else
 				{
-					joinedPlaylists.Add(platform.SortTitle, platform);
+					AddToDictionaryList(sortedJoinedPlaylists, platform.SortTitle, platform);
 				}
 			}
 
@@ -298,13 +307,15 @@ namespace RetroPass
 			{
 				if (string.IsNullOrEmpty(playlistLaunchbox._Playlist.SortTitle))
 				{
-					joinedPlaylists.Add(playlistLaunchbox._Playlist.Name, playlistLaunchbox);
+					AddToDictionaryList(sortedJoinedPlaylists, playlistLaunchbox._Playlist.Name, playlistLaunchbox);
 				}
 				else
 				{
-					joinedPlaylists.Add(playlistLaunchbox._Playlist.SortTitle, playlistLaunchbox);
+					AddToDictionaryList(sortedJoinedPlaylists, playlistLaunchbox._Playlist.SortTitle, playlistLaunchbox);
 				}
-			}			
+			}
+
+			List<object> joinedPlaylists = sortedJoinedPlaylists.SelectMany(x => x.Value).ToList();
 
 			return joinedPlaylists;
 		}
@@ -437,26 +448,24 @@ namespace RetroPass
 			platformsLaunchBox.platforms.RemoveAll(i => emulatorPlatforms.FindIndex(t => t.Platform == i.Name) == -1);
 
 			//remove platforms that don't have a valid platform xml file
-			platformsLaunchBox.platforms.RemoveAll(i => platformsFiles.FirstOrDefault(t => t.Name == i.Name + ".xml") == null);			
+			platformsLaunchBox.platforms.RemoveAll(i => platformsFiles.FirstOrDefault(t => t.Name == i.Name + ".xml") == null);
 
-			//join and sort platforms and playlists using "SortTitle" property
-			SortedDictionary<string, object> joinedPlaylists = JoinPlaylists(platformsLaunchBox, playlistsLaunchbox);
+			//join and sort platforms and playlists using "SortTitle" property			
+			List<object> joinedPlaylists = JoinPlaylists(platformsLaunchBox, playlistsLaunchbox);
 			
 			//load one by one
-			foreach (var playlistEntry in joinedPlaylists)
+			foreach (var playlist in joinedPlaylists)
 			{
-				object playlist = playlistEntry.Value;
-				string playlistKey = playlistEntry.Key;
-
 				Playlist playlistTmp = null;
 
 				if (playlist is PlatformsLaunchBox.Platform)
 				{
+					PlatformsLaunchBox.Platform platformLaunchBox = playlist as PlatformsLaunchBox.Platform;
 					//load platform if it is not already loade
-					if(Platforms.Exists(p => p.Name == playlistKey) == false)
+					if (Platforms.Exists(p => p.Name == platformLaunchBox.Name) == false)
 					{
 						//launchbox platforms are loaded as Playlists
-						playlistTmp = await LoadLaunchBoxPlatform(playlistKey, platformsLaunchBox, emulatorPlatforms, platformsFiles);
+						playlistTmp = await LoadLaunchBoxPlatform(platformLaunchBox.Name, platformsLaunchBox, emulatorPlatforms, platformsFiles);
 						if (playlistTmp == null)
 						{
 							continue;
@@ -466,7 +475,7 @@ namespace RetroPass
 					//"SNES" platform playlist will already be loaded, because "1st playlist" is processed earlier when going through joinedPlaylists dictionary.
 					else
 					{
-						playlistTmp = Playlists.FirstOrDefault(t => t.Name == playlistKey);
+						playlistTmp = Playlists.FirstOrDefault(t => t.Name == platformLaunchBox.Name);
 					}
 				}
 				else if (playlist is PlaylistLaunchBox)
