@@ -10,13 +10,13 @@
 
     <Page.Resources>
         <Style x:Key="ThemeSettingTextblockStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Assets/Fonts/Xbox.ttf#Xbox"/>
+            <Setter Property="FontFamily" Value="{StaticResource ApplicationFonts}"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
             <Setter Property="Margin" Value="5"/>
         </Style>
 
         <Style x:Key="ThemeSettingToggleButtonStyle" TargetType="ToggleButton">
-            <Setter Property="FontFamily" Value="Assets/Fonts/Xbox.ttf#Xbox"/>
+            <Setter Property="FontFamily" Value="{StaticResource ApplicationFonts}"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Background" Value="#70000000"/>
@@ -25,7 +25,7 @@
         </Style>
 
         <Style x:Key="ThemeSettingComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="FontFamily" Value="Assets/Fonts/Xbox.ttf#Xbox"/>
+            <Setter Property="FontFamily" Value="{StaticResource ApplicationFonts}"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
             <Setter Property="CornerRadius" Value="4"/>
             <Setter Property="Margin" Value="5"/>
@@ -35,10 +35,8 @@
     </Page.Resources>
 
     <Grid Margin="0,0,0,0" CornerRadius="4,4,4,4" Padding="0,0,0,0">
-        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" 
-              Source="ms-appx:///Assets/Background/Menu-Animation.mp4"
-              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-              Margin="0"/>
+        <local:RPUMediaElement x:Name="mediaPlayer" Margin="0"
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         <Grid Padding="50">
             <Grid.RowDefinitions>
@@ -49,60 +47,63 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="62*"/>
+                <ColumnDefinition Width="81*"/>
+                <ColumnDefinition Width="143*"/>
+                <ColumnDefinition Width="143*"/>
+                <ColumnDefinition Width="143*"/>
+                <ColumnDefinition Width="144*"/>
+                <ColumnDefinition Width="143*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Text="CUSTOMIZE" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="50"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Text="CUSTOMIZE" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="50" Margin="55,55,-45,72" Grid.RowSpan="3"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Text="BACKGROUNDS" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="20"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7" Text="BACKGROUNDS" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="20" Margin="55,19,-45,37"/>
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="2" Grid.Column="0" Margin="56,54,97,33" Grid.ColumnSpan="3" Grid.RowSpan="3">
                 <TextBlock Text="MAIN PAGE:" Style="{StaticResource ThemeSettingTextblockStyle}"/>
                 <ComboBox x:Name="MainPageCB" Style="{StaticResource ThemeSettingComboBoxStyle}"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="1" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="2" Grid.Column="2" Margin="55,54,99,33" Grid.ColumnSpan="2" Grid.RowSpan="3">
                 <TextBlock Text="GAME PAGE:" Style="{StaticResource ThemeSettingTextblockStyle}"/>
                 <ComboBox x:Name="GamePageCB" Style="{StaticResource ThemeSettingComboBoxStyle}"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="2" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="2" Grid.Column="3" Margin="55,54,99,33" Grid.ColumnSpan="2" Grid.RowSpan="3">
                 <TextBlock Text="DETAILS PAGE:" Style="{StaticResource ThemeSettingTextblockStyle}"/>
                 <ComboBox x:Name="DetailsPageCB" Style="{StaticResource ThemeSettingComboBoxStyle}"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="3" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="2" Grid.Column="4" Margin="54,54,100,33" Grid.ColumnSpan="2" Grid.RowSpan="3">
                 <TextBlock Text="SEARCH PAGE:" Style="{StaticResource ThemeSettingTextblockStyle}"/>
                 <ComboBox x:Name="SearchPageCB" Style="{StaticResource ThemeSettingComboBoxStyle}"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="4" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="2" Grid.Column="5" Margin="54,54,99,33" Grid.ColumnSpan="2" Grid.RowSpan="3">
                 <TextBlock Text="CUSTOMIZE PAGE:" Style="{StaticResource ThemeSettingTextblockStyle}"/>
                 <ComboBox x:Name="CustomizePageCB" Style="{StaticResource ThemeSettingComboBoxStyle}"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="5" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="2" Grid.Column="6" Margin="55,54,-45,33" Grid.RowSpan="3">
                 <TextBlock Text="SETTINGS PAGE:" Style="{StaticResource ThemeSettingTextblockStyle}"/>
                 <ComboBox x:Name="SettingsPageCB" Style="{StaticResource ThemeSettingComboBoxStyle}"/>
             </StackPanel>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Text="SELECT YOUR BOX ART TYPE" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="20"/>
-            <ToggleButton Grid.Row="4" Grid.Column="0" Content="BOX FRONT" Style="{StaticResource ThemeSettingToggleButtonStyle}"/>
-            <ToggleButton Grid.Row="4" Grid.Column="1" Content="BOX 3D" Style="{StaticResource ThemeSettingToggleButtonStyle}"/>
-            <ToggleButton Grid.Row="4" Grid.Column="2" Content="CLEAR LOGO" Style="{StaticResource ThemeSettingToggleButtonStyle}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="7" Text="SELECT YOUR BOX ART TYPE" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="20" Margin="55,19,-45,33" Grid.RowSpan="2"/>
+            <ToggleButton Grid.Row="5" Grid.Column="0" Content="BOX FRONT" Style="{StaticResource ThemeSettingToggleButtonStyle}" Grid.ColumnSpan="3" Margin="60,13,97,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+            <ToggleButton Grid.Row="5" Grid.Column="2" Content="BOX 3D" Style="{StaticResource ThemeSettingToggleButtonStyle}" Grid.ColumnSpan="2" Margin="60,13,99,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+            <ToggleButton Grid.Row="5" Grid.Column="3" Content="CLEAR LOGO" Style="{StaticResource ThemeSettingToggleButtonStyle}" Grid.ColumnSpan="2" Margin="60,13,99,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" Text="CHOOSE YOUR FONT" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="20" Margin="55,19,98,90" Grid.RowSpan="2"/>
+            <ComboBox x:Name="FontsCB" Grid.Row="7" Style="{StaticResource ThemeSettingComboBoxStyle}" Grid.ColumnSpan="3" Margin="60,55,100,0"/>
 
 
-            <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="CHOOSE YOUR FONT" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="20"/>
-            <ComboBox x:Name="FontsCB" Grid.Row="6" Grid.Column="0" Style="{StaticResource ThemeSettingComboBoxStyle}"/>
-
+            <Button x:Name="btnApplyChanges" Grid.Row="7" Content="APPLY CHANGES" CornerRadius="4" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Background="#70000000" Margin="60,108,0,0" Click="btnApplyChanges_Click" Grid.ColumnSpan="3" RenderTransformOrigin="-0.027,0.729" Width="165" VerticalAlignment="Top"/>
         </Grid>
 
     </Grid>

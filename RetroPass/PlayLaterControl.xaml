@@ -11,7 +11,7 @@
 
     <Grid
         x:Name="OverlayPlayLater"
-        Height="19"
+        Height="22"
         MaxWidth="220"
         Margin="0,0,18,16"
         Padding="0,0,0,0"
@@ -37,7 +37,7 @@
             VerticalAlignment="Center"
             CharacterSpacing="18"
             FontSize="10"
-            FontFamily="Assets/Fonts/Xbox.ttf#Xbox"
+            FontFamily="{StaticResource ApplicationFonts}"
             Text="" />
     </Grid>
 </UserControl>

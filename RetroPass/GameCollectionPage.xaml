@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:RetroPass"
+    xmlns:rpu="using:RetroPass_Ultimate"
     CornerRadius="4,4,4,4"
     NavigationCacheMode="Required"
     mc:Ignorable="d" Background="#000000">
@@ -76,10 +77,8 @@
         Padding="0,0,0,0"
         CornerRadius="4,4,4,4"
         Background="#000000">
-        <MediaElement x:Name="mediaPlayer" AutoPlay="True" IsLooping="True" 
-              Source="ms-appx:///Assets/Background/Menu-Animation.mp4"
-              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-              Margin="0"/>
+        <rpu:RPUMediaElement x:Name="mediaPlayer" Margin="0"
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         
         <GridView
             x:Name="PlatformGridView"
@@ -108,7 +107,7 @@
                         Margin="46,0,0,0"
                         Style="{StaticResource SubheaderTextBlockStyle}"
                         Text=""
-                        FontFamily="Assets/Fonts/Xbox.ttf#Xbox"/>
+                        FontFamily="{StaticResource ApplicationFonts}"/>
                     <TextBlock
                         x:Name="NumGamesCollectionText"
                         Grid.Row="1"
@@ -185,7 +184,7 @@
                 CharacterSpacing="18"
                 FontSize="10"
                 Text="Search Collection"
-                FontFamily="Assets/Fonts/Xbox.ttf#Xbox" />
+                FontFamily="{StaticResource ApplicationFonts}" />
         </Grid>
     </Grid>
 </Page>

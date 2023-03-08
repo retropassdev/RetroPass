@@ -44,6 +44,8 @@ namespace RetroPass
 
         private void GameCollectionPage_Loaded(object sender, RoutedEventArgs e)
         {
+            mediaPlayer.MediaPath = ((App)Application.Current).CurrentThemeSettings.GetMediaPath("GamePage");
+
             if (PlatformGridView.ItemsSource == null || PlatformGridView.ItemsSource != playlist.PlaylistItems)
             {
                 PlatformGridView.ItemsSource = playlist.PlaylistItems;

@@ -1,13 +1,16 @@
-﻿using System;
+﻿using RetroPass_Ultimate;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
+using Windows.UI.Xaml;
 
 namespace RetroPass
 {
@@ -138,6 +141,8 @@ namespace RetroPass
 
             switch (location)
             {
+                case DataSourceLocation.None:
+                    break;
                 case DataSourceLocation.Local:
                     if (localStorageFile != null)
                     {
@@ -151,7 +156,7 @@ namespace RetroPass
                     }
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(location), location, "Invalid data source location.");
+                    break;
             }
 
             return dataSource;
@@ -446,6 +451,112 @@ namespace RetroPass
             await ThumbnailCache.Instance.Delete(DataSourceLocation.Local);
 
             localStorageFile = null;
+        }
+
+        public async Task PrepareRetroPassUltimateFolder()
+        {
+            try
+            {
+                var removableDevices = KnownFolders.RemovableDevices;
+                var folders = await removableDevices.GetFoldersAsync();
+
+                StorageFolder retroPassUltimateFolderCurrent = null;
+
+                foreach (StorageFolder rootFolder in folders)
+                {
+                    //FIND LAUNCHBOX FOLDER TO RELATED RETROPASS FOLDER ON THE SAME REMOVABLE DEVICE
+                    StorageFolder launchBoxFolder = await rootFolder.TryGetItemAsync("LaunchBox") as StorageFolder;
+
+                    if (launchBoxFolder != null)
+                    {
+                        // Check removable devices for RetroPassUltimate Folder.
+                        retroPassUltimateFolderCurrent = await rootFolder.TryGetItemAsync("RetroPassUltimate") as StorageFolder;
+
+                        if (retroPassUltimateFolderCurrent != null)
+                        {
+                            ((App)Application.Current).RetroPassRootPath = retroPassUltimateFolderCurrent.Path;
+                            StorageFile retroPassUltimateXMLfile = await retroPassUltimateFolderCurrent.GetFileAsync("RetroPassUltimate.xml");
+
+                            if (retroPassUltimateXMLfile != null)
+                            {
+                                string xmlConfig = await FileIO.ReadTextAsync(retroPassUltimateXMLfile);
+
+                                using (TextReader reader = new StringReader(xmlConfig))
+                                {
+                                    XmlSerializer serializer = new XmlSerializer(typeof(RetroPassThemeSettings));
+                                    ((App)Application.Current).CurrentThemeSettings = (RetroPassThemeSettings)serializer.Deserialize(reader);
+                                }
+                            }
+
+                            var fontFolder = await retroPassUltimateFolderCurrent.GetFolderAsync("Fonts");
+                            StorageFolder InstallationFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(Windows.ApplicationModel.Package.Current.InstalledLocation.Path, "Assets", "Fonts"));
+
+                            foreach (var file in await fontFolder.GetFilesAsync())
+                            {
+                                await file.CopyAsync(InstallationFolder,file.Name,NameCollisionOption.ReplaceExisting);
+                            }
+                        }
+                        else
+                        {
+                            retroPassUltimateFolderCurrent = await rootFolder.CreateFolderAsync("RetroPassUltimate") as StorageFolder;
+
+                            var bgFolder = await retroPassUltimateFolderCurrent.CreateFolderAsync("Backgrounds");
+                            var fontFolder = await retroPassUltimateFolderCurrent.CreateFolderAsync("Fonts");
+
+                            //COPY SAMPLE BACKGROUND AND FONT FILES
+                            var bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Menu-Animation.mp4"));
+                            await bgStoreFile.CopyAsync(bgFolder);
+
+                            var fontStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Fonts/Xbox.ttf"));
+                            await fontStoreFile.CopyAsync(fontFolder);
+
+                            StorageFolder InstallationFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(Windows.ApplicationModel.Package.Current.InstalledLocation.Path, "Assets", "Fonts"));
+
+                            foreach (var file in await fontFolder.GetFilesAsync())
+                            {
+                                await file.CopyAsync(InstallationFolder, file.Name, NameCollisionOption.ReplaceExisting);
+                            }
+
+                            //CREATE XML FILE FOR THEME SETTINGS
+                            StorageFile retroPassUltimateXMLfile = await retroPassUltimateFolderCurrent.CreateFileAsync("RetroPassUltimate.xml", CreationCollisionOption.ReplaceExisting);
+
+                            if (retroPassUltimateXMLfile != null)
+                            {
+                                RetroPassThemeSettings retroPassUltimateDefault = new RetroPassThemeSettings();
+                                retroPassUltimateDefault.Font = "Xbox.ttf";
+
+                                retroPassUltimateDefault.Backgrounds = new Backgrounds()
+                                {
+                                    Background = new List<Background>()
+                                    {
+                                         new Background() { Page = "MainPage", File = "Menu-Animation.mp4" },
+                                         new Background() { Page = "GamePage", File = "Menu-Animation.mp4" },
+                                         new Background() { Page = "DetailsPage", File = "Menu-Animation.mp4" },
+                                         new Background() { Page = "SearchPage", File = "Menu-Animation.mp4" },
+                                         new Background() { Page = "CustomizePage", File = "Menu-Animation.mp4" },
+                                         new Background() { Page = "SettingsPage", File = "Menu-Animation.mp4" },
+                                    }
+                                };
+
+                                XmlSerializer x = new XmlSerializer(typeof(RetroPassThemeSettings));
+                                using (TextWriter writer = new StringWriter())
+                                {
+                                    x.Serialize(writer, retroPassUltimateDefault);
+                                    await FileIO.WriteTextAsync(retroPassUltimateXMLfile, writer.ToString());
+                                }
+
+                                ((App)Application.Current).CurrentThemeSettings = retroPassUltimateDefault;
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

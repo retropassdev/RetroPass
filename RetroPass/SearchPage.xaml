@@ -38,9 +38,6 @@
 
 
     <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="667" Height="423">
-        <Grid.Background>
-            <ImageBrush ImageSource="/Assets/Background/SearchPage.png"/>
-        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="50.4" />
             <RowDefinition Height="5.6"/>
@@ -61,12 +58,12 @@
                 <ColumnDefinition Width="130.4"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,0,458,0" Height="36" CornerRadius="4,4,4,4" Grid.Row="1" Grid.RowSpan="4" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" Opacity="1" Background="#66000000">
+            <ComboBox x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" Background="#66000000" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,0,458,0" Height="36" CornerRadius="4,4,4,4" Grid.Row="1" Grid.RowSpan="4" FontFamily="{StaticResource ApplicationFonts}">
                 <x:String>Title</x:String>
                 <x:String>Developer</x:String>
                 <x:String>Year</x:String>
             </ComboBox>
-            <TextBox x:Name="SearchText" Grid.Column="2" Margin="0,0,0,-1" CornerRadius="4,4,4,4" PlaceholderText="Search Games" TextChanged="TextBox_TextChanged" Grid.Row="1" Grid.RowSpan="4" FontSize="13" FontFamily="Assets/Fonts/Xbox.ttf#Xbox" HorizontalAlignment="Right" Width="442" Opacity="1" Background="#66000000"/>
+            <TextBox x:Name="SearchText" Grid.Column="2"  Background="#66000000" Margin="0,0,0,-1" CornerRadius="4,4,4,4" PlaceholderText="Search Games" TextChanged="TextBox_TextChanged" Grid.Row="1" Grid.RowSpan="4" FontSize="13" FontFamily="{StaticResource ApplicationFonts}" HorizontalAlignment="Right" Width="442"/>
         </Grid>
 
         <GridView  x:Name="SearchGridView"

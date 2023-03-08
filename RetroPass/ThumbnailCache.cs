@@ -104,6 +104,17 @@ namespace RetroPass
         object lockWriteThumb = new object();
         List<string> writeThumb = new List<string>();
 
+        public async Task<BitmapImage> GetImageFromPath(string Path)
+        {
+            BitmapImage image = new BitmapImage();
+            var storageFile = await StorageFile.GetFileFromPathAsync(Path);
+            using (IRandomAccessStream stream = await storageFile.OpenAsync(FileAccessMode.Read))
+            {
+                await image.SetSourceAsync(stream);
+            }
+            return image;
+        }
+
         public async Task<BitmapImage> GetThumbnailAsync(StorageFile sourceFile)
         {
             //if(dataSource != null)

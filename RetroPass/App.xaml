@@ -6,11 +6,9 @@
     xmlns:local="using:RetroPass">
 
     <Application.Resources>
-        <controls:XamlControlsResources>
-            <controls:XamlControlsResources.MergedDictionaries>
-                <!-- Other app resources here -->
-            </controls:XamlControlsResources.MergedDictionaries>
-        </controls:XamlControlsResources>
+
+        <FontFamily x:Key="ApplicationFonts">Assets/Fonts/Xbox.ttf#Xbox</FontFamily>
+       
     </Application.Resources>
 
 

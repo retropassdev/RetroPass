@@ -133,6 +133,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RetroPassThemeSettings.cs" />
+    <Compile Include="RPUMediaElement.xaml.cs">
+      <DependentUpon>RPUMediaElement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ThemeSettingsPage.xaml.cs">
       <DependentUpon>ThemeSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -261,6 +265,10 @@
     <Page Include="PlayLaterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RPUMediaElement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SearchPage.xaml">
       <SubType>Designer</SubType>

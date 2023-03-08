@@ -61,7 +61,7 @@
                             </Grid.Resources>
                         </Grid>
                     </Button>
-                    <Button x:Name="ButtonDescription" Visibility="Visible" Padding="6,0,0,0" CornerRadius="4,4,4,4" Width="189" Click="ButtonDescription_Click" Height="240">
+                    <Button x:Name="ButtonDescription" Visibility="Visible" Padding="6,0,0,0" CornerRadius="4,4,4,4" Background="#40000000" Foreground="White" Width="189" Click="ButtonDescription_Click" Height="240">
                         <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind Path=playlistItem.game.Description}" TextWrapping="Wrap"/>
                     </Button>
 

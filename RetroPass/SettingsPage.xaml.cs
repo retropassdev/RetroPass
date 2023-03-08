@@ -117,6 +117,8 @@ namespace RetroPass
 
         private async void SettingsPage_Loaded(object sender, RoutedEventArgs e)
         {
+            mediaPlayer.MediaPath = ((App)Application.Current).CurrentThemeSettings.GetMediaPath("SettingsPage");
+
             await dataSourceManager.ScanDataSource();
 
             bool hasLocalDataSource = dataSourceManager.HasDataSource(DataSourceManager.DataSourceLocation.Local);

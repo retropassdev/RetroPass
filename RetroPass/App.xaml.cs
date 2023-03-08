@@ -1,6 +1,7 @@
 ﻿using RetroPass_Ultimate;
 using System;
 using System.Diagnostics;
+using System.IO;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -17,6 +18,8 @@ namespace RetroPass
     {
         public static readonly string SettingsAutoPlayVideo = "SettingsAutoPlayVideo";
         public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
+        public RetroPassThemeSettings CurrentThemeSettings { get; set; }
+        public string RetroPassRootPath { get; set; }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -45,6 +48,8 @@ namespace RetroPass
             {
                 localSettings.Values[SettingsLoggingEnabled] = false;
             }
+
+            
         }
 
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -58,10 +63,10 @@ namespace RetroPass
         {
             Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
 
-			//if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
-			{
-				this.FocusVisualKind = FocusVisualKind.HighVisibility;
-			}
+            //if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
+            {
+                this.FocusVisualKind = FocusVisualKind.HighVisibility;
+            }
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -90,7 +95,7 @@ namespace RetroPass
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(MainPage), null);
+                    rootFrame.Navigate(typeof(ThemeSettingsPage), null);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
@@ -102,8 +107,14 @@ namespace RetroPass
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        async protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            DataSourceManager manager = new DataSourceManager();
+            await manager.PrepareRetroPassUltimateFolder();
+
+            string fontPath = ((App)Application.Current).CurrentThemeSettings.GetFontFilePath();
+            ((App)Application.Current).Resources["ApplicationFonts"] = "Assets/Fonts/" + Path.GetFileName(fontPath) + "#" + Path.GetFileNameWithoutExtension(fontPath);
+
             OnLaunchedOrActivated(e.PreviousExecutionState, e.PrelaunchActivated);
         }
 
