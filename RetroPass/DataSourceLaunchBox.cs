@@ -384,7 +384,7 @@ namespace RetroPass
             var playlistTmp = new Playlist();
 
             // GET PLAYLIST PLATFORM IMAGE
-            StorageFolder platformImageFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Images\\Platforms\\" + platformName);
+            StorageFolder platformImageFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Images\\Platforms\\" + platformName + "\\Clear Logo");
             List<string> fileTypeFilter = new List<string>();
             fileTypeFilter.Add(".jpg");
             fileTypeFilter.Add(".jpeg");
