@@ -37,6 +37,9 @@ namespace RetroPass
         [XmlElement(ElementName = "Font")]
         public string Font { get; set; }
 
+        [XmlElement(ElementName = "BoxArtType")]
+        public string BoxArtType { get; set; }
+
 
         public string GetMediaPath(string PageName)
         {

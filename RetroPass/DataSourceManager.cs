@@ -500,6 +500,8 @@ namespace RetroPass
                         {
                             retroPassUltimateFolderCurrent = await rootFolder.CreateFolderAsync("RetroPassUltimate") as StorageFolder;
 
+                            ((App)Application.Current).RetroPassRootPath = retroPassUltimateFolderCurrent.Path;
+
                             var bgFolder = await retroPassUltimateFolderCurrent.CreateFolderAsync("Backgrounds");
                             var fontFolder = await retroPassUltimateFolderCurrent.CreateFolderAsync("Fonts");
 
@@ -537,6 +539,8 @@ namespace RetroPass
                                          new Background() { Page = "SettingsPage", File = "Menu-Animation.mp4" },
                                     }
                                 };
+
+                                retroPassUltimateDefault.BoxArtType = "Box - Front";
 
                                 XmlSerializer x = new XmlSerializer(typeof(RetroPassThemeSettings));
                                 using (TextWriter writer = new StringWriter())

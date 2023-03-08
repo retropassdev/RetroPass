@@ -50,7 +50,7 @@
                 RevealBackground="{ThemeResource ListViewItemRevealBackground}"
                 RevealBorderBrush="{ThemeResource ListViewItemRevealBorderBrush}"
                 RevealBorderThickness="{ThemeResource ListViewItemRevealBorderThemeThickness}"
-                SelectedBackground="{ThemeResource ListViewItemBackgroundSelected}"
+                SelectedBackground="Transparent"
                 SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
                 SelectedPointerOverBackground="{ThemeResource ListViewItemBackgroundSelectedPointerOver}"
                 SelectedPressedBackground="{ThemeResource ListViewItemBackgroundSelectedPressed}"

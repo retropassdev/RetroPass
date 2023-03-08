@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
 using Windows.Storage.Search;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace RetroPass
@@ -346,7 +347,7 @@ namespace RetroPass
             platform.SourceName = platform.Name;
             platform.SetEmulatorType(emulatorPlatform.EmulatorPath);
 
-            platform.BoxFrontPath = platforms.platformFolders.Where(t => t.Platform == platformName && t.MediaType == "Box - Front").Select(t => t.FolderPath).DefaultIfEmpty(string.Empty).First();
+            platform.BoxFrontPath = platforms.platformFolders.Where(t => t.Platform == platformName && t.MediaType == ((App)Application.Current).CurrentThemeSettings.BoxArtType).Select(t => t.FolderPath).DefaultIfEmpty(string.Empty).First();
             platform.BoxFrontPath = platform.BoxFrontPath == "" ? "" : Path.GetFullPath(Path.Combine(rootFolder, platform.BoxFrontPath));
             Trace.TraceInformation("DataSourceLaunchBox: Platform BoxFrontPath: {0}", platform.BoxFrontPath);
 

@@ -96,6 +96,24 @@ namespace RetroPass_Ultimate
                         CustomizePageCB.SelectedItem = backgroundList.Where(s => s.Page == "CustomizePage").Select(s => s.File).FirstOrDefault();
                         SettingsPageCB.SelectedItem = backgroundList.Where(s => s.Page == "SettingsPage").Select(s => s.File).FirstOrDefault();
                     }
+
+                    string boxArtType = ((App)Application.Current).CurrentThemeSettings.BoxArtType;
+
+                    if (!string.IsNullOrEmpty(boxArtType))
+                    {
+                        if (Convert.ToString(toggleBoxFront.Content) == boxArtType)
+                        {
+                            toggleBoxFront.IsChecked = true;
+                        }
+                        else if (Convert.ToString(toggleBox3d.Content) == boxArtType)
+                        {
+                            toggleBox3d.IsChecked = true;
+                        }
+                        else if (Convert.ToString(toggleClearLogo.Content) == boxArtType)
+                        {
+                            toggleClearLogo.IsChecked = true;
+                        }
+                    }
                 }
             }
             catch (Exception)
@@ -181,6 +199,22 @@ namespace RetroPass_Ultimate
                     backgroundList.FirstOrDefault(s => s.Page == "SettingsPage").File = Convert.ToString(SettingsPageCB.SelectedItem);
                 }
 
+                string boxArtType = String.Empty;
+                if (toggleBoxFront.IsChecked == true)
+                {
+                    boxArtType = Convert.ToString(toggleBoxFront.Content);
+                }
+                else if (toggleBox3d.IsChecked == true)
+                {
+                    boxArtType = Convert.ToString(toggleBox3d.Content);
+                }
+                else if (toggleClearLogo.IsChecked == true)
+                {
+                    boxArtType = Convert.ToString(toggleClearLogo.Content);
+                }
+
+                ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
+
                 XmlSerializer x = new XmlSerializer(typeof(RetroPassThemeSettings));
                 using (TextWriter writer = new StringWriter())
                 {
@@ -200,6 +234,24 @@ namespace RetroPass_Ultimate
                     await CoreApplication.RequestRestartAsync("Application Restart Programmatically.");
                 }
             }
+        }
+
+        private void toggleBoxFront_Checked(object sender, RoutedEventArgs e)
+        {
+            toggleBox3d.IsChecked = false;
+            toggleClearLogo.IsChecked = false;
+        }
+
+        private void toggleBox3d_Checked(object sender, RoutedEventArgs e)
+        {
+            toggleBoxFront.IsChecked = false;
+            toggleClearLogo.IsChecked = false;
+        }
+
+        private void toggleClearLogo_Checked(object sender, RoutedEventArgs e)
+        {
+            toggleBoxFront.IsChecked = false;
+            toggleBox3d.IsChecked = false;
         }
     }
 }
