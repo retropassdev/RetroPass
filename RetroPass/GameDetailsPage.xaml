@@ -47,7 +47,7 @@
                     <StackPanel Padding="0,0,0,0" Background="Transparent" XYFocusKeyboardNavigation="Enabled" Orientation="Horizontal" Height="249" Spacing="8" BringIntoViewRequested="StackPanel_BringIntoViewRequested">
                         <Border Margin="0,0,0,0" Padding="0,0,0,0" Width="6"></Border>
 
-                        <Button x:Name="ButtonPlay" Margin="0,4,0,0" Padding="0,2,0,2" Background="Transparent" BorderBrush="Transparent" CornerRadius="4,4,4,4" Width="174" VerticalAlignment="Top"
+                        <Button x:Name="ButtonPlay" Margin="0,4,0,0" Padding="0,0,0,0" Background="Transparent" BorderBrush="Transparent" CornerRadius="4,4,4,4" Width="174" VerticalAlignment="Top"
                             Click="ButtonPlay_Click" Height="Auto">
                             <Grid>
                                 <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
@@ -66,7 +66,7 @@
                             <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind Path=playlistItem.game.Description}" TextWrapping="Wrap"/>
                         </Button>
 
-                        <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="-1,-1,-1,-1" CornerRadius="4,4,4,4" Width="auto" Height="240" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#0F000000" Click="ButtonVideo_Click">
+                        <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="-3,-3,-3,-3" CornerRadius="4,4,4,4" Width="auto" Height="240" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#0F000000" Click="ButtonVideo_Click">
                             <MediaPlayerElement  Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" x:Name="mediaPlayerElement" Stretch="Fill"
                                  AutoPlay="False"
                                  AreTransportControlsEnabled="False">
