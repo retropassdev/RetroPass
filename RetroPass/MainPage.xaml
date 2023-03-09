@@ -51,7 +51,7 @@
                 RevealBorderBrush="{ThemeResource ListViewItemRevealBorderBrush}"
                 RevealBorderThickness="{ThemeResource ListViewItemRevealBorderThemeThickness}"
                 SelectedBackground="Transparent"
-                SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                SelectedForeground="Transparent"
                 SelectedPointerOverBackground="{ThemeResource ListViewItemBackgroundSelectedPointerOver}"
                 SelectedPressedBackground="{ThemeResource ListViewItemBackgroundSelectedPressed}"
                 SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}">
