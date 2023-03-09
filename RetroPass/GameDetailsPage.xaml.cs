@@ -36,6 +36,9 @@ namespace RetroPass
         public GameDetailsPage()
         {
             this.InitializeComponent();
+
+            mediaPlayer.MediaPath = mediaPlayer1.MediaPath = ((App)Application.Current).CurrentThemeSettings.GetMediaPath("DetailsPage");
+
             mediaPlayerElement.MediaPlayer.IsLoopingEnabled = true;
         }
 
