@@ -38,18 +38,15 @@
     </ContentDialog.Resources>
 
 
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="29,17,27,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" VerticalAlignment="Top" Height="39" Grid.RowSpan="2">
     <Grid Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4">
         <rpu:RPUMediaElement x:Name="mediaPlayer" Margin="0"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         <Grid Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4" ColumnSpacing="0" RowSpacing="0" Width="667" Height="423">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0*"/>
-                <RowDefinition Height="16.8"/>
+                <RowDefinition Height="50.4" />
                 <RowDefinition Height="5.6"/>
-                <RowDefinition Height="2.633"/>
+                <RowDefinition Height="409.6" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="0*" />
             </Grid.RowDefinitions>
@@ -79,12 +76,11 @@
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
               SelectionMode="Single"
               SingleSelectionFollowsFocus="True"
-              CornerRadius="4"
               IsItemClickEnabled="False"                  
               IsTabStop="False"
               ContainerContentChanging="SearchGridView_ContainerContentChanging"
               ItemTemplate="{StaticResource GameTemplate}"
-              Padding="0,0,0,0" Margin="1,5,-1,4" Grid.RowSpan="2" SelectionChanged="SearchGridView_SelectionChanged" RenderTransformOrigin="0.5,0.316" Grid.Row="2">
+              Padding="0,0,0,0" Margin="1,5,-1,4" CornerRadius="4,4,4,4" Grid.RowSpan="2" SelectionChanged="SearchGridView_SelectionChanged" RenderTransformOrigin="0.5,0.316" Grid.Row="2">
                 <GridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem">
                         <Setter Property="Width" Value="116" />
