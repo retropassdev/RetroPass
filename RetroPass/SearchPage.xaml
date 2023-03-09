@@ -20,11 +20,11 @@
 
         <DataTemplate x:Key="GameTemplate"
                     x:DataType="local:PlaylistItem">
-            <Grid>
+            <Grid CornerRadius="4,4,4,4">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Button Click="GameButton_Click" Grid.Row="0" x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="117"
+                <Button Click="GameButton_Click" Grid.Row="0" x:Name="GameButton" CornerRadius="1,1,1,1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="117"
                 Margin="0,0,0,0" Padding="0,0,0,0" 
                 HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                 BorderThickness="0" Background="Transparent">
