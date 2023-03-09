@@ -129,11 +129,10 @@
                 <Image x:Name="OverlayImage" Stretch="Uniform" Width="852" Height="337"/>
             </Border>
             <Border x:Name="DescriptionOverlay" Visibility="Collapsed" CornerRadius="4,4,4,4">
-                <Grid>
-                    <rpu:RPUMediaElement x:Name="mediaPlayer1" Margin="0"
-                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="852" Height="335" TextWrapping="Wrap" d:IsHidden="False"></TextBlock>
-                </Grid>
+                <Border.Background>
+                    <ImageBrush ImageSource="/Assets/Background/GameDetail-Pge.png"/>
+                </Border.Background>
+                <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="852" Height="335" TextWrapping="Wrap" d:IsHidden="False"></TextBlock>
             </Border>
             <Grid RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"  CornerRadius="4,4,4,4"
               Width="143" Height="34" Padding="0,0,0,0" >

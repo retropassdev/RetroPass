@@ -37,6 +37,8 @@ namespace RetroPass
         public SearchPage()
         {
             this.InitializeComponent();
+
+            mediaPlayer.MediaPath = ((App)Application.Current).CurrentThemeSettings.GetMediaPath("SearchPage");
         }
 
         protected override void OnGotFocus(RoutedEventArgs e)
