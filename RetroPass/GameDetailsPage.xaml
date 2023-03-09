@@ -50,7 +50,7 @@
                         <Button x:Name="ButtonPlay" Margin="0,4,0,0" Padding="0,2,0,2" Background="Transparent" BorderBrush="Transparent" CornerRadius="4,4,4,4" Width="174" VerticalAlignment="Top"
                             Click="ButtonPlay_Click" Height="Auto">
                             <Grid>
-                                <TextBlock Text="Play" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                                 <Image x:Name="ItemImage" Stretch="Uniform" Height="Auto" Width="176" Margin="-2,-3,-2,-3" >
                                     <Image.FocusVisualPrimaryBrush>
                                         <ImageBrush ImageSource="/Assets/empty.png"/>
@@ -130,7 +130,7 @@
             </Border>
             <Border x:Name="DescriptionOverlay" Visibility="Collapsed" CornerRadius="4,4,4,4">
                 <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Background/GameDetail-Pge.png"/>
+                    <ImageBrush ImageSource="/Assets/Background/DescriptionBackground.png"/>
                 </Border.Background>
                 <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="852" Height="335" TextWrapping="Wrap" d:IsHidden="False"></TextBlock>
             </Border>

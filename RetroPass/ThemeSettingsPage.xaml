@@ -38,7 +38,7 @@
         <local:RPUMediaElement x:Name="mediaPlayer" Margin="0"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-        <Grid Padding="50">
+        <Grid Padding="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -60,11 +60,11 @@
                 <ColumnDefinition Width="143*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Text="CUSTOMIZE" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="50" Margin="55,55,-45,72" Grid.RowSpan="3"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Text="CUSTOMIZE" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="50" Margin="45,10,-45,72" Grid.RowSpan="3"/>
 
             <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7" Text="BACKGROUNDS" Style="{StaticResource ThemeSettingTextblockStyle}" FontSize="20" Margin="55,19,-45,37"/>
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Margin="56,54,97,33" Grid.ColumnSpan="3" Grid.RowSpan="3">
+            <StackPanel Grid.Row="2" Grid.Column="0" Margin="56,54,97,33" Padding="4" Grid.ColumnSpan="3" Grid.RowSpan="3">
                 <TextBlock Text="MAIN PAGE:" Style="{StaticResource ThemeSettingTextblockStyle}"/>
                 <ComboBox x:Name="MainPageCB" Style="{StaticResource ThemeSettingComboBoxStyle}"/>
             </StackPanel>

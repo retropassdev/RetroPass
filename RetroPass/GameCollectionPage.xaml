@@ -165,9 +165,9 @@
             VerticalAlignment="Top"
             Visibility="Visible">
             <Border
-                Background="White"
+                Background="Black"
                 CornerRadius="5"
-                Opacity="0.08" />
+                Opacity="0.35" />
             <TextBlock
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
