@@ -48,10 +48,10 @@
                     <Border>
                         <TextBlock Width="160" Text="  " VerticalAlignment="Center"></TextBlock>
                     </Border>
-                    <Button x:Name="ButtonActivateRemovableStorage" Click="ButtonActivateRemovableStorage_Click" Content="Activate" FontFamily="{StaticResource ApplicationFonts}"></Button>
-                    <Button x:Name="ButtonClearRemovableCache" Click="ButtonClearRemovableCache_Click" Content="Delete Cache" FontFamily="{StaticResource ApplicationFonts}"></Button>
-                    <Button x:Name="ButtonHelp" Click="ButtonHelp_Click" Content="User Manual" Width="160" FontFamily="{StaticResource ApplicationFonts}"></Button>
-                    <Button Visibility="Collapsed"  x:Name="ButtonImport" Content="Copy To Xbox" Click="ButtonImport_Click" FontFamily="{StaticResource ApplicationFonts}"></Button>
+                    <Button x:Name="ButtonActivateRemovableStorage" Click="ButtonActivateRemovableStorage_Click" Content="Activate" Background="#6000" FontFamily="{StaticResource ApplicationFonts}"></Button>
+                    <Button x:Name="ButtonCustomize" Content="Customize" Click="ButtonCustomize_Click" Background="#6000" FontFamily="{StaticResource ApplicationFonts}"></Button>
+                    <Button x:Name="ButtonClearRemovableCache" Click="ButtonClearRemovableCache_Click" Background="#6000" Content="Delete Cache" FontFamily="{StaticResource ApplicationFonts}"></Button>
+                    <Button Visibility="Collapsed"  x:Name="ButtonImport" Content="Copy To Xbox" Background="#6000" Click="ButtonImport_Click" FontFamily="{StaticResource ApplicationFonts}"></Button>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Left" x:Name="StackPanelLocalStorage" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="1" Orientation="Horizontal" >
@@ -69,11 +69,13 @@
                     <Button Margin="10,0,0,0" Visibility="Collapsed" x:Name="ButtonActivateLocalStorage" Click="ButtonActivateLocalStorage_Click" Content="Activate"></Button>
                 </StackPanel>
             </Grid>
-            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" FontFamily="{StaticResource ApplicationFonts}" Width="143" Margin="417,0,0,0" CornerRadius="4" IsChecked="True"/>
-            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" Margin="417,130,0,0" VerticalAlignment="Top" Width="143" CornerRadius="4" FontFamily="{StaticResource ApplicationFonts}"/>
-            <TextBlock Grid.Row="4" x:Name ="TextStatus" Text=""
+            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Play Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" FontSize="12" VerticalContentAlignment="Center" Padding="10,0,0,0" FontFamily="{StaticResource ApplicationFonts}" Width="184" Margin="507,131,0,0" CornerRadius="4" IsChecked="True" VerticalAlignment="Top"/>
+            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" FontSize="12" VerticalContentAlignment="Center" Padding="10,0,0,0" Margin="280,130,0,0" VerticalAlignment="Top" Width="179" CornerRadius="4" FontFamily="{StaticResource ApplicationFonts}"/>
+            <TextBlock Grid.Row="4" x:Name ="TextStatus" Text="" 
                        HorizontalAlignment="Left"
-                       TextWrapping="Wrap" VerticalAlignment="Top" Width="800" Style="{StaticResource TitleTextBlockStyle}" Margin="85,168,0,0" Height="33"/>
+                       TextWrapping="Wrap" VerticalAlignment="Center" Width="800" Style="{StaticResource TitleTextBlockStyle}" Margin="85,168,0,0" Height="33"/>
+            <Button x:Name="ButtonHelp" Click="ButtonHelp_Click" Content="RPU User Manual" Width="219" Background="#6000" FontFamily="{StaticResource ApplicationFonts}" Margin="490,83,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+            <Button x:Name="ButtonRetroAchievements" Content="RetroAchievements" Background="#6000" Click="RetroAchievements_Click" FontFamily="{StaticResource ApplicationFonts}" Margin="258,83,0,0" Grid.Row="4" VerticalAlignment="Top" Width="219"/>
         </Grid>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>

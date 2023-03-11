@@ -130,7 +130,7 @@
             </Border>
             <Border x:Name="DescriptionOverlay" Visibility="Collapsed" CornerRadius="4,4,4,4">
                 <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Background/DescriptionBackground.png"/>
+                    <ImageBrush ImageSource="/Assets/DescriptionBackground.png"/>
                 </Border.Background>
                 <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="852" Height="335" TextWrapping="Wrap" d:IsHidden="False"></TextBlock>
             </Border>

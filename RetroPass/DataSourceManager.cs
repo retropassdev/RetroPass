@@ -469,6 +469,27 @@ namespace RetroPass
 
                     if (launchBoxFolder != null)
                     {
+                        //Check root foler for RetroPass.xml file.
+                        IStorageItem configItem = await rootFolder.TryGetItemAsync("RetroPass.xml");
+                        if (configItem == null)
+                        {
+                           
+                            //create config file			
+                            RetroPassConfig config = new RetroPassConfig();
+                            config.relativePath = "./LaunchBox";
+                            config.type = RetroPassConfig.DataSourceType.LaunchBox;
+
+                            //save the file to app local directory
+                            StorageFile filename = await rootFolder.CreateFileAsync("RetroPass.xml", CreationCollisionOption.ReplaceExisting);
+                            XmlSerializer x = new XmlSerializer(typeof(RetroPassConfig));
+                            using (TextWriter writer = new StringWriter())
+                            {
+                                x.Serialize(writer, config);
+                                await FileIO.WriteTextAsync(filename, writer.ToString());
+                                localStorageFile = filename;
+                            }
+                        }
+
                         // Check removable devices for RetroPassUltimate Folder.
                         retroPassUltimateFolderCurrent = await rootFolder.TryGetItemAsync("RetroPassUltimate") as StorageFolder;
 
@@ -506,7 +527,22 @@ namespace RetroPass
                             var fontFolder = await retroPassUltimateFolderCurrent.CreateFolderAsync("Fonts");
 
                             //COPY SAMPLE BACKGROUND AND FONT FILES
-                            var bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Menu-Animation.mp4"));
+                            var bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Main-Default.mp4"));
+                            await bgStoreFile.CopyAsync(bgFolder);
+
+                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Games-Default.mp4"));
+                            await bgStoreFile.CopyAsync(bgFolder);
+
+                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Details-Default.png"));
+                            await bgStoreFile.CopyAsync(bgFolder);
+
+                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Search-Default.png"));
+                            await bgStoreFile.CopyAsync(bgFolder);
+
+                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Customize-Default.mp4"));
+                            await bgStoreFile.CopyAsync(bgFolder);
+
+                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Settings-Default.mp4"));
                             await bgStoreFile.CopyAsync(bgFolder);
 
                             var fontStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Fonts/Xbox.ttf"));
@@ -531,12 +567,12 @@ namespace RetroPass
                                 {
                                     Background = new List<Background>()
                                     {
-                                         new Background() { Page = "MainPage", File = "Menu-Animation.mp4" },
-                                         new Background() { Page = "GamePage", File = "Menu-Animation.mp4" },
-                                         new Background() { Page = "DetailsPage", File = "Menu-Animation.mp4" },
-                                         new Background() { Page = "SearchPage", File = "Menu-Animation.mp4" },
-                                         new Background() { Page = "CustomizePage", File = "Menu-Animation.mp4" },
-                                         new Background() { Page = "SettingsPage", File = "Menu-Animation.mp4" },
+                                         new Background() { Page = "MainPage", File = "Main-Default.mp4" },
+                                         new Background() { Page = "GamePage", File = "Games-Default.mp4" },
+                                         new Background() { Page = "DetailsPage", File = "Details-Default.png" },
+                                         new Background() { Page = "SearchPage", File = "Search-Default.png" },
+                                         new Background() { Page = "CustomizePage", File = "Customize-Default.mp4" },
+                                         new Background() { Page = "SettingsPage", File = "Settings-Default.mp4" },
                                     }
                                 };
 

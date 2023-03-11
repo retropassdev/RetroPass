@@ -182,11 +182,14 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Background\GameDetail-Pge.png" />
-    <Content Include="Assets\Background\Menu-Animation.mp4" />
-    <Content Include="Assets\Background\SearchPage.png" />
-    <Content Include="Assets\Background\SettingsPage-Animated.mp4" />
+    <Content Include="Assets\Background\Customize_Default.mp4" />
+    <Content Include="Assets\Background\Details-Default.png" />
+    <Content Include="Assets\Background\Games-Default.mp4" />
+    <Content Include="Assets\Background\Main-Default.mp4" />
+    <Content Include="Assets\Background\Search-Default.png" />
+    <Content Include="Assets\Background\Settings-Default.mp4" />
     <Content Include="Assets\Background\stub.txt" />
+    <Content Include="Assets\DescriptionBackground.png" />
     <Content Include="Assets\empty.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
@@ -297,6 +300,7 @@
     </None>
     <Content Include="Assets\Fonts\Xbox.ttf" />
     <Content Include="Assets\Fonts\XBold.ttf" />
+    <Content Include="Assets\Fonts\EmotionEngine-8ynA.ttf" />
     <None Include="RetroPass_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

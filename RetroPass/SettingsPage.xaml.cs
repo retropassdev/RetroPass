@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroPass_Ultimate;
+using System;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
@@ -275,5 +276,30 @@ namespace RetroPass
                 await dialog.ShowAsync();
             }
         }
+
+        private void ButtonCustomize_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ThemeSettingsPage));
+        }
+        private async void RetroAchievements_Click(object sender, RoutedEventArgs e)
+        {
+            // The URI to launch
+            var uri = new Uri("microsoft-edge:https://retroachievements.org/");
+
+            // Launch the URI
+            var success = await Windows.System.Launcher.LaunchUriAsync(uri);
+
+            if (success)
+            {
+                // URI launched
+            }
+            else
+            {
+                // URI launch failed
+                var dialog = new MessageDialog("Sorry, something went wrong! Check your connection and make sure you have MS-Edge browser.");
+                await dialog.ShowAsync();
+            }
+        }
     }
 }
+

@@ -233,6 +233,15 @@ namespace RetroPass_Ultimate
                     await msgBox.ShowAsync();
                     await CoreApplication.RequestRestartAsync("Application Restart Programmatically.");
                 }
+
+                if (Frame.CanGoBack)
+                {
+                    Frame.GoBack();
+                }
+                else
+                {
+                    Frame.Navigate(typeof(SettingsPage));
+                }
             }
         }
 
