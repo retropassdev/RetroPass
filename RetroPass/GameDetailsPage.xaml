@@ -39,7 +39,7 @@
                         <RowDefinition Height="7.45" />
                         <RowDefinition Height="8.511"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="769" Text="{x:Bind playlistItem.game.Title}" TextWrapping="Wrap" Margin="0,4,0,8" Grid.RowSpan="3"></TextBlock>
+                    <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="769" Text="{x:Bind playlistItem.game.Title}" Foreground="White" TextWrapping="Wrap" Margin="0,4,0,8" Grid.RowSpan="3"></TextBlock>
                     <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="844"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="#909090" Margin="0,34,0,0" Grid.RowSpan="3"/>
                 </Grid>
                 <ScrollViewer Margin="0,-6,0,0" Name="ScrollViewer1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden"  
