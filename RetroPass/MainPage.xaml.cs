@@ -132,8 +132,8 @@ namespace RetroPass
 			}
 
 			//load data source only the first time or when it's changed
-			if (this.dataSource != dataSource)
-			{
+			//if (this.dataSource != dataSource)
+			//{
 				if (this.dataSource != null)
 				{
 					this.dataSource.PlatformImported -= OnPlatformImported;
@@ -146,7 +146,7 @@ namespace RetroPass
 				this.dataSource.PlatformImported += OnPlatformImported;
 				this.dataSource.PlaylistImported += OnPlaylistImported;
 				await this.dataSource.Load();
-			}
+			//}
 
 			//focus on button only if getting from another page
 			//this is to prevent setting focus after delayed load while search page is visible
@@ -471,7 +471,7 @@ namespace RetroPass
 					var storageFile = items[0] as StorageFile;
 					var contentType = storageFile.ContentType;
 					StorageFolder folder = ApplicationData.Current.LocalFolder;
-					if (contentType == "image/jpg" || contentType == "image/png" || contentType == "image/jpeg")
+                    if (contentType == "image/jpg" || contentType == "image/png" || contentType == "image/webp" || contentType == "image/jpeg")
 					{
 						StorageFile newFile = await storageFile.CopyAsync(folder, storageFile.Name, NameCollisionOption.GenerateUniqueName);
 						var bitmapImg = new BitmapImage();

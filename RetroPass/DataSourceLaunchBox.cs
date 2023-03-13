@@ -390,6 +390,7 @@ namespace RetroPass
             fileTypeFilter.Add(".jpg");
             fileTypeFilter.Add(".jpeg");
             fileTypeFilter.Add(".png");
+            fileTypeFilter.Add(".webp");
             QueryOptions queryOptions = new QueryOptions(Windows.Storage.Search.CommonFileQuery.OrderByName, fileTypeFilter);
             StorageFileQueryResult queryResult = platformImageFolder.CreateFileQueryWithOptions(queryOptions);
             var files = await queryResult.GetFilesAsync();
@@ -478,21 +479,21 @@ namespace RetroPass
                 {
                     PlatformsLaunchBox.Platform platformLaunchBox = playlist as PlatformsLaunchBox.Platform;
                     //load platform if it is not already loade
-                    if (Platforms.Exists(p => p.Name == platformLaunchBox.Name) == false)
-                    {
+                    //if (Platforms.Exists(p => p.Name == platformLaunchBox.Name) == false)
+                    //{
                         //launchbox platforms are loaded as Playlists
                         playlistTmp = await LoadLaunchBoxPlatform(platformLaunchBox.Name, platformsLaunchBox, emulatorPlatforms, platformsFiles);
                         if (playlistTmp == null)
                         {
                             continue;
                         }
-                    }
-                    //Platform can be loaded already. For example, launchbox playlist called "1st playlist" has a game that's from "SNES" platform playlist.
-                    //"SNES" platform playlist will already be loaded, because "1st playlist" is processed earlier when going through joinedPlaylists dictionary.
-                    else
-                    {
-                        playlistTmp = Playlists.FirstOrDefault(t => t.Name == platformLaunchBox.Name);
-                    }
+                    //}
+                    ////Platform can be loaded already. For example, launchbox playlist called "1st playlist" has a game that's from "SNES" platform playlist.
+                    ////"SNES" platform playlist will already be loaded, because "1st playlist" is processed earlier when going through joinedPlaylists dictionary.
+                    //else
+                    //{
+                    //    playlistTmp = Playlists.FirstOrDefault(t => t.Name == platformLaunchBox.Name);
+                    //}
                 }
                 else if (playlist is PlaylistLaunchBox)
                 {
@@ -519,6 +520,7 @@ namespace RetroPass
                     fileTypeFilter.Add(".jpg");
                     fileTypeFilter.Add(".jpeg");
                     fileTypeFilter.Add(".png");
+                    fileTypeFilter.Add(".webp");
                     QueryOptions queryOptions = new QueryOptions(Windows.Storage.Search.CommonFileQuery.OrderByName, fileTypeFilter);
                     StorageFileQueryResult queryResult = platformImageFolder.CreateFileQueryWithOptions(queryOptions);
                     var files = await queryResult.GetFilesAsync();

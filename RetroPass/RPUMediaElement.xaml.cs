@@ -24,8 +24,8 @@ namespace RetroPass_Ultimate
 {
     public sealed partial class RPUMediaElement : UserControl
     {
-        static string[] imageExt = new string[] { ".png", "jpg", "jpeg" };
-        static string[] videoExt = new string[] { ".mp4" };
+        static string[] imageExt = new string[] { ".png", "jpg", "jpeg", ".webp" };
+        static string[] videoExt = new string[] { ".mp4", ".MOV", ".webp" };
 
         public string MediaPath
         {

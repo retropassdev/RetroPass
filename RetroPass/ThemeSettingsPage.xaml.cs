@@ -10,6 +10,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -44,6 +45,29 @@ namespace RetroPass_Ultimate
             LoadBackgroundsAndFonts();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+            base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
+
+            base.OnNavigatedFrom(e);
+        }
+
+        //on windows, windows key + backspace
+        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+                e.Handled = true;
+            }
+        }
+
         private async void LoadBackgroundsAndFonts()
         {
             try
@@ -65,7 +89,7 @@ namespace RetroPass_Ultimate
 
                         settingsXMLFile = await GetRPUThemeSettingsFile(retroPassUltimateFolderCurrent);
 
-                        var backgroundFiles = await GetFilesAsync(retroPassUltimateFolderCurrent, "Backgrounds", new List<string>() { ".png", ".jpg", ".mp4", ".mpg" });
+                        var backgroundFiles = await GetFilesAsync(retroPassUltimateFolderCurrent, "Backgrounds", new List<string>() { ".png", ".jpg", ".mp4", ".mpg", ".MOV", ".avif", ".webp" });
                         List<String> backgroundsFilesNameList = backgroundFiles.Select(s => s.Name).ToList();
 
                         MainPageCB.ItemsSource = backgroundsFilesNameList;
@@ -75,7 +99,7 @@ namespace RetroPass_Ultimate
                         CustomizePageCB.ItemsSource = backgroundsFilesNameList;
                         SettingsPageCB.ItemsSource = backgroundsFilesNameList;
 
-                        var fontFiles = await GetFilesAsync(retroPassUltimateFolderCurrent, "Fonts", new List<string>() { ".ttf" });
+                        var fontFiles = await GetFilesAsync(retroPassUltimateFolderCurrent, "Fonts", new List<string>() { ".ttf", ".otf" });
                         FontsCB.ItemsSource = fontFiles.Select(s => s.Name).ToList();
 
                         break;
@@ -181,67 +205,65 @@ namespace RetroPass_Ultimate
 
         async private void btnApplyChanges_Click(object sender, RoutedEventArgs e)
         {
-            if (((App)Application.Current).CurrentThemeSettings != null)
+            try
             {
-                bool isFontChanged = ((App)Application.Current).CurrentThemeSettings.Font != Convert.ToString(FontsCB.SelectedItem);
-
-                ((App)Application.Current).CurrentThemeSettings.Font = Convert.ToString(FontsCB.SelectedItem);
-
-                List<Background> backgroundList = ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background;
-
-                if (backgroundList != null && backgroundList.Count() != 0)
+                if (((App)Application.Current).CurrentThemeSettings != null)
                 {
-                    backgroundList.FirstOrDefault(s => s.Page == "MainPage").File = Convert.ToString(MainPageCB.SelectedItem);
-                    backgroundList.FirstOrDefault(s => s.Page == "GamePage").File = Convert.ToString(GamePageCB.SelectedItem);
-                    backgroundList.FirstOrDefault(s => s.Page == "DetailsPage").File = Convert.ToString(DetailsPageCB.SelectedItem);
-                    backgroundList.FirstOrDefault(s => s.Page == "SearchPage").File = Convert.ToString(SearchPageCB.SelectedItem);
-                    backgroundList.FirstOrDefault(s => s.Page == "CustomizePage").File = Convert.ToString(CustomizePageCB.SelectedItem);
-                    backgroundList.FirstOrDefault(s => s.Page == "SettingsPage").File = Convert.ToString(SettingsPageCB.SelectedItem);
-                }
+                    bool isFontChanged = ((App)Application.Current).CurrentThemeSettings.Font != Convert.ToString(FontsCB.SelectedItem);
 
-                string boxArtType = String.Empty;
-                if (toggleBoxFront.IsChecked == true)
-                {
-                    boxArtType = Convert.ToString(toggleBoxFront.Content);
-                }
-                else if (toggleBox3d.IsChecked == true)
-                {
-                    boxArtType = Convert.ToString(toggleBox3d.Content);
-                }
-                else if (toggleClearLogo.IsChecked == true)
-                {
-                    boxArtType = Convert.ToString(toggleClearLogo.Content);
-                }
+                    ((App)Application.Current).CurrentThemeSettings.Font = Convert.ToString(FontsCB.SelectedItem);
 
-                ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
+                    if (((App)Application.Current).CurrentThemeSettings.Backgrounds.Background != null && ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.Count() != 0)
+                    {
+                        ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "MainPage").File = Convert.ToString(MainPageCB.SelectedItem);
+                        ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "GamePage").File = Convert.ToString(GamePageCB.SelectedItem);
+                        ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "DetailsPage").File = Convert.ToString(DetailsPageCB.SelectedItem);
+                        ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "SearchPage").File = Convert.ToString(SearchPageCB.SelectedItem);
+                        ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "CustomizePage").File = Convert.ToString(CustomizePageCB.SelectedItem);
+                        ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "SettingsPage").File = Convert.ToString(SettingsPageCB.SelectedItem);
+                    }
 
-                XmlSerializer x = new XmlSerializer(typeof(RetroPassThemeSettings));
-                using (TextWriter writer = new StringWriter())
-                {
-                    x.Serialize(writer, ((App)Application.Current).CurrentThemeSettings);
-                    await FileIO.WriteTextAsync(settingsXMLFile, writer.ToString());
+                    string boxArtType = String.Empty;
+                    if (toggleBoxFront.IsChecked == true)
+                    {
+                        boxArtType = Convert.ToString(toggleBoxFront.Content);
+                    }
+                    else if (toggleBox3d.IsChecked == true)
+                    {
+                        boxArtType = Convert.ToString(toggleBox3d.Content);
+                    }
+                    else if (toggleClearLogo.IsChecked == true)
+                    {
+                        boxArtType = Convert.ToString(toggleClearLogo.Content);
+                    }
+
+                    XmlSerializer x = new XmlSerializer(typeof(RetroPassThemeSettings));
+                    using (TextWriter writer = new StringWriter())
+                    {
+                        x.Serialize(writer, ((App)Application.Current).CurrentThemeSettings);
+                        await FileIO.WriteTextAsync(settingsXMLFile, writer.ToString());
+                    }
+
+                    var folderPath = await (await settingsXMLFile.GetParentAsync() as StorageFolder).GetFolderAsync("Backgrounds");
+                    var file = await folderPath.GetFileAsync(((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "CustomizePage").File);
+
+                    mediaPlayer.MediaPath = file.Path;
+
+                    ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
+
+                    if (isFontChanged)
+                    {
+                        var msgBox = new MessageDialog("You changed fonts. Application will be restarted!", "RetroPass Utlimate");
+                        await msgBox.ShowAsync();
+                        await CoreApplication.RequestRestartAsync("Application Restart Programmatically.");
+                    }
+
                 }
-
-                var folderPath = await (await settingsXMLFile.GetParentAsync() as StorageFolder).GetFolderAsync("Backgrounds");
-                var file = await folderPath.GetFileAsync(backgroundList.FirstOrDefault(s => s.Page == "CustomizePage").File);
-
-                mediaPlayer.MediaPath = file.Path;
-
-                if (isFontChanged)
-                {
-                    var msgBox = new MessageDialog("You changed fonts. Application will be restarted!", "RetroPass Utlimate");
-                    await msgBox.ShowAsync();
-                    await CoreApplication.RequestRestartAsync("Application Restart Programmatically.");
-                }
-
-                if (Frame.CanGoBack)
-                {
-                    Frame.GoBack();
-                }
-                else
-                {
-                    Frame.Navigate(typeof(SettingsPage));
-                }
+            }
+            catch (Exception ex)
+            {
+                var msgBox = new MessageDialog("Something went wrong! Could not save the Settings." + Environment.NewLine + ex.Message, "RetroPass Utlimate");
+                await msgBox.ShowAsync();
             }
         }
 

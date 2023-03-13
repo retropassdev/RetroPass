@@ -53,7 +53,7 @@
                 SelectedBackground="Transparent"
                 SelectedForeground="Transparent"
                 SelectedPointerOverBackground="{ThemeResource ListViewItemBackgroundSelectedPointerOver}"
-                SelectedPressedBackground="{ThemeResource ListViewItemBackgroundSelectedPressed}"
+                SelectedPressedBackground="#7000"
                 SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}">
                                     <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup x:Name="CommonStates">
