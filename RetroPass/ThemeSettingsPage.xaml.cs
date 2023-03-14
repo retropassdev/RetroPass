@@ -133,9 +133,17 @@ namespace RetroPass_Ultimate
                         {
                             toggleBox3d.IsChecked = true;
                         }
+                        else if (Convert.ToString(ToggleCartFront.Content) == boxArtType)
+                        {
+                            ToggleCartFront.IsChecked = true;
+                        }
                         else if (Convert.ToString(toggleClearLogo.Content) == boxArtType)
                         {
                             toggleClearLogo.IsChecked = true;
+                        }
+                        else if (Convert.ToString(ToggleFanartBackground.Content) == boxArtType)
+                        {
+                            ToggleFanartBackground.IsChecked = true;
                         }
                     }
                 }
@@ -232,9 +240,17 @@ namespace RetroPass_Ultimate
                     {
                         boxArtType = Convert.ToString(toggleBox3d.Content);
                     }
+                    else if (ToggleCartFront.IsChecked == true)
+                    {
+                        boxArtType = Convert.ToString(ToggleCartFront.Content);
+                    }
                     else if (toggleClearLogo.IsChecked == true)
                     {
                         boxArtType = Convert.ToString(toggleClearLogo.Content);
+                    }
+                    else if (ToggleFanartBackground.IsChecked == true)
+                    {
+                        boxArtType = Convert.ToString(ToggleFanartBackground.Content);
                     }
 
                     XmlSerializer x = new XmlSerializer(typeof(RetroPassThemeSettings));
@@ -270,19 +286,37 @@ namespace RetroPass_Ultimate
         private void toggleBoxFront_Checked(object sender, RoutedEventArgs e)
         {
             toggleBox3d.IsChecked = false;
+            ToggleCartFront.IsChecked = false;
             toggleClearLogo.IsChecked = false;
+            ToggleFanartBackground.IsChecked = false;
         }
-
         private void toggleBox3d_Checked(object sender, RoutedEventArgs e)
         {
             toggleBoxFront.IsChecked = false;
+            ToggleCartFront.IsChecked = false;
             toggleClearLogo.IsChecked = false;
+            ToggleFanartBackground.IsChecked = false;
         }
-
+        private void ToggleCartFront_Checked(object sender, RoutedEventArgs e)
+        {
+            toggleBoxFront.IsChecked = false;
+            toggleBox3d.IsChecked = false;
+            toggleClearLogo.IsChecked = false;
+            ToggleFanartBackground.IsChecked = false;
+        }
         private void toggleClearLogo_Checked(object sender, RoutedEventArgs e)
         {
             toggleBoxFront.IsChecked = false;
             toggleBox3d.IsChecked = false;
+            ToggleCartFront.IsChecked = false;
+            ToggleFanartBackground.IsChecked = false;
+        }
+        private void ToggleFanartBackground_Checked(object sender, RoutedEventArgs e)
+        {
+            toggleBoxFront.IsChecked = false;
+            toggleBox3d.IsChecked = false;
+            ToggleCartFront.IsChecked = false;
+            toggleClearLogo.IsChecked = false;
         }
     }
 }
