@@ -241,7 +241,7 @@ namespace RetroPass
             if (folder != null)
             {
                 //check if the location exists
-                var item = await folder.TryGetItemAsync("RetroPass.xml");
+                var item = await folder.TryGetItemAsync("LaunchPass.xml");
 
                 if (item != null)
                 {
@@ -334,7 +334,7 @@ namespace RetroPass
             config.retroarch = ds.retroPassConfig.retroarch;
 
             //save the file to app local directory
-            StorageFile filename = await folderDest.CreateFileAsync("RetroPass.xml", CreationCollisionOption.ReplaceExisting);
+            StorageFile filename = await folderDest.CreateFileAsync("LaunchPass.xml", CreationCollisionOption.ReplaceExisting);
             XmlSerializer x = new XmlSerializer(typeof(RetroPassConfig));
             using (TextWriter writer = new StringWriter())
             {
@@ -441,7 +441,7 @@ namespace RetroPass
             {
                 await assetItem.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
-            IStorageItem configItem = await destPath.TryGetItemAsync("RetroPass.xml");
+            IStorageItem configItem = await destPath.TryGetItemAsync("LaunchPass.xml");
             if (configItem != null)
             {
                 await configItem.DeleteAsync(StorageDeleteOption.PermanentDelete);
@@ -469,8 +469,8 @@ namespace RetroPass
 
                     if (launchBoxFolder != null)
                     {
-                        //Check root foler for RetroPass.xml file.
-                        IStorageItem configItem = await rootFolder.TryGetItemAsync("RetroPass.xml");
+                        //Check root foler for LaunchPass.xml file.
+                        IStorageItem configItem = await rootFolder.TryGetItemAsync("LaunchPass.xml");
                         if (configItem == null)
                         {
                            
@@ -480,7 +480,7 @@ namespace RetroPass
                             config.type = RetroPassConfig.DataSourceType.LaunchBox;
 
                             //save the file to app local directory
-                            StorageFile filename = await rootFolder.CreateFileAsync("RetroPass.xml", CreationCollisionOption.ReplaceExisting);
+                            StorageFile filename = await rootFolder.CreateFileAsync("LaunchPass.xml", CreationCollisionOption.ReplaceExisting);
                             XmlSerializer x = new XmlSerializer(typeof(RetroPassConfig));
                             using (TextWriter writer = new StringWriter())
                             {
