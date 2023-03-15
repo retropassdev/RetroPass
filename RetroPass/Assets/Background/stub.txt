@@ -1,2 +1,0 @@
-﻿This is a dummy file to publish the Assets Directory to Github on Push.
-(just leave it alone, remove it later on the Github repo branch via Web Browser)
