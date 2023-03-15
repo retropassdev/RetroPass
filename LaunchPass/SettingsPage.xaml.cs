@@ -320,7 +320,7 @@ namespace RetroPass
         private async void SM_Click(object sender, RoutedEventArgs e)
         {
             // The URI to launch
-            var uri = new Uri("microsoft-edge:https://ko-fi.com/sirmangler/goal?g=14");
+            var uri = new Uri("microsoft-edge:https://github.com/Misunderstood-Wookiee/LaunchPass");
             // Launch the URI
             var success = await Windows.System.Launcher.LaunchUriAsync(uri);
             if (success)
@@ -337,7 +337,7 @@ namespace RetroPass
         private async void Our_Apps_Click(object sender, RoutedEventArgs e)
         {
             // The URI to launch
-            var uri = new Uri("microsoft-edge:https://github.com/Misunderstood-Wookiee/RetroPassUltimate/wiki");
+            var uri = new Uri("microsoft-edge:https://github.com/Misunderstood-Wookiee/LaunchPass/wiki");
             // Launch the URI
             var success = await Windows.System.Launcher.LaunchUriAsync(uri);
             if (success)
