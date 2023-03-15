@@ -67,8 +67,8 @@
                     <Button Margin="10,0,0,0" Visibility="Collapsed" x:Name="ButtonActivateLocalStorage" Click="ButtonActivateLocalStorage_Click" Content="Activate"></Button>
                 </StackPanel>
             </Grid>
-            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Start Gameplay" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" FontSize="12" VerticalContentAlignment="Center" Padding="10,0,0,0" FontFamily="{StaticResource ApplicationFonts}" Width="184" Margin="248,126,0,0" CornerRadius="4" IsChecked="True" VerticalAlignment="Top"/>
-            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" FontSize="12" VerticalContentAlignment="Center" Padding="10,0,0,0" Margin="480,126,0,0" VerticalAlignment="Top" Width="179" CornerRadius="4" FontFamily="{StaticResource ApplicationFonts}" RenderTransformOrigin="1.405,-2.906"/>
+            <CheckBox x:Name="AutoPlayVideoCheckBox" Content="Auto Start Gameplay Video" Grid.Row="4" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked" FontSize="10" VerticalContentAlignment="Center" Padding="10,0,0,0" FontFamily="{StaticResource ApplicationFonts}" Width="184" Margin="236,126,0,0" CornerRadius="4" IsChecked="True" VerticalAlignment="Top"/>
+            <CheckBox Name="EnableLoggingCheckBox" Content="Enable Logging" Grid.Row="4" Checked="EnableLoggingCheckBox_Checked" Unchecked="EnableLoggingCheckBox_Unchecked" FontSize="10" VerticalContentAlignment="Center" Padding="10,0,0,0" Margin="456,126,0,0" VerticalAlignment="Top" Width="179" CornerRadius="4" FontFamily="{StaticResource ApplicationFonts}" RenderTransformOrigin="1.405,-2.906"/>
             <TextBlock Grid.Row="4" x:Name ="TextStatus" Text="" 
                        HorizontalAlignment="Left"
                        TextWrapping="Wrap" VerticalAlignment="Top" Width="283" Style="{StaticResource TitleTextBlockStyle}" Margin="705,307,0,0" Height="40"/>
