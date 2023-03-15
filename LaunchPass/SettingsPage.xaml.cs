@@ -131,7 +131,7 @@ namespace RetroPass
             }
 
             RefreshDataSourceUI();
-        } 
+        }
 
         //on windows, windows key + backspace
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
@@ -300,5 +300,63 @@ namespace RetroPass
                 await dialog.ShowAsync();
             }
         }
+        private async void Xhb_Click(object sender, RoutedEventArgs e)
+        {
+            // The URI to launch
+            var uri = new Uri("https://discord.com/servers/xbox-emulation-hub-1007582798598647889");
+            // Launch the URI
+            var success = await Windows.System.Launcher.LaunchUriAsync(uri);
+            if (success)
+            {
+                // URI launched
+            }
+            else
+            {
+                // URI launch failed
+                var dialog = new MessageDialog("Sorry, something went wrong! Check your connection and make sure you have MS-Edge browser.");
+                await dialog.ShowAsync();
+            }
+        }
+        private async void SM_Click(object sender, RoutedEventArgs e)
+        {
+            // The URI to launch
+            var uri = new Uri("microsoft-edge:https://ko-fi.com/sirmangler/goal?g=14");
+            // Launch the URI
+            var success = await Windows.System.Launcher.LaunchUriAsync(uri);
+            if (success)
+            {
+                // URI launched
+            }
+            else
+            {
+                // URI launch failed
+                var dialog = new MessageDialog("Sorry, something went wrong! Check your connection and make sure you have MS-Edge browser.");
+                await dialog.ShowAsync();
+            }
+        }
+        private async void Our_Apps_Click(object sender, RoutedEventArgs e)
+        {
+            // The URI to launch
+            var uri = new Uri("microsoft-edge:https://github.com/Misunderstood-Wookiee/RetroPassUltimate/wiki");
+            // Launch the URI
+            var success = await Windows.System.Launcher.LaunchUriAsync(uri);
+            if (success)
+            {
+                // URI launched
+            }
+            else
+            {
+                // URI launch failed
+                var dialog = new MessageDialog("Sorry, something went wrong! Check your connection and make sure you have MS-Edge browser.");
+                await dialog.ShowAsync();
+            }
+        }
+
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
-}
+
+    }
+        
