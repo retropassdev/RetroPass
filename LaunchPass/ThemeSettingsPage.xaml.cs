@@ -269,7 +269,7 @@ namespace LaunchPass
 
                     if (isFontChanged)
                     {
-                        var msgBox = new MessageDialog("You changed fonts. Application will be restarted!", "RetroPass Utlimate");
+                        var msgBox = new MessageDialog("You changed fonts. Application will be restarted!", "LaunchPass");
                         await msgBox.ShowAsync();
                         await CoreApplication.RequestRestartAsync("Application Restart Programmatically.");
                     }
@@ -278,7 +278,7 @@ namespace LaunchPass
             }
             catch (Exception ex)
             {
-                var msgBox = new MessageDialog("Something went wrong! Could not save the Settings." + Environment.NewLine + ex.Message, "RetroPass Utlimate");
+                var msgBox = new MessageDialog("Something went wrong! Could not save the Settings." + Environment.NewLine + ex.Message, "LaunchPass");
                 await msgBox.ShowAsync();
             }
         }

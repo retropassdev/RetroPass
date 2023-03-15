@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("LaunchPass")]
-[assembly: AssemblyDescription("LaunchPass Ultimate is a simple front-end for emulators on XBOX One/ Series S|X")]
+[assembly: AssemblyDescription("LaunchPass is a simple front-end for emulators on XBOX One/ Series S|X")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LaunchPass")]
