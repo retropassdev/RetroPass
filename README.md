@@ -1,8 +1,9 @@
 # LaunchPass
 LaunchPass is a fork of RetroPass frontend for RetroArch and RetriX Gold, Xenia Cannary UWP, Dolphin UWP on Xbox One & Xbox Series S|X. 
 
-![Video](https://github.com/Misunderstood-Wookiee/LaunchPass/blob/cfb5c229a25da69934f0fc5180301f544f6cb592/Docs/LaunchPass.gif)
+![Video](https://github.com/Misunderstood-Wookiee/LaunchPass/blob/d14ac0b559bae1aae99185a8be933d4af86664f2/Docs/LaunchPass.webp)
 ![Video](/Docs/collection.gif)
+
 
 This is made specifically for Xbox console and hopefully, should feel familiar to Xbox users right from the start with its classic xbox theme meets Game Pass Ultimate vibe.
 ## Usage
