@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:RetroPass"
-    xmlns:rpu="using:RetroPass_Ultimate"
+    xmlns:lp="using:LaunchPass"
     CornerRadius="4,4,4,4"
     NavigationCacheMode="Required"
     mc:Ignorable="d" Background="#000000">
@@ -78,7 +78,7 @@
         Padding="0,0,0,0"
         CornerRadius="4,4,4,4"
         Background="#000000">
-        <rpu:RPUMediaElement x:Name="mediaPlayer" Margin="0"
+        <lp:LPMediaElement x:Name="mediaPlayer" Margin="0"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         
         <GridView

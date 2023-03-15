@@ -20,9 +20,9 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace RetroPass_Ultimate
+namespace LaunchPass
 {
-    public sealed partial class RPUMediaElement : UserControl
+    public sealed partial class LPMediaElement : UserControl
     {
         static string[] imageExt = new string[] { ".png", "jpg", "jpeg", ".webp" };
         static string[] videoExt = new string[] { ".mp4", ".MOV", ".webp" };
@@ -41,11 +41,11 @@ namespace RetroPass_Ultimate
 
         // Using a DependencyProperty as the backing store for MediaPath.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MediaPathProperty =
-            DependencyProperty.Register("MediaPath", typeof(string), typeof(RPUMediaElement), new PropertyMetadata(string.Empty, OnMediaPathChangedCallBack));
+            DependencyProperty.Register("MediaPath", typeof(string), typeof(LPMediaElement), new PropertyMetadata(string.Empty, OnMediaPathChangedCallBack));
 
         async private static void OnMediaPathChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            RPUMediaElement element = sender as RPUMediaElement;
+            LPMediaElement element = sender as LPMediaElement;
             string path = Convert.ToString(e.NewValue);
 
             if (element != null && !string.IsNullOrEmpty(path))
@@ -74,7 +74,7 @@ namespace RetroPass_Ultimate
             }
         }
 
-        public RPUMediaElement()
+        public LPMediaElement()
         {
             this.InitializeComponent();
         }

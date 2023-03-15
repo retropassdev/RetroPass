@@ -1,8 +1,8 @@
 ﻿<Page
-    x:Class="RetroPass_Ultimate.ThemeSettingsPage"
+    x:Class="LaunchPass.ThemeSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:RetroPass_Ultimate"
+    xmlns:local="using:LaunchPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -36,7 +36,7 @@
     </Page.Resources>
 
     <Grid Margin="0,0,0,0" CornerRadius="4,4,4,4" Padding="0,0,0,0">
-        <local:RPUMediaElement x:Name="mediaPlayer" Margin="0"
+        <local:LPMediaElement x:Name="mediaPlayer" Margin="0"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         <Grid Padding="-25,-10,85,0">

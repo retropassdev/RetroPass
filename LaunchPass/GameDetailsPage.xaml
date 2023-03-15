@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RetroPass"
-    xmlns:rpu="using:RetroPass_Ultimate"
+    xmlns:lp="using:LaunchPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Height="589"
@@ -20,7 +20,7 @@
     </ContentDialog.Resources>
 
     <Grid>
-        <rpu:RPUMediaElement x:Name="mediaPlayer" Margin="0"
+        <lp:LPMediaElement x:Name="mediaPlayer" Margin="0"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <RelativePanel Background="Transparent">
 
