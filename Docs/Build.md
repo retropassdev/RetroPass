@@ -1,7 +1,7 @@
 ## Build Project?
 
 1. Install Visual Studio 2019
-2. Get the latest source code from Main/Dev branch or [release](../../releases/)
+2. Get the latest source code from Main/Dev branch or [release](https://github.com/Misunderstood-Wookiee/LaunchPass/releases)
 3. Open **RetroPass.sln**
 4. Under **Package.appxmanifest** -> **Packing**, create and choose a different Certificate if needed.
 5. Set **Configuration** to **Release**
