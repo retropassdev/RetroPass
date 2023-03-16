@@ -368,7 +368,7 @@ namespace RetroPass
                     continue;
                 }
 
-                //create all subdirectories so asset can be coppied into it
+                //create all subdirectories so asset can be copied into it
                 if (string.IsNullOrEmpty(dstAssetRelativeDirectoryPath) == false)
                 {
                     dstAssetFolder = await destinationRootFolder.CreateFolderAsync(dstAssetRelativeDirectoryPath, CreationCollisionOption.OpenIfExists);
