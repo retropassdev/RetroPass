@@ -344,7 +344,7 @@ namespace RetroPass
         private async void Our_Apps_Click(object sender, RoutedEventArgs e)
         {
             // The URI to launch
-            var uri = new Uri("microsoft-edge:https://github.com/Misunderstood-Wookiee/LaunchPass/wiki");
+            var uri = new Uri("microsoft-edge:https://misunderstood-wookiee.github.io/LaunchPass/MYSTERY.html");
             // Launch the URI
             var success = await Windows.System.Launcher.LaunchUriAsync(uri);
             if (success)
