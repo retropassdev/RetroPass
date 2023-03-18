@@ -13,10 +13,9 @@ This is made specifically for Xbox console and hopefully, should feel familiar t
 
  - Xbox Only
  - Optimized for Gamepad Only
- - No Custom Themes *(yet)*
- - Zipped content supported only if RetroArch or RetriX Gold and other supported cores/emulators support that.
- - No Automatic Scrapper, you must use Launchbox (more info below) 
-  (EmulationStation support is discontinued sorry!)
+ - Zipped content supported only if RetroArch, RetriX or other supported cores/emulators support reading the file extentsion.
+ - No Automatic Scrapper, you must use Launchbox (More Info Below)
+ - EmulationStation support is discontinued sorry!
   
 ## Installation
  1. [Download](../../releases/) latest LaunchPass.
