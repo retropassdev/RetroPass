@@ -20,6 +20,7 @@ namespace RetroPass
         public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
         public LaunchPassThemeSettings CurrentThemeSettings { get; set; }
         public string RetroPassRootPath { get; set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -48,8 +49,6 @@ namespace RetroPass
             {
                 localSettings.Values[SettingsLoggingEnabled] = false;
             }
-
-            
         }
 
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)

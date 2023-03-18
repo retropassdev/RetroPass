@@ -9,7 +9,6 @@ using System.Xml.Serialization;
 using Windows.Storage;
 using Windows.Storage.Search;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace RetroPass
 {
@@ -82,6 +81,7 @@ namespace RetroPass
 
         [XmlElement("Playlist")]
         public Playlist _Playlist;
+
         [XmlElement("PlaylistGame")]
         public PlaylistGame[] PlaylistGames;
     }
@@ -101,12 +101,15 @@ namespace RetroPass
         public class EmulatorPlatform
         {
             public string Emulator;
+
             [NonSerialized]
             public string EmulatorPath;
+
             public string Platform;
             public string CommandLine;
             public bool Default;
         }
+
         public class Emulator
         {
             public string ApplicationPath;
@@ -115,6 +118,7 @@ namespace RetroPass
 
         [XmlElement("EmulatorPlatform")]
         public List<EmulatorPlatform> emulatorPlatforms;
+
         [XmlElement("Emulator")]
         public List<Emulator> emulators;
     }
@@ -143,9 +147,11 @@ namespace RetroPass
         public List<PlatformFolder> platformFolders;
     }
 
-    class DataSourceLaunchBox : DataSource
+    internal class DataSourceLaunchBox : DataSource
     {
-        public DataSourceLaunchBox(string rootFolder, RetroPassConfig retroPassConfig) : base(rootFolder, retroPassConfig) { }
+        public DataSourceLaunchBox(string rootFolder, RetroPassConfig retroPassConfig) : base(rootFolder, retroPassConfig)
+        {
+        }
 
         public override List<string> GetAssets()
         {
@@ -325,7 +331,7 @@ namespace RetroPass
 
         public async Task<Playlist> LoadLaunchBoxPlatform(string platformName, PlatformsLaunchBox platforms, List<EmulatorsLaunchBox.EmulatorPlatform> emulatorPlatforms, IReadOnlyList<StorageFile> platformsFiles)
         {
-            //this can actually never happen, because all platforms that are not in Emulators.xml are already removed 
+            //this can actually never happen, because all platforms that are not in Emulators.xml are already removed
             var emulatorPlatform = emulatorPlatforms.Find(t => t.Platform == platformName);
             if (emulatorPlatform == null)
             {
@@ -334,7 +340,7 @@ namespace RetroPass
 
             StorageFile xmlPlatformFile = platformsFiles.FirstOrDefault(t => t.Name == platformName + ".xml");
 
-            //this can actually never happen, because all platforms that don't have <platform>.xml are already removed 
+            //this can actually never happen, because all platforms that don't have <platform>.xml are already removed
             if (xmlPlatformFile == null)
             {
                 return null;
@@ -443,7 +449,6 @@ namespace RetroPass
             //TODO: add platforms from playlistPlayLater to all platforms, so we don't repeat them
             StorageFolder dataFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Data");
 
-
             ///////////////////read and parse Emulators.xml///////////////////////////////////////////////
             List<EmulatorsLaunchBox.EmulatorPlatform> emulatorPlatforms = await LoadEmulatorsXml(dataFolder);
 
@@ -467,7 +472,7 @@ namespace RetroPass
             //remove platforms that don't have a valid platform xml file
             platformsLaunchBox.platforms.RemoveAll(i => platformsFiles.FirstOrDefault(t => t.Name == i.Name + ".xml") == null);
 
-            //join and sort platforms and playlists using "SortTitle" property			
+            //join and sort platforms and playlists using "SortTitle" property
             List<object> joinedPlaylists = JoinPlaylists(platformsLaunchBox, playlistsLaunchbox);
 
             //load one by one
@@ -481,12 +486,12 @@ namespace RetroPass
                     //load platform if it is not already loade
                     //if (Platforms.Exists(p => p.Name == platformLaunchBox.Name) == false)
                     //{
-                        //launchbox platforms are loaded as Playlists
-                        playlistTmp = await LoadLaunchBoxPlatform(platformLaunchBox.Name, platformsLaunchBox, emulatorPlatforms, platformsFiles);
-                        if (playlistTmp == null)
-                        {
-                            continue;
-                        }
+                    //launchbox platforms are loaded as Playlists
+                    playlistTmp = await LoadLaunchBoxPlatform(platformLaunchBox.Name, platformsLaunchBox, emulatorPlatforms, platformsFiles);
+                    if (playlistTmp == null)
+                    {
+                        continue;
+                    }
                     //}
                     ////Platform can be loaded already. For example, launchbox playlist called "1st playlist" has a game that's from "SNES" platform playlist.
                     ////"SNES" platform playlist will already be loaded, because "1st playlist" is processed earlier when going through joinedPlaylists dictionary.
@@ -538,7 +543,6 @@ namespace RetroPass
                         if (playlistPlatform == null)
                         {
                             continue;
-
                         }
                         //add only if the game with the same file name exists in one of platforms
                         PlaylistItem playlistItemPlatform = playlistPlatform.PlaylistItems.FirstOrDefault(t => t.game.ApplicationPath.EndsWith(gameFileName));
@@ -565,4 +569,3 @@ namespace RetroPass
         }
     }
 }
-

@@ -1,9 +1,7 @@
-﻿using LaunchPass;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -23,8 +21,8 @@ namespace RetroPass
             Removable
         }
 
-        readonly string ActiveDataSourceLocationKey = "ActiveDataSourceLocationKey";
-        readonly string ImportFinishedKey = "ImportFinishedKey";
+        private readonly string ActiveDataSourceLocationKey = "ActiveDataSourceLocationKey";
+        private readonly string ImportFinishedKey = "ImportFinishedKey";
 
         public bool ImportFinished
         {
@@ -69,7 +67,7 @@ namespace RetroPass
         private StorageFile localStorageFile = null;
         private DataSource dataSource;
 
-        static CancellationTokenSource tokenSource;
+        private static CancellationTokenSource tokenSource;
 
         public DataSourceManager()
         {
@@ -111,9 +109,11 @@ namespace RetroPass
             {
                 case DataSourceLocation.None:
                     break;
+
                 case DataSourceLocation.Local:
                     file = await GetConfigFile(ApplicationData.Current.LocalCacheFolder);
                     break;
+
                 case DataSourceLocation.Removable:
                     // Get the logical root folder for all external storage devices.
                     IReadOnlyList<StorageFolder> removableFolders = await KnownFolders.RemovableDevices.GetFoldersAsync();
@@ -128,6 +128,7 @@ namespace RetroPass
                         }
                     }
                     break;
+
                 default:
                     break;
             }
@@ -143,18 +144,21 @@ namespace RetroPass
             {
                 case DataSourceLocation.None:
                     break;
+
                 case DataSourceLocation.Local:
                     if (localStorageFile != null)
                     {
                         dataSource = await GetDataSourceFromConfigurationFile(localStorageFile);
                     }
                     break;
+
                 case DataSourceLocation.Removable:
                     if (removableStorageFile != null)
                     {
                         dataSource = await GetDataSourceFromConfigurationFile(removableStorageFile);
                     }
                     break;
+
                 default:
                     break;
             }
@@ -187,10 +191,13 @@ namespace RetroPass
             {
                 case DataSourceLocation.None:
                     return false;
+
                 case DataSourceLocation.Local:
                     return localStorageFile != null;
+
                 case DataSourceLocation.Removable:
                     return removableStorageFile != null;
+
                 default:
                     return false;
             }
@@ -326,7 +333,7 @@ namespace RetroPass
 
             List<string> assets = ds.GetAssets();
 
-            //create config file			
+            //create config file
             RetroPassConfig configRemovable = await GetConfiguration(DataSourceLocation.Removable);
             RetroPassConfig config = new RetroPassConfig();
             config.relativePath = "./DataSource";
@@ -473,8 +480,7 @@ namespace RetroPass
                         IStorageItem configItem = await rootFolder.TryGetItemAsync("LaunchPass.xml");
                         if (configItem == null)
                         {
-                           
-                            //create config file			
+                            //create config file
                             RetroPassConfig config = new RetroPassConfig();
                             config.relativePath = "./LaunchBox";
                             config.type = RetroPassConfig.DataSourceType.LaunchBox;
@@ -514,7 +520,7 @@ namespace RetroPass
 
                             foreach (var file in await fontFolder.GetFilesAsync())
                             {
-                                await file.CopyAsync(InstallationFolder,file.Name,NameCollisionOption.ReplaceExisting);
+                                await file.CopyAsync(InstallationFolder, file.Name, NameCollisionOption.ReplaceExisting);
                             }
                         }
                         else

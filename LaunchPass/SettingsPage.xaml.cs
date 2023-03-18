@@ -31,7 +31,7 @@ namespace RetroPass
             defaultForeground = ButtonActivateLocalStorage.Foreground;
         }
 
-        protected async override void OnKeyDown(KeyRoutedEventArgs e)
+        protected override async void OnKeyDown(KeyRoutedEventArgs e)
         {
             switch (e.Key)
             {
@@ -97,6 +97,7 @@ namespace RetroPass
                     ButtonActivateRemovableStorage.Foreground = defaultForeground;
                     ButtonActivateRemovableStorage.Focus(FocusState.Keyboard);
                     break;
+
                 case DataSourceManager.DataSourceLocation.Local:
                     ButtonActivateLocalStorage.Content = "Active";
                     ButtonActivateLocalStorage.Foreground = (SolidColorBrush)Application.Current.Resources["SystemControlForegroundAccentBrush"];
@@ -104,6 +105,7 @@ namespace RetroPass
                     ButtonActivateRemovableStorage.Foreground = defaultForeground;
                     ButtonActivateLocalStorage.Focus(FocusState.Keyboard);
                     break;
+
                 case DataSourceManager.DataSourceLocation.Removable:
                     ButtonActivateLocalStorage.Content = "Activate";
                     ButtonActivateLocalStorage.Foreground = defaultForeground;
@@ -111,6 +113,7 @@ namespace RetroPass
                     ButtonActivateRemovableStorage.Foreground = (SolidColorBrush)Application.Current.Resources["SystemControlForegroundAccentBrush"];
                     ButtonActivateRemovableStorage.Focus(FocusState.Keyboard);
                     break;
+
                 default:
                     break;
             }
@@ -281,6 +284,7 @@ namespace RetroPass
         {
             Frame.Navigate(typeof(ThemeSettingsPage));
         }
+
         private async void RetroAchievements_Click(object sender, RoutedEventArgs e)
         {
             // The URI to launch
@@ -300,6 +304,7 @@ namespace RetroPass
                 await dialog.ShowAsync();
             }
         }
+
         private async void Xhb_Click(object sender, RoutedEventArgs e)
         {
             // The URI to launch
@@ -317,6 +322,7 @@ namespace RetroPass
                 await dialog.ShowAsync();
             }
         }
+
         private async void SM_Click(object sender, RoutedEventArgs e)
         {
             // The URI to launch
@@ -334,6 +340,7 @@ namespace RetroPass
                 await dialog.ShowAsync();
             }
         }
+
         private async void Our_Apps_Click(object sender, RoutedEventArgs e)
         {
             // The URI to launch
@@ -354,9 +361,6 @@ namespace RetroPass
 
         private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
         {
-
         }
     }
-
-    }
-        
+}

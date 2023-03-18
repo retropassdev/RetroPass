@@ -18,7 +18,7 @@ namespace RetroPass
     /// </summary>
     public sealed partial class GameCollectionPage : Page
     {
-        Playlist playlist;
+        private Playlist playlist;
 
         public class GameCollectionPageNavigateParams
         {
@@ -34,7 +34,7 @@ namespace RetroPass
             public PlaylistPlayLater playlistPlayLater;
         }
 
-        PlaylistPlayLater playlistPlayLater;
+        private PlaylistPlayLater playlistPlayLater;
 
         public GameCollectionPage()
         {
@@ -59,7 +59,7 @@ namespace RetroPass
             }
         }
 
-        protected async override void OnKeyDown(KeyRoutedEventArgs e)
+        protected override async void OnKeyDown(KeyRoutedEventArgs e)
         {
             switch (e.Key)
             {
@@ -81,6 +81,7 @@ namespace RetroPass
                         }
                     }
                     break;
+
                 case VirtualKey.GamepadY:
                 case VirtualKey.Y:
                     var pl1 = new List<Playlist>();
@@ -97,6 +98,7 @@ namespace RetroPass
                         popupDetails.OnNavigatedFrom();
                     }
                     break;
+
                 case VirtualKey.GamepadMenu:
                     if (PlatformGridView.SelectedItem != null)
                     {
@@ -152,7 +154,7 @@ namespace RetroPass
             {
                 args.Handled = true;
                 // Swallow this request and restart it with a request to center the item.  We could instead have chosen
-                // to adjust the TargetRect’s Y and Height values to add a specific amount of padding as it bubbles up, 
+                // to adjust the TargetRect’s Y and Height values to add a specific amount of padding as it bubbles up,
                 // but if we just want to center it then this is easier.
 
                 // (Optional) Account for sticky headers if they exist
@@ -167,7 +169,6 @@ namespace RetroPass
                 });
             }
         }
-
 
         private void ItemsWrapGrid_BringIntoViewRequested(UIElement sender, BringIntoViewRequestedEventArgs args)
         {

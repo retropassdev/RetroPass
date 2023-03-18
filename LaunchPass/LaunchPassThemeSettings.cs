@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Windows.Storage;
 using Windows.UI.Xaml;
 
 namespace RetroPass
 {
-
     [XmlRoot(ElementName = "Background")]
     public class Background
     {
@@ -40,7 +35,6 @@ namespace RetroPass
         [XmlElement(ElementName = "BoxArtType")]
         public string BoxArtType { get; set; }
 
-
         public string GetMediaPath(string PageName)
         {
             string path = string.Empty;
@@ -59,4 +53,3 @@ namespace RetroPass
         }
     }
 }
-

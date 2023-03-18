@@ -19,6 +19,7 @@ namespace RetroPass
             Warning,
             Error
         }
+
         public LogItem(string text)
         {
             Text = text;
@@ -36,13 +37,13 @@ namespace RetroPass
                 Level = LogLevel.Information;
             }
         }
+
         public string Text { get; set; }
         public LogLevel Level { get; set; }
     }
 
     public sealed partial class LogPage : ContentDialog
     {
-
         public LogPage()
         {
             this.InitializeComponent();
@@ -64,6 +65,7 @@ namespace RetroPass
                 return instance;
             }
         }
+
         public static async void SetLogging()
         {
             if ((bool)ApplicationData.Current.LocalSettings.Values[App.SettingsLoggingEnabled] == true)
@@ -137,12 +139,15 @@ namespace RetroPass
                     case LogItem.LogLevel.Information:
                         container.Foreground = whiteBrush;
                         break;
+
                     case LogItem.LogLevel.Warning:
                         container.Foreground = yellowBrush;
                         break;
+
                     case LogItem.LogLevel.Error:
                         container.Foreground = redBrush;
                         break;
+
                     default:
                         break;
                 }

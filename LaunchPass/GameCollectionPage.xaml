@@ -79,8 +79,8 @@
         CornerRadius="4,4,4,4"
         Background="#000000">
         <lp:LPMediaElement x:Name="mediaPlayer" Margin="0"
-                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
         <GridView
             x:Name="PlatformGridView"
             Background="Transparent"
@@ -109,7 +109,7 @@
                         Style="{StaticResource SubheaderTextBlockStyle}"
                         Text=""
                         Foreground="White"
-                        FontFamily="{StaticResource ApplicationFonts}"/>
+                        FontFamily="{StaticResource ApplicationFonts}" />
                     <TextBlock
                         x:Name="NumGamesCollectionText"
                         Grid.Row="1"

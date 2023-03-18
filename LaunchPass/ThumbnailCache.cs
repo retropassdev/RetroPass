@@ -223,7 +223,6 @@ namespace RetroPass
                 numImagesProcessed--;
             }
 
-
             return thumbnail;
         }
 

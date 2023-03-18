@@ -23,7 +23,6 @@ namespace RetroPass
             }
         }
 
-
         public static async Task<StorageFolder> GetFolderFromPathAsync(string path)
         {
             try
@@ -34,7 +33,6 @@ namespace RetroPass
             }
             catch (Exception e)
             {
-
                 Trace.TraceError("StorageUtils: GetFolderFromPathAsync FAIL: {0}", path);
                 Trace.TraceError(e.Message);
                 return null;

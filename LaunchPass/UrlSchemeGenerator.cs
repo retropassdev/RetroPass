@@ -2,7 +2,7 @@ using System;
 
 namespace RetroPass
 {
-    class UrlSchemeGenerator
+    internal class UrlSchemeGenerator
     {
         public static string GetUrl(Game game)
         {
@@ -13,33 +13,42 @@ namespace RetroPass
                 case Platform.EEmulatorType.retroarch:
                     url = GetUrlRetroarch(game);
                     break;
+
                 case Platform.EEmulatorType.rgx:
                     url = GetUrlRetrix(game);
                     break;
+
                 case Platform.EEmulatorType.xbsx2:
                     url = GetUrlXBSX2(game);
                     break;
+
                 case Platform.EEmulatorType.dolphin:
                     url = GetUrlDolphin(game);
                     break;
+
                 case Platform.EEmulatorType.ppsspp:
                     url = GetUrlPpsspp(game);
                     break;
+
                 case Platform.EEmulatorType.duckstation:
                     url = GetUrlDuckstation(game);
                     break;
+
                 case Platform.EEmulatorType.flycast:
                     url = GetUrlFlycast(game);
                     break;
-				case Platform.EEmulatorType.xenia:
-					url = GetUrlXenia(game);
-					break;
-				case Platform.EEmulatorType.xeniacanary:
-					url = GetUrlXeniaCanary(game);
-					break;
-				default:
-					break;
-			}
+
+                case Platform.EEmulatorType.xenia:
+                    url = GetUrlXenia(game);
+                    break;
+
+                case Platform.EEmulatorType.xeniacanary:
+                    url = GetUrlXeniaCanary(game);
+                    break;
+
+                default:
+                    break;
+            }
 
             return url;
         }
@@ -104,20 +113,21 @@ namespace RetroPass
             args += "&launchOnExit=" + "LaunchPass:";
             return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
         }
-		private static string GetUrlXenia(Game game)
-		{
-			string args = "cmd=" + "xenia.exe";
-			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-			args += "&launchOnExit=" + "LaunchPass:";
-			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
-		}
 
-		private static string GetUrlXeniaCanary(Game game)
-		{
-			string args = "cmd=" + "xeniacanary.exe";
-			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
-			args += "&launchOnExit=" + "LaunchPass:";
-			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
-		}
-	}
+        private static string GetUrlXenia(Game game)
+        {
+            string args = "cmd=" + "xenia.exe";
+            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+            args += "&launchOnExit=" + "LaunchPass:";
+            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+        }
+
+        private static string GetUrlXeniaCanary(Game game)
+        {
+            string args = "cmd=" + "xeniacanary.exe";
+            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+            args += "&launchOnExit=" + "LaunchPass:";
+            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+        }
+    }
 }

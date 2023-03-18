@@ -11,9 +11,9 @@
 
     <Grid>
         <Image x:Name="image1" Stretch="Fill" Margin="0"
-               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
         <MediaElement x:Name="mediaElement1" AutoPlay="True" IsLooping="True" Margin="0" Stretch="Fill"
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </Grid>
 </UserControl>

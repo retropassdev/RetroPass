@@ -107,6 +107,7 @@ namespace RetroPass
                             searchResultList.Add(i);
                         }
                         break;
+
                     case "Developer":
                         playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.Developer != null && t.game.Developer.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
                         searchResultList.Clear();
@@ -115,6 +116,7 @@ namespace RetroPass
                             searchResultList.Add(i);
                         }
                         break;
+
                     case "Year":
                         playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.ReleaseDate != null && t.game.ReleaseDate.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
                         searchResultList.Clear();
@@ -123,6 +125,7 @@ namespace RetroPass
                             searchResultList.Add(i);
                         }
                         break;
+
                     default:
                         break;
                 }
@@ -186,7 +189,7 @@ namespace RetroPass
 
                 //Trace.TraceInformation("ShowImage " + item.game.BoxFrontFileName);
 
-                // It's phase 1, so show this item's image.				
+                // It's phase 1, so show this item's image.
                 var templateRoot = args.ItemContainer.ContentTemplateRoot as FrameworkElement;
                 var image = (Image)templateRoot.FindName("ItemImage");
 
@@ -203,14 +206,13 @@ namespace RetroPass
             }
         }
 
-
         private void ScrollToCenter(UIElement sender, BringIntoViewRequestedEventArgs args)
         {
             if (args.VerticalAlignmentRatio != 0.5)  // Guard against our own request
             {
                 args.Handled = true;
                 // Swallow this request and restart it with a request to center the item.  We could instead have chosen
-                // to adjust the TargetRect’s Y and Height values to add a specific amount of padding as it bubbles up, 
+                // to adjust the TargetRect’s Y and Height values to add a specific amount of padding as it bubbles up,
                 // but if we just want to center it then this is easier.
 
                 // (Optional) Account for sticky headers if they exist
@@ -248,12 +250,10 @@ namespace RetroPass
 
         private void SearchGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private void SearchCriteria_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
     }
 }

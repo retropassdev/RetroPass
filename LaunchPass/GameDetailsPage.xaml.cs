@@ -29,6 +29,7 @@ namespace RetroPass
 
         //private ObservableCollection<DetailImage> imageList = new ObservableCollection<DetailImage>();
         private bool detailsPopupActive = false;
+
         private bool descriptionPopupActive = false;
         public string Subtitle { get; set; }
         private MediaSource mediaSource;
@@ -137,7 +138,7 @@ namespace RetroPass
             {
                 args.Handled = true;
                 // Swallow this request and restart it with a request to center the item.  We could instead have chosen
-                // to adjust the TargetRect’s Y and Height values to add a specific amount of padding as it bubbles up, 
+                // to adjust the TargetRect’s Y and Height values to add a specific amount of padding as it bubbles up,
                 // but if we just want to center it then this is easier.
 
                 // (Optional) Account for sticky headers if they exist
@@ -186,7 +187,7 @@ namespace RetroPass
             }
         }
 
-        public async static Task StartContent(PlaylistItem playlistItem)
+        public static async Task StartContent(PlaylistItem playlistItem)
         {
             var game = playlistItem.game;
             playlistItem.playlist.SetLastPlayed(playlistItem);
@@ -220,7 +221,6 @@ namespace RetroPass
 
         private void ScrollViewer1_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-
         }
     }
 }

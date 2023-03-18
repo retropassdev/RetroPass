@@ -48,7 +48,6 @@ namespace RetroPass
         [XmlElement(ElementName = "publisher")] public override string Publisher { get; set; }
         [XmlElement(ElementName = "genre")] public override string Genre { get; set; }
 
-
         //public override string BoxFrontFileName { get { return Path.GetFileName(Thumbnail); } }
 
         public override void Init()
@@ -91,9 +90,12 @@ namespace RetroPass
             Trace.TraceInformation("GameES: BoxFrontContentName Init: {0}" + BoxFrontContentName);
         }
     }
-    class DataSourceEmulationStation : DataSource
+
+    internal class DataSourceEmulationStation : DataSource
     {
-        public DataSourceEmulationStation(string rootFolder, RetroPassConfig retroPassConfig) : base(rootFolder, retroPassConfig) { }
+        public DataSourceEmulationStation(string rootFolder, RetroPassConfig retroPassConfig) : base(rootFolder, retroPassConfig)
+        {
+        }
 
         public override List<string> GetAssets()
         {
@@ -205,7 +207,6 @@ namespace RetroPass
                 }
                 string coreName = system.command.Substring(indexStart + 1, index + 3 - indexStart);
 
-
                 //////////////////////////////////import platform games as playlist/////////////////////////
                 string xmlPlatform = await FileIO.ReadTextAsync(gamelistFile);
 
@@ -228,7 +229,6 @@ namespace RetroPass
 
                         string platformPath = dataFolder.Path;
 
-
                         //try to find path in any of the games
                         platform.BoxFrontPath = platformGames.games.Where(t => string.IsNullOrEmpty(t.Thumbnail) == false).Select(t => t.Thumbnail).DefaultIfEmpty(string.Empty).First();
 
@@ -243,7 +243,6 @@ namespace RetroPass
 
                         //find folder
                         platform.BoxFrontFolder = await StorageUtils.GetFolderFromPathAsync(platform.BoxFrontPath);
-
 
                         platform.ScreenshotGameTitlePath = platformGames.games.Where(t => string.IsNullOrEmpty(t.Screenshot) == false).Select(t => t.Screenshot).DefaultIfEmpty(string.Empty).First();
                         platform.ScreenshotGameTitlePath = platform.ScreenshotGameTitlePath == "" ? "" : Path.GetFullPath(platformPath + Path.GetDirectoryName(platform.ScreenshotGameTitlePath));

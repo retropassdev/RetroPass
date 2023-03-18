@@ -1,22 +1,10 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
-using RetroPass;
+﻿using RetroPass;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -24,8 +12,8 @@ namespace LaunchPass
 {
     public sealed partial class LPMediaElement : UserControl
     {
-        static string[] imageExt = new string[] { ".png", "jpg", "jpeg", ".webp" };
-        static string[] videoExt = new string[] { ".mp4", ".MOV", ".webp" };
+        private static string[] imageExt = new string[] { ".png", "jpg", "jpeg", ".webp" };
+        private static string[] videoExt = new string[] { ".mp4", ".MOV", ".webp" };
 
         public string MediaPath
         {
@@ -43,7 +31,7 @@ namespace LaunchPass
         public static readonly DependencyProperty MediaPathProperty =
             DependencyProperty.Register("MediaPath", typeof(string), typeof(LPMediaElement), new PropertyMetadata(string.Empty, OnMediaPathChangedCallBack));
 
-        async private static void OnMediaPathChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static async void OnMediaPathChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             LPMediaElement element = sender as LPMediaElement;
             string path = Convert.ToString(e.NewValue);

@@ -12,8 +12,8 @@ namespace RetroPass
     {
         public GameRetroPass() : base()
         {
-
         }
+
         public GameRetroPass(Game game)
         {
             Title = game.Title;
@@ -32,6 +32,7 @@ namespace RetroPass
             ReleaseDate = game.ReleaseDate;
             Genre = game.Genre;
         }
+
         [XmlElement(ElementName = "ApplicationPath")] public override string ApplicationPath { get; set; }
         [XmlElement(ElementName = "Title")] public override string Title { get; set; }
         [XmlElement(ElementName = "CoreName")] public override string CoreName { get; set; }
@@ -100,6 +101,7 @@ namespace RetroPass
         }
 
         public abstract Task Load();
+
         public abstract List<string> GetAssets();
     }
 }
