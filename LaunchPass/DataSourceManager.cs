@@ -505,7 +505,7 @@ namespace RetroPass
                             ((App)Application.Current).LaunchPassRootPath = launchPassFolderCurrent.Path;
                             StorageFile launchPassXMLfile = await launchPassFolderCurrent.GetFileAsync("LaunchPassUserSettings.xml");
                             if (launchPassXMLfile != null)
-                            // We've Located LaunchPass.xml, attempt to read the file.
+                            // We've Located LaunchPassUserSettings.xml, attempt to read the file.
                             {
                                 string xmlConfig = await FileIO.ReadTextAsync(launchPassXMLfile);
 
