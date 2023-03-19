@@ -267,12 +267,16 @@ namespace LaunchPass
                     }
                 }
             }
-            // Show the user that something has gone wrong when applying the settings changes
+            // Show user that something has gone wrong while applying the settings
             catch (Exception ex)
             {
-                var msgBox = new MessageDialog("Something went wrong! Could not save the Settings." + Environment.NewLine + ex.Message, "LaunchPass");
-                await msgBox.ShowAsync();
+                var restart_required_msgBox = new MessageDialog("Something went wrong! Could not save the Settings." + Environment.NewLine + ex.Message, "LaunchPass");
+                await restart_required_msgBox.ShowAsync();
             }
+
+            // Show user that the Settings have been applied successfully
+            var settings_applied_msgBox = new MessageDialog("Your settings have been applied!", "Success");
+            await settings_applied_msgBox.ShowAsync();
         }
 
         private void toggleBoxFront_Checked(object sender, RoutedEventArgs e)
