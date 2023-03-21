@@ -82,7 +82,7 @@ namespace LaunchPass
 
                         settingsXMLFile = await GetRPUThemeSettingsFile(retroPassUltimateFolderCurrent);
 
-                        var backgroundFiles = await GetFilesAsync(retroPassUltimateFolderCurrent, "Backgrounds", new List<string>() { ".png", ".jpg", ".mp4", ".mpg", ".MOV", ".avif", ".webp" });
+                        var backgroundFiles = await GetFilesAsync(retroPassUltimateFolderCurrent, "Backgrounds", new List<string>() { ".png", ".jpg", ".jxr", ".dds", ".jpeg", ".webp", ".webm", ".mkv", ".mp4", ".mov", ".wdp" });
                         List<String> backgroundsFilesNameList = backgroundFiles.Select(s => s.Name).ToList();
 
                         MainPageCB.ItemsSource = backgroundsFilesNameList;

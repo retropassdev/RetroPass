@@ -12,8 +12,8 @@ namespace LaunchPass
 {
     public sealed partial class LPMediaElement : UserControl
     {
-        private static string[] imageExt = new string[] { ".png", "jpg", "jpeg", ".webp" };
-        private static string[] videoExt = new string[] { ".mp4", ".MOV", ".webp" };
+        static string[] imageExt = new string[] { ".png", ".jpg", ".jxr", ".wdp", ".dds", ".jpeg", ".webp" };
+        static string[] videoExt = new string[] { ".mp4", ".mov", ".webp", ".webm", ".mkv" };
 
         public string MediaPath
         {
