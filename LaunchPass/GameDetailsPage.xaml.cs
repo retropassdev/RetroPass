@@ -45,6 +45,8 @@ namespace RetroPass
 
         public void OnNavigatedTo(PlaylistItem playlistItem)
         {
+            mediaPlayer.MediaPath = ((App)Application.Current).CurrentThemeSettings.GetMediaPath("DetailsPage");
+
             //CoreWindow.GetForCurrentThread().KeyDown += OnKeyDown;
             //SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
             this.Closing += OnGameDetailsClosing;

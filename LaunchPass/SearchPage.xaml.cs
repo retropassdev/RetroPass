@@ -54,6 +54,8 @@ namespace RetroPass
 
         public void OnNavigatedTo(List<Playlist> playlists)
         {
+            mediaPlayer.MediaPath = ((App)Application.Current).CurrentThemeSettings.GetMediaPath("SearchPage");
+
             firstFocus = true;
             IsOpened = true;
             SearchGridView.ItemsSource = searchResultList;
