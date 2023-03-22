@@ -92,12 +92,12 @@ namespace RetroPass
         public Action<Playlist> PlaylistImported;
 
         public string rootFolder;
-        public RetroPassConfig retroPassConfig;
+        public LaunchPassConfig LaunchPassConfig;
 
-        public DataSource(string rootFolder, RetroPassConfig retroPassConfig)
+        public DataSource(string rootFolder, LaunchPassConfig LaunchPassConfig)
         {
             this.rootFolder = rootFolder;
-            this.retroPassConfig = retroPassConfig;
+            this.LaunchPassConfig = LaunchPassConfig;
         }
 
         public abstract Task Load();

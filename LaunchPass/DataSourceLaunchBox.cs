@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -149,9 +149,7 @@ namespace RetroPass
 
     internal class DataSourceLaunchBox : DataSource
     {
-        public DataSourceLaunchBox(string rootFolder, RetroPassConfig retroPassConfig) : base(rootFolder, retroPassConfig)
-        {
-        }
+        public DataSourceLaunchBox(string rootFolder, LaunchPassConfig LaunchPassConfig) : base(rootFolder, LaunchPassConfig) { }
 
         public override List<string> GetAssets()
         {

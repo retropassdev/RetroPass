@@ -1,4 +1,4 @@
-﻿using RetroPass;
+using RetroPass;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,21 +68,21 @@ namespace LaunchPass
                 var removableDevices = KnownFolders.RemovableDevices;
                 var folders = await removableDevices.GetFoldersAsync();
 
-                StorageFolder retroPassUltimateFolderCurrent = null;
+                StorageFolder launchPassFolderCurrent = null;
 
                 foreach (StorageFolder rootFolder in folders)
                 {
-                    //FIND LAUNCHBOX FOLDER TO RELATED RETROPASS FOLDER ON THE SAME REMOVABLE DEVICE
+                    //FIND LAUNCHBOX FOLDER TO RELATED LaunchPass FOLDER ON THE SAME REMOVABLE DEVICE
                     StorageFolder launchBoxFolder = await rootFolder.TryGetItemAsync("LaunchBox") as StorageFolder;
 
                     if (launchBoxFolder != null)
                     {
                         // Check removable devices for LaunchPass Folder.
-                        retroPassUltimateFolderCurrent = await rootFolder.TryGetItemAsync("LaunchPass") as StorageFolder;
+                        launchPassFolderCurrent = await rootFolder.TryGetItemAsync("LaunchPass") as StorageFolder;
 
-                        settingsXMLFile = await GetRPUThemeSettingsFile(retroPassUltimateFolderCurrent);
+                        settingsXMLFile = await GetLaunchPassThemeSettingsFile(launchPassFolderCurrent);
 
-                        var backgroundFiles = await GetFilesAsync(retroPassUltimateFolderCurrent, "Backgrounds", new List<string>() { ".png", ".jpg", ".jxr", ".dds", ".jpeg", ".webp", ".webm", ".mkv", ".mp4", ".mov", ".wdp" });
+                        var backgroundFiles = await GetFilesAsync(launchPassFolderCurrent, "Backgrounds", new List<string>() { ".png", ".jpg", ".jxr", ".dds", ".jpeg", ".webp", ".webm", ".mkv", ".mp4", ".mov", ".wdp" });
                         List<String> backgroundsFilesNameList = backgroundFiles.Select(s => s.Name).ToList();
 
                         MainPageCB.ItemsSource = backgroundsFilesNameList;
@@ -92,7 +92,7 @@ namespace LaunchPass
                         CustomizePageCB.ItemsSource = backgroundsFilesNameList;
                         SettingsPageCB.ItemsSource = backgroundsFilesNameList;
 
-                        var fontFiles = await GetFilesAsync(retroPassUltimateFolderCurrent, "Fonts", new List<string>() { ".ttf", ".otf" });
+                        var fontFiles = await GetFilesAsync(launchPassFolderCurrent, "Fonts", new List<string>() { ".ttf", ".otf" });
                         FontsCB.ItemsSource = fontFiles.Select(s => s.Name).ToList();
 
                         break;
@@ -185,14 +185,14 @@ namespace LaunchPass
             return allFiles;
         }
 
-        private async Task<StorageFile> GetRPUThemeSettingsFile(StorageFolder folder)
+        private async Task<StorageFile> GetLaunchPassThemeSettingsFile(StorageFolder folder)
         {
             StorageFile file = null;
 
             if (folder != null)
             {
-                //check if the location exists
-                var item = await folder.TryGetItemAsync("LaunchPass.xml");
+                //check if user settings config file exists
+                var item = await folder.TryGetItemAsync("LaunchPassUserSettings.xml");
 
                 if (item != null)
                 {
@@ -258,7 +258,7 @@ namespace LaunchPass
                     mediaPlayer.MediaPath = file.Path;
 
                     ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
-
+                    // Show the user that fonts were changed and application will be restarted
                     if (isFontChanged)
                     {
                         var msgBox = new MessageDialog("You changed fonts. Application will be restarted!", "LaunchPass");
@@ -267,6 +267,7 @@ namespace LaunchPass
                     }
                 }
             }
+            // Show the user that something has gone wrong when applying the settings changes
             catch (Exception ex)
             {
                 var msgBox = new MessageDialog("Something went wrong! Could not save the Settings." + Environment.NewLine + ex.Message, "LaunchPass");

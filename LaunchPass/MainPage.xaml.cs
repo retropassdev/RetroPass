@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,14 +19,14 @@ using Windows.UI.Xaml.Navigation;
 
 namespace RetroPass
 {
-    [Serializable, XmlRoot("dataSource")]
-    public class RetroPassConfig
-    {
-        public enum DataSourceType
-        {
-            LaunchBox,
-            EmulationStation,
-        }
+	[Serializable, XmlRoot("dataSource")]
+	public class LaunchPassConfig
+	{
+		public enum DataSourceType
+		{
+			LaunchBox,
+			EmulationStation,
+		}
 
         public class Retroarch
         {

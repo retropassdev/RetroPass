@@ -41,7 +41,7 @@ namespace RetroPass
 
             if (!string.IsNullOrEmpty(PageName))
             {
-                path = Path.Combine(((App)Application.Current).RetroPassRootPath, "Backgrounds",
+                path = Path.Combine(((App)Application.Current).LaunchPassRootPath, "Backgrounds",
                     ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == PageName).File);
             }
             return path;
@@ -49,7 +49,7 @@ namespace RetroPass
 
         public string GetFontFilePath()
         {
-            return Path.Combine(((App)Application.Current).RetroPassRootPath, "Fonts", ((App)Application.Current).CurrentThemeSettings.Font);
+            return Path.Combine(((App)Application.Current).LaunchPassRootPath, "Fonts", ((App)Application.Current).CurrentThemeSettings.Font);
         }
     }
 }

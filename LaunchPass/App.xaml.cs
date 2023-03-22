@@ -1,4 +1,4 @@
-﻿using LaunchPass;
+using LaunchPass;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,8 +19,7 @@ namespace RetroPass
         public static readonly string SettingsAutoPlayVideo = "SettingsAutoPlayVideo";
         public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
         public LaunchPassThemeSettings CurrentThemeSettings { get; set; }
-        public string RetroPassRootPath { get; set; }
-
+        public string LaunchPassRootPath { get; set; }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -109,7 +108,7 @@ namespace RetroPass
         async protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             DataSourceManager manager = new DataSourceManager();
-            await manager.PrepareRetroPassUltimateFolder();
+            await manager.PreparelaunchPassFolder();
 
             string fontPath = ((App)Application.Current).CurrentThemeSettings.GetFontFilePath();
             ((App)Application.Current).Resources["ApplicationFonts"] = "Assets/Fonts/" + Path.GetFileName(fontPath) + "#" + Path.GetFileNameWithoutExtension(fontPath);

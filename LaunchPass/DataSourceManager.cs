@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -82,10 +82,10 @@ namespace RetroPass
             removableStorageFile = await GetConfigurationFile(DataSourceLocation.Removable);
         }
 
-        private async Task<RetroPassConfig> GetConfiguration(DataSourceLocation location)
+        private async Task<LaunchPassConfig> GetConfiguration(DataSourceLocation location)
         {
             var file = await GetConfigurationFile(location);
-            RetroPassConfig configuration = null;
+            LaunchPassConfig configuration = null;
 
             if (file != null)
             {
@@ -93,9 +93,9 @@ namespace RetroPass
 
                 using (TextReader reader = new StringReader(xmlConfig))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(RetroPassConfig));
-                    // Call the Deserialize method to restore the object's state.
-                    configuration = serializer.Deserialize(reader) as RetroPassConfig;
+                    XmlSerializer serializer = new XmlSerializer(typeof(LaunchPassConfig));
+                    // Call the De-serialize method to restore the object's state.
+                    configuration = serializer.Deserialize(reader) as LaunchPassConfig;
                 }
             }
             return configuration;
@@ -214,18 +214,18 @@ namespace RetroPass
 
                 using (TextReader reader = new StringReader(xmlConfig))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(RetroPassConfig));
+                    XmlSerializer serializer = new XmlSerializer(typeof(LaunchPassConfig));
                     // Call the Deserialize method to restore the object's state.
-                    RetroPassConfig configuration = serializer.Deserialize(reader) as RetroPassConfig;
+                    LaunchPassConfig configuration = serializer.Deserialize(reader) as LaunchPassConfig;
 
                     string rootFolder = Path.Combine(Path.GetDirectoryName(xmlConfigFile.Path), configuration.relativePath);
                     rootFolder = Path.GetFullPath(rootFolder);
 
-                    if (configuration.type == RetroPassConfig.DataSourceType.LaunchBox)
+                    if (configuration.type == LaunchPassConfig.DataSourceType.LaunchBox)
                     {
                         dataSource = new DataSourceLaunchBox(rootFolder, configuration);
                     }
-                    else if (configuration.type == RetroPassConfig.DataSourceType.EmulationStation)
+                    else if (configuration.type == LaunchPassConfig.DataSourceType.EmulationStation)
                     {
                         dataSource = new DataSourceEmulationStation(rootFolder, configuration);
                     }
@@ -333,16 +333,16 @@ namespace RetroPass
 
             List<string> assets = ds.GetAssets();
 
-            //create config file
-            RetroPassConfig configRemovable = await GetConfiguration(DataSourceLocation.Removable);
-            RetroPassConfig config = new RetroPassConfig();
+            //create a launchpass config file			
+            LaunchPassConfig configRemovable = await GetConfiguration(DataSourceLocation.Removable);
+            LaunchPassConfig config = new LaunchPassConfig();
             config.relativePath = "./DataSource";
             config.type = configRemovable.type;
-            config.retroarch = ds.retroPassConfig.retroarch;
+            config.retroarch = ds.LaunchPassConfig.retroarch;
 
-            //save the file to app local directory
+            //save the config file to removable storage
             StorageFile filename = await folderDest.CreateFileAsync("LaunchPass.xml", CreationCollisionOption.ReplaceExisting);
-            XmlSerializer x = new XmlSerializer(typeof(RetroPassConfig));
+            XmlSerializer x = new XmlSerializer(typeof(LaunchPassConfig));
             using (TextWriter writer = new StringWriter())
             {
                 x.Serialize(writer, config);
@@ -368,7 +368,7 @@ namespace RetroPass
                     continue;
                 }
 
-                //create all subdirectories so asset can be copied into it
+                //create all subdirectories so asset can be copied into them
                 if (string.IsNullOrEmpty(dstAssetRelativeDirectoryPath) == false)
                 {
                     dstAssetFolder = await destinationRootFolder.CreateFolderAsync(dstAssetRelativeDirectoryPath, CreationCollisionOption.OpenIfExists);
@@ -460,14 +460,14 @@ namespace RetroPass
             localStorageFile = null;
         }
 
-        public async Task PrepareRetroPassUltimateFolder()
+        public async Task PreparelaunchPassFolder()
         {
             try
             {
                 var removableDevices = KnownFolders.RemovableDevices;
                 var folders = await removableDevices.GetFoldersAsync();
 
-                StorageFolder retroPassUltimateFolderCurrent = null;
+                StorageFolder launchPassFolderCurrent = null;
 
                 foreach (StorageFolder rootFolder in folders)
                 {
@@ -476,18 +476,19 @@ namespace RetroPass
 
                     if (launchBoxFolder != null)
                     {
-                        //Check root foler for LaunchPass.xml file.
+                        //Check storage root directory for LaunchPass.xml config file. (used for setting the data-source location)
                         IStorageItem configItem = await rootFolder.TryGetItemAsync("LaunchPass.xml");
                         if (configItem == null)
                         {
-                            //create config file
-                            RetroPassConfig config = new RetroPassConfig();
+                           
+                            // In the event launchpass config file is not found, attempt too create file relative too launchbox data folder			
+                            LaunchPassConfig config = new LaunchPassConfig();
                             config.relativePath = "./LaunchBox";
-                            config.type = RetroPassConfig.DataSourceType.LaunchBox;
+                            config.type = LaunchPassConfig.DataSourceType.LaunchBox;
 
-                            //save the file to app local directory
+                            //save the file to storage root directory
                             StorageFile filename = await rootFolder.CreateFileAsync("LaunchPass.xml", CreationCollisionOption.ReplaceExisting);
-                            XmlSerializer x = new XmlSerializer(typeof(RetroPassConfig));
+                            XmlSerializer x = new XmlSerializer(typeof(LaunchPassConfig));
                             using (TextWriter writer = new StringWriter())
                             {
                                 x.Serialize(writer, config);
@@ -497,16 +498,16 @@ namespace RetroPass
                         }
 
                         // Check removable devices for LaunchPass Folder.
-                        retroPassUltimateFolderCurrent = await rootFolder.TryGetItemAsync("LaunchPass") as StorageFolder;
-
-                        if (retroPassUltimateFolderCurrent != null)
+                        launchPassFolderCurrent = await rootFolder.TryGetItemAsync("LaunchPass") as StorageFolder;
+                        if (launchPassFolderCurrent != null)
+                        // We've Located LaunchPass Folder, check the folder for LaunchPassUserSettings.xml
                         {
-                            ((App)Application.Current).RetroPassRootPath = retroPassUltimateFolderCurrent.Path;
-                            StorageFile retroPassUltimateXMLfile = await retroPassUltimateFolderCurrent.GetFileAsync("LaunchPass.xml");
-
-                            if (retroPassUltimateXMLfile != null)
+                            ((App)Application.Current).LaunchPassRootPath = launchPassFolderCurrent.Path;
+                            StorageFile launchPassXMLfile = await launchPassFolderCurrent.GetFileAsync("LaunchPassUserSettings.xml");
+                            if (launchPassXMLfile != null)
+                            // We've Located LaunchPass.xml, attempt to read the file.
                             {
-                                string xmlConfig = await FileIO.ReadTextAsync(retroPassUltimateXMLfile);
+                                string xmlConfig = await FileIO.ReadTextAsync(launchPassXMLfile);
 
                                 using (TextReader reader = new StringReader(xmlConfig))
                                 {
@@ -515,7 +516,7 @@ namespace RetroPass
                                 }
                             }
 
-                            var fontFolder = await retroPassUltimateFolderCurrent.GetFolderAsync("Fonts");
+                            var fontFolder = await launchPassFolderCurrent.GetFolderAsync("Fonts");
                             StorageFolder InstallationFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(Windows.ApplicationModel.Package.Current.InstalledLocation.Path, "Assets", "Fonts"));
 
                             foreach (var file in await fontFolder.GetFilesAsync())
@@ -525,12 +526,12 @@ namespace RetroPass
                         }
                         else
                         {
-                            retroPassUltimateFolderCurrent = await rootFolder.CreateFolderAsync("LaunchPass") as StorageFolder;
+                            launchPassFolderCurrent = await rootFolder.CreateFolderAsync("LaunchPass") as StorageFolder;
 
-                            ((App)Application.Current).RetroPassRootPath = retroPassUltimateFolderCurrent.Path;
+                            ((App)Application.Current).LaunchPassRootPath = launchPassFolderCurrent.Path;
 
-                            var bgFolder = await retroPassUltimateFolderCurrent.CreateFolderAsync("Backgrounds");
-                            var fontFolder = await retroPassUltimateFolderCurrent.CreateFolderAsync("Fonts");
+                            StorageFolder bgFolder = await launchPassFolderCurrent.CreateFolderAsync("Backgrounds");
+                            var fontFolder = await launchPassFolderCurrent.CreateFolderAsync("Fonts");
 
                             //COPY SAMPLE BACKGROUND AND FONT FILES
                             var bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Main-Default.mp4"));
@@ -561,15 +562,16 @@ namespace RetroPass
                                 await file.CopyAsync(InstallationFolder, file.Name, NameCollisionOption.ReplaceExisting);
                             }
 
-                            //CREATE XML FILE FOR THEME SETTINGS
-                            StorageFile retroPassUltimateXMLfile = await retroPassUltimateFolderCurrent.CreateFileAsync("LaunchPass.xml", CreationCollisionOption.ReplaceExisting);
+                            //Attempt too create theme settings configuration file.
+                            StorageFile launchPassXMLfile = await launchPassFolderCurrent.CreateFileAsync("LaunchPassUserSettings.xml", CreationCollisionOption.ReplaceExisting);
 
-                            if (retroPassUltimateXMLfile != null)
+                            if (launchPassXMLfile != null)
+                                // Success, now generate the files contents.
                             {
-                                LaunchPassThemeSettings retroPassUltimateDefault = new LaunchPassThemeSettings();
-                                retroPassUltimateDefault.Font = "Xbox.ttf";
+                                LaunchPassThemeSettings launchPassDefault = new LaunchPassThemeSettings();
+                                launchPassDefault.Font = "Xbox.ttf";
 
-                                retroPassUltimateDefault.Backgrounds = new Backgrounds()
+                                launchPassDefault.Backgrounds = new Backgrounds()
                                 {
                                     Background = new List<Background>()
                                     {
@@ -582,16 +584,16 @@ namespace RetroPass
                                     }
                                 };
 
-                                retroPassUltimateDefault.BoxArtType = "Box - Front";
+                                launchPassDefault.BoxArtType = "Box - Front";
 
                                 XmlSerializer x = new XmlSerializer(typeof(LaunchPassThemeSettings));
                                 using (TextWriter writer = new StringWriter())
                                 {
-                                    x.Serialize(writer, retroPassUltimateDefault);
-                                    await FileIO.WriteTextAsync(retroPassUltimateXMLfile, writer.ToString());
+                                    x.Serialize(writer, launchPassDefault);
+                                    await FileIO.WriteTextAsync(launchPassXMLfile, writer.ToString());
                                 }
 
-                                ((App)Application.Current).CurrentThemeSettings = retroPassUltimateDefault;
+                                ((App)Application.Current).CurrentThemeSettings = launchPassDefault;
                             }
                         }
 

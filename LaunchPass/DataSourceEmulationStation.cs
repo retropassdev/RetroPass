@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -93,9 +93,7 @@ namespace RetroPass
 
     internal class DataSourceEmulationStation : DataSource
     {
-        public DataSourceEmulationStation(string rootFolder, RetroPassConfig retroPassConfig) : base(rootFolder, retroPassConfig)
-        {
-        }
+        public DataSourceEmulationStation(string rootFolder, LaunchPassConfig LaunchPassConfig) : base(rootFolder, LaunchPassConfig) { }
 
         public override List<string> GetAssets()
         {
@@ -260,13 +258,13 @@ namespace RetroPass
                     }
 
                     string retroArchRomPlatformPath = "";
-                    if (retroPassConfig.retroarch != null && string.IsNullOrEmpty(retroPassConfig.retroarch.romPath) == false)
+                    if (LaunchPassConfig.retroarch != null && string.IsNullOrEmpty(LaunchPassConfig.retroarch.romPath) == false)
                     {
-                        var mapping = retroPassConfig.retroarch.dirMappings.FirstOrDefault(t => t.src == platform.SourceName);
+                        var mapping = LaunchPassConfig.retroarch.dirMappings.FirstOrDefault(t => t.src == platform.SourceName);
 
                         if (mapping != null)
                         {
-                            retroArchRomPlatformPath = Path.Combine(retroPassConfig.retroarch.romPath, mapping.dst);
+                            retroArchRomPlatformPath = Path.Combine(LaunchPassConfig.retroarch.romPath, mapping.dst);
                         }
                     }
 
