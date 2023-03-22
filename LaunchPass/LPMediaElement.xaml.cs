@@ -62,9 +62,72 @@ namespace LaunchPass
             }
         }
 
+        public bool Stop
+        {
+            get
+            {
+                return (bool)GetValue(StopProperty);
+            }
+            set
+            {
+                SetValue(StopProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty StopProperty =
+            DependencyProperty.Register("Stop", typeof(bool), typeof(LPMediaElement), new PropertyMetadata(false, OnStopChangedCallBack));
+
+        private static void OnStopChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            LPMediaElement element = sender as LPMediaElement;
+            string path = element.MediaPath;
+
+            if (element != null && !string.IsNullOrEmpty(path))
+            {
+                string extension = Path.GetExtension(path);
+
+                if (videoExt.Contains(extension))
+                {
+                    element.mediaElement1.Stop();
+                }
+            }
+        }
+
+        public bool Play
+        {
+            get
+            {
+                return (bool)GetValue(PlayProperty);
+            }
+            set
+            {
+                SetValue(PlayProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty PlayProperty =
+            DependencyProperty.Register("Play", typeof(bool), typeof(LPMediaElement), new PropertyMetadata(false, OnPlayChangedCallBack));
+
+        private static void OnPlayChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            LPMediaElement element = sender as LPMediaElement;
+            string path = element.MediaPath;
+
+            if (element != null && !string.IsNullOrEmpty(path))
+            {
+                string extension = Path.GetExtension(path);
+
+                if (videoExt.Contains(extension))
+                {
+                    element.mediaElement1.Play();
+                }
+            }
+        }
+
         public LPMediaElement()
         {
             this.InitializeComponent();
         }
+
     }
 }
