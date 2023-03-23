@@ -31,6 +31,10 @@ namespace RetroPass
             Publisher = game.Publisher;
             ReleaseDate = game.ReleaseDate;
             Genre = game.Genre;
+            PlayMode = game.PlayMode;
+            ReleaseType = game.ReleaseType;
+            Version = game.Version;
+            MaxPlayers = game.MaxPlayers;
         }
 
         [XmlElement(ElementName = "ApplicationPath")] public override string ApplicationPath { get; set; }
@@ -42,6 +46,10 @@ namespace RetroPass
         [XmlElement(ElementName = "Publisher")] public override string Publisher { get; set; }
         [XmlElement(ElementName = "Genre")] public override string Genre { get; set; }
         [XmlElement(ElementName = "GamePlatform")] public override Platform GamePlatform { get; set; }
+        [XmlElement(ElementName = "PlayMode")] public override string PlayMode { get; set; }
+        [XmlElement(ElementName = "ReleaseType")] public override string ReleaseType { get; set; }
+        [XmlElement(ElementName = "Version")] public override string Version { get; set; }
+        [XmlElement(ElementName = "MaxPlayers")] public override string MaxPlayers { get; set; }
 
         public override void Init()
         {

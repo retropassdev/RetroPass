@@ -61,7 +61,7 @@ namespace RetroPass
             {
                 date = dt.Year.ToString();
             }
-            string[] arr = { game.Developer, game.Publisher, date, game.Genre };
+            string[] arr = { game.Developer, game.Publisher, date, game.Genre, game.PlayMode, game.ReleaseType, game.Version, game.MaxPlayers };
             arr = Array.FindAll(arr, t => string.IsNullOrEmpty(t) == false);
             Subtitle = string.Join(" · ", arr);
         }

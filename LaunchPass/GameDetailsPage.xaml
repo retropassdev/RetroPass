@@ -33,7 +33,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="88" />
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Margin="27,0,0,2" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Left" Width="769">
+                <Grid Grid.Row="0" Margin="15,5,0,2" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Left" Width="825">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="34" />
                         <RowDefinition Height="7.45" />

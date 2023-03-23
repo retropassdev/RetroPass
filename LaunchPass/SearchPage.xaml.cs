@@ -128,6 +128,42 @@ namespace RetroPass
                         }
                         break;
 
+                    case "Play Mode":
+                        playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.PlayMode != null && t.game.PlayMode.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        searchResultList.Clear();
+                        foreach (PlaylistItem i in playlistItems)
+                        {
+                            searchResultList.Add(i);
+                        }
+                        break;
+
+                    case "Release":
+                        playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.ReleaseType != null && t.game.ReleaseType.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        searchResultList.Clear();
+                        foreach (PlaylistItem i in playlistItems)
+                        {
+                            searchResultList.Add(i);
+                        }
+                        break;
+
+                    case "Version":
+                        playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.Version != null && t.game.Version.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        searchResultList.Clear();
+                        foreach (PlaylistItem i in playlistItems)
+                        {
+                            searchResultList.Add(i);
+                        }
+                        break;
+
+                    case "MaxPlayers":
+                        playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.MaxPlayers != null && t.game.MaxPlayers.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        searchResultList.Clear();
+                        foreach (PlaylistItem i in playlistItems)
+                        {
+                            searchResultList.Add(i);
+                        }
+                        break;
+
                     default:
                         break;
                 }
