@@ -1,6 +1,7 @@
 using RetroPass;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 namespace LaunchPass
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Theme Settings Page: Purpose, Store, Fetch & Set all user customizable options of the App 
     /// </summary>
     public sealed partial class ThemeSettingsPage : Page
     {
@@ -60,50 +61,99 @@ namespace LaunchPass
                 e.Handled = true;
             }
         }
+        /// <summary>
+        /// Variables & Methods for  fetching, caching file extensions  then populating the customize combo-boxes of the themes settings page.
+        /// </summary>
+        // Cache for storing file extensions for different file types
+        private Dictionary<string, List<string>> fileExtensionCache = new Dictionary<string, List<string>>();
 
-        private async void LoadBackgroundsAndFonts()
+        // Function to get file extensions based on the input type (background or font)
+        private List<string> GetFileExtensions(string type)
+        {
+            // Check if the extensions are already in the cache
+            if (fileExtensionCache.ContainsKey(type))
+            {
+                return fileExtensionCache[type];
+            }
+
+            List<string> fileExtensions = new List<string>();
+
+            // Define file extensions for different types
+            switch (type)
+            {
+                case "background":
+                    fileExtensions = new List<string>() { ".png", ".jpg", ".jxr", ".dds", ".jpeg", ".webp", ".webm", ".mkv", ".mp4", ".mov", ".wdp" };
+                    break;
+                case "font":
+                    fileExtensions = new List<string>() { ".ttf", ".otf" };
+                    break;
+            }
+
+            // Store the extensions in the cache for future use
+            fileExtensionCache[type] = fileExtensions;
+            return fileExtensions;
+        }
+
+        // Async function to load backgrounds and fonts
+        private async Task LoadBackgroundsAndFonts()
         {
             try
             {
+                // Get removable devices
                 var removableDevices = KnownFolders.RemovableDevices;
                 var folders = await removableDevices.GetFoldersAsync();
 
                 StorageFolder launchPassFolderCurrent = null;
 
+                // Iterate through the devices to find LaunchBox and LaunchPass folders
                 foreach (StorageFolder rootFolder in folders)
                 {
-                    //FIND LAUNCHBOX FOLDER TO RELATED LaunchPass FOLDER ON THE SAME REMOVABLE DEVICE
                     StorageFolder launchBoxFolder = await rootFolder.TryGetItemAsync("LaunchBox") as StorageFolder;
 
                     if (launchBoxFolder != null)
                     {
-                        // Check removable devices for LaunchPass Folder.
                         launchPassFolderCurrent = await rootFolder.TryGetItemAsync("LaunchPass") as StorageFolder;
-
-                        settingsXMLFile = await GetLaunchPassThemeSettingsFile(launchPassFolderCurrent);
-
-                        var backgroundFiles = await GetFilesAsync(launchPassFolderCurrent, "Backgrounds", new List<string>() { ".png", ".jpg", ".jxr", ".dds", ".jpeg", ".webp", ".webm", ".mkv", ".mp4", ".mov", ".wdp" });
-                        List<String> backgroundsFilesNameList = backgroundFiles.Select(s => s.Name).ToList();
-
-                        MainPageCB.ItemsSource = backgroundsFilesNameList;
-                        GamePageCB.ItemsSource = backgroundsFilesNameList;
-                        DetailsPageCB.ItemsSource = backgroundsFilesNameList;
-                        SearchPageCB.ItemsSource = backgroundsFilesNameList;
-                        CustomizePageCB.ItemsSource = backgroundsFilesNameList;
-                        SettingsPageCB.ItemsSource = backgroundsFilesNameList;
-
-                        var fontFiles = await GetFilesAsync(launchPassFolderCurrent, "Fonts", new List<string>() { ".ttf", ".otf" });
-                        FontsCB.ItemsSource = fontFiles.Select(s => s.Name).ToList();
-
                         break;
                     }
                 }
 
+                if (launchPassFolderCurrent != null)
+                {
+                    // Load the theme settings XML file
+                    settingsXMLFile = await GetLaunchPassThemeSettingsFile(launchPassFolderCurrent);
+
+                    // Get the supported file extensions for background and font files
+                    var backgroundFileExtensions = GetFileExtensions("background");
+                    var fontFileExtensions = GetFileExtensions("font");
+
+                    // Retrieve background and font files
+                    var backgroundFiles = await GetFilesAsync(launchPassFolderCurrent, "Backgrounds", backgroundFileExtensions);
+                    var fontFiles = await GetFilesAsync(launchPassFolderCurrent, "Fonts", fontFileExtensions);
+
+                    // Create lists of file names for backgrounds and fonts
+                    List<String> backgroundsFilesNameList = backgroundFiles.Select(s => s.Name).ToList();
+                    List<String> fontFilesNameList = fontFiles.Select(s => s.Name).ToList();
+
+                    // Populate ComboBoxes with the file names
+                    MainPageCB.ItemsSource = backgroundsFilesNameList;
+                    GamePageCB.ItemsSource = backgroundsFilesNameList;
+                    DetailsPageCB.ItemsSource = backgroundsFilesNameList;
+                    SearchPageCB.ItemsSource = backgroundsFilesNameList;
+                    CustomizePageCB.ItemsSource = backgroundsFilesNameList;
+                    SettingsPageCB.ItemsSource = backgroundsFilesNameList;
+                    FontsCB.ItemsSource = fontFilesNameList;
+                }
+
+                // Check if the current theme settings are available
                 if (((App)Application.Current).CurrentThemeSettings != null)
                 {
+                    // Set the selected font in the ComboBox
                     FontsCB.SelectedItem = ((App)Application.Current).CurrentThemeSettings.Font;
 
+                    // Get the list of background settings for each page
                     List<Background> backgroundList = ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background;
+
+                    // If the background list exists and is not empty, set the selected background for each page
                     if (backgroundList != null && backgroundList.Count() != 0)
                     {
                         MainPageCB.SelectedItem = backgroundList.Where(s => s.Page == "MainPage").Select(s => s.File).FirstOrDefault();
@@ -114,8 +164,10 @@ namespace LaunchPass
                         SettingsPageCB.SelectedItem = backgroundList.Where(s => s.Page == "SettingsPage").Select(s => s.File).FirstOrDefault();
                     }
 
+                    // Get the box art type from the theme settings
                     string boxArtType = ((App)Application.Current).CurrentThemeSettings.BoxArtType;
 
+                    // If the box art type exists, set the corresponding CheckBox to checked
                     if (!string.IsNullOrEmpty(boxArtType))
                     {
                         if (Convert.ToString(toggleBoxFront.Content) == boxArtType)
@@ -141,9 +193,10 @@ namespace LaunchPass
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //throw;
+                // Handle any exceptions that might occur while loading background and font files
+                Debug.WriteLine($"Error loading backgrounds and fonts: {ex.Message}");
             }
         }
 
