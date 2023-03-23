@@ -120,6 +120,7 @@ namespace RetroPass
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
             //			   AppViewBackButtonVisibility.Collapsed;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -135,21 +136,21 @@ namespace RetroPass
             }
 
             //load data source only the first time or when it's changed
-            //if (this.dataSource != dataSource)
-            //{
-            if (this.dataSource != null)
+            if (this.dataSource != dataSource || ((App)Application.Current).IsLoadMainPage)
             {
-                this.dataSource.PlatformImported -= OnPlatformImported;
-                this.dataSource.PlaylistImported -= OnPlaylistImported;
+                if (this.dataSource != null)
+                {
+                    this.dataSource.PlatformImported -= OnPlatformImported;
+                    this.dataSource.PlaylistImported -= OnPlaylistImported;
 
-                ClearList();
+                    ClearList();
+                }
+
+                this.dataSource = dataSource;
+                this.dataSource.PlatformImported += OnPlatformImported;
+                this.dataSource.PlaylistImported += OnPlaylistImported;
+                await this.dataSource.Load();
             }
-
-            this.dataSource = dataSource;
-            this.dataSource.PlatformImported += OnPlatformImported;
-            this.dataSource.PlaylistImported += OnPlaylistImported;
-            await this.dataSource.Load();
-            //}
 
             //focus on button only if getting from another page
             //this is to prevent setting focus after delayed load while search page is visible
@@ -166,6 +167,8 @@ namespace RetroPass
             {
                 stackPanelPlayLater.Visibility = Visibility.Visible;
             }
+
+            ((App)Application.Current).IsLoadMainPage = false;
         }
 
         public static bool IsBackOrEscapeKey(Windows.System.VirtualKey key)
@@ -354,7 +357,7 @@ namespace RetroPass
             mediaPlayer.Stop = true;
             await popup.ShowAsync();
             popup.OnNavigatedFrom();
-            mediaPlayer.Play= true;
+            mediaPlayer.Play = true;
         }
 
         private void GamesListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)

@@ -266,6 +266,8 @@ namespace LaunchPass
 
                     ((App)Application.Current).CurrentThemeSettings.Font = Convert.ToString(FontsCB.SelectedItem);
 
+                    bool flag1 = ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "MainPage").File != Convert.ToString(MainPageCB.SelectedItem);
+
                     if (((App)Application.Current).CurrentThemeSettings.Backgrounds.Background != null && ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.Count() != 0)
                     {
                         ((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "MainPage").File = Convert.ToString(MainPageCB.SelectedItem);
@@ -298,6 +300,8 @@ namespace LaunchPass
                         boxArtType = Convert.ToString(ToggleFanartBackground.Content);
                     }
 
+                    bool flag2 = ((App)Application.Current).CurrentThemeSettings.BoxArtType != boxArtType;
+
                     XmlSerializer x = new XmlSerializer(typeof(LaunchPassThemeSettings));
                     using (TextWriter writer = new StringWriter())
                     {
@@ -311,6 +315,9 @@ namespace LaunchPass
                     mediaPlayer.MediaPath = file.Path;
 
                     ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
+
+                    ((App)Application.Current).IsLoadMainPage = flag1 || flag2;
+
                     // Show the user that fonts were changed and application will be restarted
                     if (isFontChanged)
                     {

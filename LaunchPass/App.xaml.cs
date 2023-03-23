@@ -20,6 +20,8 @@ namespace RetroPass
         public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
         public LaunchPassThemeSettings CurrentThemeSettings { get; set; }
         public string LaunchPassRootPath { get; set; }
+        public bool IsLoadMainPage { get; set; } = true;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
