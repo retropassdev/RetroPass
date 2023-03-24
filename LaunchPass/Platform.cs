@@ -62,7 +62,8 @@ namespace RetroPass
             }
             else if (string.IsNullOrEmpty(emulatorPath) == false &&
                 (emulatorPath.Contains("xenia-canary", System.StringComparison.CurrentCultureIgnoreCase) ||
-                emulatorPath.Contains("xeniacanary", System.StringComparison.CurrentCultureIgnoreCase))
+                emulatorPath.Contains("xeniacanary", System.StringComparison.CurrentCultureIgnoreCase) ||
+                emulatorPath.Contains("xenia_canary", System.StringComparison.CurrentCultureIgnoreCase))
                 )
             {
                 EmulatorType = EEmulatorType.xeniacanary;
