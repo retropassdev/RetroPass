@@ -32,7 +32,8 @@ namespace RetroPass
 
         private bool descriptionPopupActive = false;
         public string Subtitle { get; set; }
-        public string Players { get; set; }
+        public string SubItalic { get; set; }
+        public string TimePlayed { get; set; }
         private MediaSource mediaSource;
 
         public GameDetailsPage()
@@ -66,9 +67,35 @@ namespace RetroPass
             arr = Array.FindAll(arr, t => string.IsNullOrEmpty(t) == false);
             Subtitle = string.Join(" · ", arr);
 
-            string[] brr = { "Players: " + game.MaxPlayers, game.PlayMode, game.ReleaseType, game.Version};
+            string[] brr = { "Players: " + game.MaxPlayers, game.PlayMode, game.ReleaseType, game.Version };
             brr = Array.FindAll(brr, t => string.IsNullOrEmpty(t) == false);
-            Players = string.Join(" · ", brr);
+            SubItalic = string.Join(" · ", brr);
+
+            string[] crr = { game.PlayTime };
+            crr = Array.FindAll(crr, t => string.IsNullOrEmpty(t) == false);
+
+            if (crr.Length > 0)
+            {
+                string timePlayed = crr[0];
+                int seconds = 0;
+
+                if (int.TryParse(timePlayed, out seconds) && seconds > 0)
+                {
+                    int hours = seconds / 3600;
+                    int minutes = (seconds % 3600) / 60;
+                    seconds = seconds % 60;
+
+                    TimePlayed = string.Format("Time Played: " + "{0}h {1}m {2}s", hours, minutes.ToString("D2"), seconds.ToString("D2"));
+                }
+                else
+                {
+                    TimePlayed = "";
+                }
+            }
+            else
+            {
+                TimePlayed = "";
+            }
         }
 
         public void OnNavigatedFrom()

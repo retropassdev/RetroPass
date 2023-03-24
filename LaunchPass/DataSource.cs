@@ -35,6 +35,7 @@ namespace RetroPass
             ReleaseType = game.ReleaseType;
             Version = game.Version;
             MaxPlayers = game.MaxPlayers;
+            PlayTime = game.PlayTime;
         }
 
         [XmlElement(ElementName = "ApplicationPath")] public override string ApplicationPath { get; set; }
@@ -50,6 +51,7 @@ namespace RetroPass
         [XmlElement(ElementName = "ReleaseType")] public override string ReleaseType { get; set; }
         [XmlElement(ElementName = "Version")] public override string Version { get; set; }
         [XmlElement(ElementName = "MaxPlayers")] public override string MaxPlayers { get; set; }
+        [XmlElement(ElementName = "PlayTime")] public override string PlayTime { get; set; }
 
         public override void Init()
         {

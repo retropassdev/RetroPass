@@ -39,7 +39,8 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="769" Text="{x:Bind playlistItem.game.Title}" Foreground="White" TextWrapping="Wrap" Margin="0,2,0,8" Grid.RowSpan="3"></TextBlock>
                     <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="844"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="#c7c7c7" FontWeight="Normal" Margin="0,28,0,0" Grid.RowSpan="3" />
-                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="844"  Text="{x:Bind Players}" TextWrapping="Wrap" Foreground="#909090" FontStyle="Italic" FontWeight="SemiLight" Margin="0,42,0,0" Grid.RowSpan="3" />
+                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="844"  Text="{x:Bind SubItalic}" TextWrapping="Wrap" Foreground="#909090" FontStyle="Italic" FontWeight="SemiLight" Margin="0,42,0,0" Grid.RowSpan="3" />
+                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Right" Width="844"  Text="{x:Bind TimePlayed}" TextWrapping="Wrap" Foreground="#909090" FontStyle="Italic" FontWeight="SemiLight" Margin="0,42,-700,0" Grid.RowSpan="3" />
                 </Grid>
                 <ScrollViewer Margin="0,-4,0,0" Name="ScrollViewer1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden"
                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.RowSpan="3" ViewChanged="ScrollViewer1_ViewChanged" Height="391" VerticalAlignment="Top">

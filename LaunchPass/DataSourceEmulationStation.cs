@@ -51,10 +51,11 @@ namespace RetroPass
         [XmlElement(ElementName = "ReleaseType")] public override string ReleaseType { get; set; }
         [XmlElement(ElementName = "Version")] public override string Version { get; set; }
         [XmlElement(ElementName = "MaxPlayers")] public override string MaxPlayers { get; set; }
+        [XmlElement(ElementName = "PlayTime")] public override string PlayTime { get; set; }
 
-    //public override string BoxFrontFileName { get { return Path.GetFileName(Thumbnail); } }
+        //public override string BoxFrontFileName { get { return Path.GetFileName(Thumbnail); } }
 
-    public override void Init()
+        public override void Init()
         {
             char replacement = '_';
 

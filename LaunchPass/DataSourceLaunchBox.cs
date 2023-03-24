@@ -27,8 +27,9 @@ namespace RetroPass
         [XmlElement(ElementName = "ReleaseType")] public override string ReleaseType { get; set; }
         [XmlElement(ElementName = "Version")] public override string Version { get; set; }
         [XmlElement(ElementName = "MaxPlayers")] public override string MaxPlayers { get; set; }
+        [XmlElement(ElementName = "PlayTime")] public override string PlayTime { get; set; }
 
-    [XmlIgnore] public override string ApplicationPathFull { get { return Path.GetFullPath(Path.Combine(DataRootFolder, ApplicationPath)); } }
+        [XmlIgnore] public override string ApplicationPathFull { get { return Path.GetFullPath(Path.Combine(DataRootFolder, ApplicationPath)); } }
 
         public override void Init()
         {

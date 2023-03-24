@@ -155,8 +155,17 @@ namespace RetroPass
                         }
                         break;
 
-                    case "MaxPlayers":
+                    case "Max Players":
                         playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.MaxPlayers != null && t.game.MaxPlayers.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        searchResultList.Clear();
+                        foreach (PlaylistItem i in playlistItems)
+                        {
+                            searchResultList.Add(i);
+                        }
+                        break;
+
+                    case "Play Time":
+                        playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.PlayTime != null && t.game.PlayTime.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
                         searchResultList.Clear();
                         foreach (PlaylistItem i in playlistItems)
                         {
