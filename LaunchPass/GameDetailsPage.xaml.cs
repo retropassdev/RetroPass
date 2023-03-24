@@ -32,6 +32,7 @@ namespace RetroPass
 
         private bool descriptionPopupActive = false;
         public string Subtitle { get; set; }
+        public string Players { get; set; }
         private MediaSource mediaSource;
 
         public GameDetailsPage()
@@ -61,9 +62,13 @@ namespace RetroPass
             {
                 date = dt.Year.ToString();
             }
-            string[] arr = { game.Developer, game.Publisher, date, game.Genre, game.PlayMode, game.ReleaseType, game.Version, game.MaxPlayers };
+            string[] arr = { game.Developer, game.Publisher, date, game.Genre };
             arr = Array.FindAll(arr, t => string.IsNullOrEmpty(t) == false);
             Subtitle = string.Join(" · ", arr);
+
+            string[] brr = { "Players: " + game.MaxPlayers, game.PlayMode, game.ReleaseType, game.Version};
+            brr = Array.FindAll(brr, t => string.IsNullOrEmpty(t) == false);
+            Players = string.Join(" · ", brr);
         }
 
         public void OnNavigatedFrom()

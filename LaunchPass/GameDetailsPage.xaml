@@ -33,16 +33,15 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="88" />
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Margin="15,5,0,2" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Left" Width="825">
+                <Grid Grid.Row="0" Margin="18,5,0,2" Padding="0,0,0,0" CornerRadius="4,4,4,4" HorizontalAlignment="Left" Width="825">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="34" />
-                        <RowDefinition Height="7.45" />
-                        <RowDefinition Height="8.511" />
+                        <RowDefinition Height="64" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="769" Text="{x:Bind playlistItem.game.Title}" Foreground="White" TextWrapping="Wrap" Margin="0,4,0,8" Grid.RowSpan="3"></TextBlock>
-                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="844"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="#909090" Margin="0,34,0,0" Grid.RowSpan="3" />
+                    <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="769" Text="{x:Bind playlistItem.game.Title}" Foreground="White" TextWrapping="Wrap" Margin="0,2,0,8" Grid.RowSpan="3"></TextBlock>
+                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="844"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="#c7c7c7" FontWeight="Normal" Margin="0,28,0,0" Grid.RowSpan="3" />
+                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="844"  Text="{x:Bind Players}" TextWrapping="Wrap" Foreground="#909090" FontStyle="Italic" FontWeight="SemiLight" Margin="0,42,0,0" Grid.RowSpan="3" />
                 </Grid>
-                <ScrollViewer Margin="0,-6,0,0" Name="ScrollViewer1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden"
+                <ScrollViewer Margin="0,-4,0,0" Name="ScrollViewer1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden"
                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.RowSpan="3" ViewChanged="ScrollViewer1_ViewChanged" Height="391" VerticalAlignment="Top">
                     <StackPanel Padding="0,0,0,0" Background="Transparent" XYFocusKeyboardNavigation="Enabled" Orientation="Horizontal" Height="249" Spacing="8" BringIntoViewRequested="StackPanel_BringIntoViewRequested">
                         <Border Margin="0,0,0,0" Padding="0,0,0,0" Width="6"></Border>
@@ -62,10 +61,6 @@
                                 </Grid.Resources>
                             </Grid>
                         </Button>
-                        <Button x:Name="ButtonDescription" Visibility="Visible" Padding="6,0,0,0" CornerRadius="4,4,4,4" Background="#40000000" Foreground="White" Width="189" Click="ButtonDescription_Click" Height="240">
-                            <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind Path=playlistItem.game.Description}" TextWrapping="Wrap" />
-                        </Button>
-
                         <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="-3,-3,-3,-3" CornerRadius="4,4,4,4" Width="auto" Height="240" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#0F000000" Click="ButtonVideo_Click">
                             <MediaPlayerElement  Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" x:Name="mediaPlayerElement" Stretch="Fill"
                                  AutoPlay="False"
@@ -87,6 +82,11 @@
                                 </MediaPlayerElement.TransportControls>
                             </MediaPlayerElement>
                         </Button>
+                        <Button x:Name="ButtonDescription" Visibility="Visible" Padding="6,0,0,0" CornerRadius="4,4,4,4" Background="#40000000" Foreground="White" Width="189" Click="ButtonDescription_Click" Height="240">
+                            <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind Path=playlistItem.game.Description}" TextWrapping="Wrap" />
+                        </Button>
+
+
 
                         <GridView x:Name="GameDetailsGridView"
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
