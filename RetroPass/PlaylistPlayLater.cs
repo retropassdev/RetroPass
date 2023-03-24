@@ -84,13 +84,17 @@ namespace RetroPass
 			}
 		}
 
-		public async Task Load(string dataRootfolder)
+		public async Task Load(List<DataSource> dataSources)
 		{
 			// if the file doesn't exist
 			if (await folder.TryGetItemAsync(fileName) == null)
 			{
 				return;
 			}
+
+			//PlaylistItemsDict.Clear();
+			//PlaylistItems.Clear();
+			//PlaylistItemsLandingPage.Clear();
 
 			StorageFile filename = await StorageUtils.GetFileAsync(folder, fileName);
 			string xmlPlaylist = await FileIO.ReadTextAsync(filename);
@@ -115,6 +119,19 @@ namespace RetroPass
 			{
 				foreach (var game in playlistRetroPass.games)
 				{
+					//search for proper root folder in all data sources
+					//each game in PlayLater playlist has rootFolder which is main folder without a volume
+					//for example: e:\\DataSource, rootFolder is DataSource
+					//when PlayLater list is loaded immediately on start, we need to find data source with the same root folder
+					//and create full dataRootFolder
+					DataSource dataSource = dataSources.FirstOrDefault(t => Path.GetFileName(t.rootFolder) == game.RootFolder);
+
+					if(dataSource == null)
+					{
+						continue;
+					}
+
+					string dataRootfolder = dataSource.rootFolder;
 					game.DataRootFolder = dataRootfolder;
 					//game.GamePlatform = p;//platform read directly from file
 					game.GamePlatform.BoxFrontPath = game.GamePlatform.BoxFrontPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.BoxFrontPath));

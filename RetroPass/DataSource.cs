@@ -31,6 +31,7 @@ namespace RetroPass
 			Publisher = game.Publisher;
 			ReleaseDate = game.ReleaseDate;
 			Genre = game.Genre;
+			RootFolder = Path.GetFileName(DataRootFolder);
 		}
 		[XmlElement(ElementName = "ApplicationPath")] public override string ApplicationPath { get; set; }
 		[XmlElement(ElementName = "Title")] public override string Title { get; set; }
@@ -41,6 +42,7 @@ namespace RetroPass
 		[XmlElement(ElementName = "Publisher")] public override string Publisher { get; set; }
 		[XmlElement(ElementName = "Genre")] public override string Genre { get; set; }
 		[XmlElement(ElementName = "GamePlatform")] public override Platform GamePlatform { get; set; }
+		[XmlElement(ElementName = "RootFolder")] public string RootFolder { get; set; }
 
 		public override void Init()
 		{
@@ -84,14 +86,23 @@ namespace RetroPass
 
 	public abstract class DataSource
 	{
+		public enum Status
+		{
+			Unavailable,
+			Active,
+			Inactive,
+		};
+
 		public List<Platform> Platforms = new List<Platform>();
 		public List<Playlist> Playlists = new List<Playlist>();
-		public PlaylistPlayLater playlistPlayLater = new PlaylistPlayLater();
 		public Action<Platform> PlatformImported;
 		public Action<Playlist> PlaylistImported;
 
 		public string rootFolder;
 		public RetroPassConfig retroPassConfig;
+
+		[NonSerialized]
+		public Status status;
 
 		public DataSource(string rootFolder, RetroPassConfig retroPassConfig)
 		{

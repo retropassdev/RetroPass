@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.System;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using static RetroPass.PlaylistLaunchBox;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -41,10 +43,18 @@ namespace RetroPass
 			public string dst;
 		}
 
+		public string name;
 		public bool log;
 		public DataSourceType type;
 		public string relativePath;
 		public Retroarch retroarch;
+	}
+
+	[Serializable, XmlRoot("retropass")]
+	public class RetroPassConfig_V1_6
+	{	
+		[XmlArrayItem("dataSource", typeof(RetroPassConfig))]
+		public List<RetroPassConfig> dataSources;
 	}
 
 	/// <summary>
@@ -52,11 +62,13 @@ namespace RetroPass
 	/// </summary>
 	public sealed partial class MainPage : Page
 	{
-		DataSource dataSource = null;
+		List<DataSource> loadedActiveDataSources = new List<DataSource>();
+		PlaylistPlayLater playlistPlayLater = new PlaylistPlayLater();
 		ListView currentListView;
 		Button currentButton;
 		DataSourceManager dataSourceManager;
 		StackPanel stackPanelPlayLater;
+		bool activeDataSourcesChanged = false;
 
 		protected async override void OnKeyDown(KeyRoutedEventArgs e)
 		{
@@ -69,15 +81,15 @@ namespace RetroPass
 					{
 						int lastIndex = currentListView.SelectedIndex;
 						PlaylistItem pl = currentListView.SelectedItem as PlaylistItem;
-						dataSource.playlistPlayLater.UpdatePlaylistPlayLater(pl);
-						PlayLaterControl.UpdatePlayLaterControl(pl, dataSource.playlistPlayLater);
+						playlistPlayLater.UpdatePlaylistPlayLater(pl);
+						PlayLaterControl.UpdatePlayLaterControl(pl, playlistPlayLater);
 						//if this is item from playlistPlayLater, then currentListView is playLater list view
 						//so set proper selected item in case of deletion
-						if (pl.playlist == dataSource.playlistPlayLater)
+						if (pl.playlist == playlistPlayLater)
 						{
-							currentListView.SelectedIndex = Math.Min(lastIndex, dataSource.playlistPlayLater.PlaylistItemsLandingPage.Count - 1);
+							currentListView.SelectedIndex = Math.Min(lastIndex, playlistPlayLater.PlaylistItemsLandingPage.Count - 1);
 						}
-						if (dataSource.playlistPlayLater.PlaylistItems.Count == 0)
+						if (playlistPlayLater.PlaylistItems.Count == 0)
 						{
 							stackPanelPlayLater.Visibility = Visibility.Collapsed;
 						}
@@ -109,7 +121,29 @@ namespace RetroPass
 			this.InitializeComponent();
 			this.Loaded += MainPage_Loaded;
 			dataSourceManager = new DataSourceManager();
+			dataSourceManager.ActiveDataSourcesChanged += ActiveDataSourceChanged;
 			LogPage.SetLogging();
+		}
+
+		private void ActiveDataSourceChanged()
+		{
+			activeDataSourcesChanged = true;
+		}
+
+		private void ClearAll()
+		{
+			//clear all 
+			foreach (var dataSource in loadedActiveDataSources)
+			{
+				dataSource.PlatformImported -= OnPlatformImported;
+				dataSource.PlaylistImported -= OnPlaylistImported;
+				dataSource.Platforms.Clear();
+				dataSource.Playlists.Clear();
+			}
+
+			ClearMainPanel();
+			loadedActiveDataSources.Clear();
+			playlistPlayLater = new PlaylistPlayLater();
 		}
 
 		private async void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -118,30 +152,39 @@ namespace RetroPass
 			//			   AppViewBackButtonVisibility.Collapsed;
 			SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
-			var dataSource = await dataSourceManager.GetActiveDataSource();
+			var dataSourceItems = await dataSourceManager.GetPresentActiveDataSources();
 
-			if (dataSource == null)
+			if (dataSourceItems.Count == 0)
 			{
+				if (activeDataSourcesChanged)
+				{
+					activeDataSourcesChanged = false;
+					ClearAll();
+				}
+
 				Frame.Navigate(typeof(SettingsPage), dataSourceManager);
 				return;
 			}
 
 			//load data source only the first time or when it's changed
-			if (this.dataSource != dataSource)
+			if (activeDataSourcesChanged)
 			{
-				if (this.dataSource != null)
+				activeDataSourcesChanged = false;
+
+				ClearAll();
+				
+				await playlistPlayLater.Load(dataSourceItems);
+				playlistPlayLater.UpdateGamesLandingPage();
+				OnPlaylistImported(playlistPlayLater);
+
+				foreach (var dataSource in dataSourceItems)
 				{
-					this.dataSource.PlatformImported -= OnPlatformImported;
-					this.dataSource.PlaylistImported -= OnPlaylistImported;
-
-					ClearList();
+					loadedActiveDataSources.Add(dataSource);
+					dataSource.PlatformImported += OnPlatformImported;
+					dataSource.PlaylistImported += OnPlaylistImported;
+					await dataSource.Load();
 				}
-
-				this.dataSource = dataSource;
-				this.dataSource.PlatformImported += OnPlatformImported;
-				this.dataSource.PlaylistImported += OnPlaylistImported;
-				await this.dataSource.Load();
-			}
+			}			
 
 			//focus on button only if getting from another page
 			//this is to prevent setting focus after delayed load while search page is visible
@@ -150,7 +193,7 @@ namespace RetroPass
 				currentButton.Focus(FocusState.Programmatic);
 			}
 
-			if (this.dataSource.playlistPlayLater.PlaylistItems.Count == 0)
+			if (playlistPlayLater.PlaylistItems.Count == 0)
 			{
 				stackPanelPlayLater.Visibility = Visibility.Collapsed;
 			}
@@ -183,7 +226,7 @@ namespace RetroPass
 			base.OnNavigatedFrom(e);
 		}
 
-		private void ClearList()
+		private void ClearMainPanel()
 		{
 			var stackPanelPlaylists = StackPanelMain.Children.Where(t => t is StackPanel && ((StackPanel)t).Name != "StackPanelMenu").ToList();
 
@@ -279,7 +322,7 @@ namespace RetroPass
 			}
 
 			PlaylistItem playlistItem = lv.SelectedItem as PlaylistItem;
-			PlayLaterControl.UpdatePlayLaterControl(playlistItem, dataSource.playlistPlayLater);
+			PlayLaterControl.UpdatePlayLaterControl(playlistItem, playlistPlayLater);
 		}
 
 		private void OnPlaylistImported(Playlist playlist)
@@ -299,7 +342,7 @@ namespace RetroPass
 			Button b = sender as Button;
 			//currentButton = b;
 			Playlist p = b.DataContext as Playlist;
-			this.Frame.Navigate(typeof(GameCollectionPage), new GameCollectionPage.GameCollectionPageNavigateParams(null, p, dataSource.playlistPlayLater));
+			this.Frame.Navigate(typeof(GameCollectionPage), new GameCollectionPage.GameCollectionPageNavigateParams(null, p, playlistPlayLater));
 		}
 
 		private void ScrollToCenter(UIElement sender, BringIntoViewRequestedEventArgs args)
@@ -371,7 +414,16 @@ namespace RetroPass
 		private async Task ShowSearch()
 		{
 			//search only platform playlists and not custom playlists
-			List<Playlist> searchPlaylists = dataSource.Playlists.FindAll(t => dataSource.Platforms.Exists(p => p.Name == t.Name));
+			//List<Playlist> searchPlaylists = dataSource.Playlists.FindAll(t => dataSource.Platforms.Exists(p => p.Name == t.Name));
+
+			/*List<Playlist> searchPlaylists = new List<Playlist>();
+
+			foreach (DataSource dataSource in loadedDataSources)
+			{
+				searchPlaylists.AddRange(dataSource.Playlists.FindAll(t => dataSource.Platforms.Any(p => p.Name == t.Name)));
+			}*/
+
+			List<Playlist> searchPlaylists = loadedActiveDataSources.SelectMany(ds => ds.Playlists.Where(pl => ds.Platforms.Any(p => p.Name == pl.Name))).ToList();
 			SearchPage.Instance.OnNavigatedTo(searchPlaylists);
 			await SearchPage.Instance.ShowAsync();
 			SearchPage.Instance.OnNavigatedFrom();
@@ -405,44 +457,6 @@ namespace RetroPass
 					image.Source = bitmapImage;
 				}
 			}
-		}
-
-		public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
-		{
-			if (parent == null) return null;
-			T foundChild = null;
-			int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-
-			for (int i = 0; i < childrenCount; i++)
-			{
-				var child = VisualTreeHelper.GetChild(parent, i);
-				T childType = child as T;
-
-				if (childType == null)
-				{
-					foundChild = FindChild<T>(child, childName);
-					if (foundChild != null) break;
-				}
-				else if (!string.IsNullOrEmpty(childName))
-				{
-					var frameworkElement = child as FrameworkElement;
-					if (frameworkElement != null && frameworkElement.Name == childName)
-					{
-						foundChild = (T)child;
-						break;
-					}
-
-					foundChild = FindChild<T>(child, childName);
-					if (foundChild != null) break;
-				}
-				else
-				{
-					foundChild = (T)child;
-					break;
-				}
-			}
-
-			return foundChild;
 		}
 
 		private void Settings_Click(object sender, RoutedEventArgs e)

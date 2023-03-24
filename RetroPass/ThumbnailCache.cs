@@ -13,14 +13,9 @@ namespace RetroPass
 	//use custom thumbnail caching to avoid increasing system thumb database storage and to easily delete
 	public class ThumbnailCache
 	{
-		private static DataSource dataSource;
-		private static DataSourceManager.DataSourceLocation activeDataSourceLocation;
-
 		private static string folderNameRemovable = "ImageCacheRemovable";
-		private static string folderNameLocal = "ImageCacheLocal";
 
 		private static StorageFolder storageFolderRemovable;
-		private static StorageFolder storageFolderLocal;
 
 		private static ThumbnailCache instance = null;
 
@@ -68,7 +63,7 @@ namespace RetroPass
 			}
 		}
 
-		public async Task<StorageFile> CreateThumbnailFileAsync(StorageFolder sourceFolder, string name)
+		private async Task<StorageFile> CreateThumbnailFileAsync(StorageFolder sourceFolder, string name)
 		{
 			Trace.TraceInformation("ThumbnailCache: CreateThumbnailFileAsync {0} {1}", sourceFolder.Path, name);
 			IStorageItem outputFile = await sourceFolder.TryGetItemAsync(name);
@@ -82,7 +77,7 @@ namespace RetroPass
 			return file;
 		}
 
-		public async Task CreateFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
+		private async Task CreateFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
 		{
 			Trace.TraceInformation("ThumbnailCache: CreateThumbnailFileAsync CreateFolderAsync {0} {1} {2}", source.Path, destinationContainer.Path, desiredName);
 			StorageFolder destinationFolder = null;
@@ -90,7 +85,7 @@ namespace RetroPass
 				desiredName ?? source.Name, CreationCollisionOption.OpenIfExists);
 		}
 
-		public string Base64Encode(string str)
+		private string Base64Encode(string str)
 		{
 			var strBytes = System.Text.Encoding.UTF8.GetBytes(str);
 			return Convert.ToBase64String(strBytes);
@@ -103,9 +98,9 @@ namespace RetroPass
 		List<string> writeThumb = new List<string>();
 
 		public async Task<BitmapImage> GetThumbnailAsync(StorageFile sourceFile)
-		{
-			//if(dataSource != null)
-			string path = Path.GetRelativePath(dataSource.rootFolder, sourceFile.Path);
+		{		
+			string root = Path.GetPathRoot(sourceFile.Path);
+			string path = Path.GetRelativePath(root, sourceFile.Path);
 			string destPath = "";
 
 			while (numImagesProcessed > 5)
@@ -120,31 +115,12 @@ namespace RetroPass
 
 			string encodedName = Base64Encode(path) + ".jpg";
 
-			if (activeDataSourceLocation == DataSourceManager.DataSourceLocation.Local)
+			if (storageFolderRemovable == null)
 			{
-				if (storageFolderLocal == null)
-				{
-					storageFolderLocal = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync(folderNameLocal, CreationCollisionOption.OpenIfExists);
-				}
-				destPath = storageFolderLocal.Path;
-			}
-			else if (activeDataSourceLocation == DataSourceManager.DataSourceLocation.Removable)
-			{
-				if (storageFolderRemovable == null)
-				{
-					storageFolderRemovable = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync(folderNameRemovable, CreationCollisionOption.OpenIfExists);
-				}
-				destPath = storageFolderRemovable.Path;
-			}
-			else
-			{
-				lock (numTasks)
-				{
-					numImagesProcessed--;
-				}
+				storageFolderRemovable = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync(folderNameRemovable, CreationCollisionOption.OpenIfExists);
+			}				
 
-				return null;
-			}
+			destPath = storageFolderRemovable.Path;
 
 			//if file exists that is not older than original, just return that file
 			BitmapImage thumbnail = await GetThumbnailAsync2(encodedName, destPath);
@@ -210,7 +186,6 @@ namespace RetroPass
 				numImagesProcessed--;
 			}
 
-
 			return thumbnail;
 		}
 
@@ -270,24 +245,11 @@ namespace RetroPass
 			return bitmapImage;
 		}
 
-		public void Set(DataSource dataSource, DataSourceManager.DataSourceLocation activeDataSourceLocation)
-		{
-			ThumbnailCache.dataSource = dataSource;
-			ThumbnailCache.activeDataSourceLocation = activeDataSourceLocation;
-		}
-
-		public async Task Delete(DataSourceManager.DataSourceLocation location)
+		public async Task Delete()
 		{
 			IStorageItem assetItem = null;
 
-			if (location == DataSourceManager.DataSourceLocation.Local)
-			{
-				assetItem = await ApplicationData.Current.LocalCacheFolder.TryGetItemAsync(folderNameLocal);
-			}
-			else if (location == DataSourceManager.DataSourceLocation.Removable)
-			{
-				assetItem = await ApplicationData.Current.LocalCacheFolder.TryGetItemAsync(folderNameRemovable);
-			}
+			assetItem = await ApplicationData.Current.LocalCacheFolder.TryGetItemAsync(folderNameRemovable);
 
 			if (assetItem != null)
 			{
