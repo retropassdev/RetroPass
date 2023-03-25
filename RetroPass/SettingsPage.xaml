@@ -77,5 +77,8 @@
                    HorizontalAlignment="Right" VerticalAlignment="Center"  
                    Text="Back" FontSize="12" CharacterSpacing="40"></TextBlock>
         </Grid>
+        <TextBlock Margin="0,-4,20,0" 
+                   HorizontalAlignment="Right" VerticalAlignment="Top"  
+                   Text="{x:Bind AppVersion,Mode=OneWay}" FontSize="12" CharacterSpacing="40"></TextBlock>
     </Grid>
 </Page>

@@ -24,9 +24,13 @@ namespace RetroPass
 
 		DataSourceManager dataSourceManager;
 		//Brush defaultForeground;
+		string AppVersion { get; set; }
 
 		public SettingsPage()
 		{
+			var version = Package.Current.Id.Version;
+
+			AppVersion = string.Format("v{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 			//Instance = this;
 			InitializeComponent();
 			Loaded += SettingsPage_Loaded;
