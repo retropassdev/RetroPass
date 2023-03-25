@@ -41,29 +41,28 @@
                         Visibility="Visible">
                         <TextBlock
                             x:Name="TextTitleEmpty"
-                            Padding="5,0,5,0"
-                            MaxLines="10"
                             Style="{StaticResource BaseTextBlockStyle}"
-                            Text="{x:Bind game.Title}"
-                            TextAlignment="Center"
-                            TextTrimming="WordEllipsis"
-                            TextWrapping="Wrap" />
+                            Text="{x:Bind game.Title}"/>
                     </Border>
+                        
                     <Border
                         x:Name="GameNameDisplay"
                         Background="Black"
-                        Opacity="0.74"
+                        Opacity="0.9"
                         RelativePanel.AlignBottomWithPanel="True"
                         RelativePanel.AlignLeftWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True"
                         Visibility="Collapsed">
                         <TextBlock
                             x:Name="TextTitle"
-                            Padding="10,10,5,10"
+                            Padding="0,0,0,1"
+                            MaxLines="2"
                             Style="{StaticResource BaseTextBlockStyle}"
                             Text="{x:Bind game.Title}"
+                            FontSize="10"
                             Foreground="White"
-                            TextAlignment="Left"
+                            TextAlignment="center"
+                            TextTrimming="WordEllipsis"
                             TextWrapping="Wrap" />
                     </Border>
                 </RelativePanel>
