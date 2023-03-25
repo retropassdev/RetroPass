@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using Windows.ApplicationModel;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
@@ -18,8 +21,9 @@ namespace RetroPass
 	/// </summary>
 	public sealed partial class SettingsPage : Page
 	{
+
 		DataSourceManager dataSourceManager;
-		Brush defaultForeground;
+		//Brush defaultForeground;
 
 		public SettingsPage()
 		{
@@ -27,7 +31,7 @@ namespace RetroPass
 			InitializeComponent();
 			Loaded += SettingsPage_Loaded;
 
-			defaultForeground = ButtonActivateLocalStorage.Foreground;
+			//defaultForeground = ButtonActivateLocalStorage.Foreground;
 		}
 
 		protected async override void OnKeyDown(KeyRoutedEventArgs e)
@@ -49,80 +53,53 @@ namespace RetroPass
 
 		private void RefreshDataSourceUI()
 		{
-			StackPanelRemovableStorage.Visibility = Visibility.Collapsed;
-			StackPanelLocalStorage.Visibility = Visibility.Collapsed;
-
-			bool hasLocalDataSource = dataSourceManager.HasDataSource(DataSourceManager.DataSourceLocation.Local);
-			bool hasRemovableDataSource = dataSourceManager.HasDataSource(DataSourceManager.DataSourceLocation.Removable);
-
-			if (hasRemovableDataSource)
+			if (dataSourceManager.HasDataSources())
 			{
-				StackPanelRemovableStorage.Visibility = Visibility.Visible;
-				ButtonActivateRemovableStorage.Visibility = Visibility.Visible;
+				foreach (var item in ListDataSources.Items)
+				{
+					ListViewItem listViewItem = ListDataSources.ContainerFromItem(item) as ListViewItem;
+					if (listViewItem != null)
+					{
+						DataSource dataSource = item as DataSource;
+						if (dataSource != null)
+						{
+							ToggleButton button = Utils.FindChild<ToggleButton>(listViewItem, "ButtonActivateRemovableStorage");
+							if (button != null)
+							{
+								switch (dataSource.status)
+								{
+									case DataSource.Status.Active:
+										button.Content = "Deactivate";
+										button.IsChecked = true;
+										break;
+									case DataSource.Status.Inactive:
+										button.Content = "Activate";
+										button.IsChecked = false;
+										break;
+									case DataSource.Status.Unavailable:
+										button.Content = "Unavailable";
+										button.IsChecked = true;
+										button.IsEnabled = false;
+										break;
+								}
+							}
+						}
+					}
+				}
+
+				ListDataSources.Visibility = Visibility.Visible;
 				ButtonClearRemovableCache.Visibility = Visibility.Visible;
-				//ButtonImport.Visibility = Visibility.Visible;
-
-				if (dataSourceManager.IsImportInProgress())
-				{
-					//ButtonImport.Visibility = Visibility.Collapsed;
-				}
 			}
-
-			if (hasLocalDataSource || dataSourceManager.IsImportInProgress())
+			else
 			{
-				StackPanelLocalStorage.Visibility = Visibility.Visible;
-				ButtonActivateLocalStorage.Visibility = Visibility.Visible;
-				ButtonDeleteLocalStorage.Visibility = Visibility.Visible;
-				StackPanelLocalXboxProgress.Visibility = Visibility.Collapsed;
-
-				if (dataSourceManager.IsImportInProgress())
-				{
-					ButtonActivateLocalStorage.Visibility = Visibility.Collapsed;
-					ButtonDeleteLocalStorage.Visibility = Visibility.Collapsed;
-					StackPanelLocalXboxProgress.Visibility = Visibility.Visible;
-				}
-				else if (dataSourceManager.ImportFinished == false)
-				{
-					ButtonActivateLocalStorage.Visibility = Visibility.Collapsed;
-				}
-			}
-
-			switch (dataSourceManager.ActiveDataSourceLocation)
-			{
-				case DataSourceManager.DataSourceLocation.None:
-					ButtonActivateLocalStorage.Content = "Activate";
-					ButtonActivateLocalStorage.Foreground = defaultForeground;
-					ButtonActivateRemovableStorage.Content = "Activate";
-					ButtonActivateRemovableStorage.Foreground = defaultForeground;
-					ButtonActivateRemovableStorage.Focus(FocusState.Keyboard);
-					break;
-				case DataSourceManager.DataSourceLocation.Local:
-					ButtonActivateLocalStorage.Content = "Active";
-					ButtonActivateLocalStorage.Foreground = (SolidColorBrush)Application.Current.Resources["SystemControlForegroundAccentBrush"];
-					ButtonActivateRemovableStorage.Content = "Activate";
-					ButtonActivateRemovableStorage.Foreground = defaultForeground;
-					ButtonActivateLocalStorage.Focus(FocusState.Keyboard);
-					break;
-				case DataSourceManager.DataSourceLocation.Removable:
-					ButtonActivateLocalStorage.Content = "Activate";
-					ButtonActivateLocalStorage.Foreground = defaultForeground;
-					ButtonActivateRemovableStorage.Content = "Active";
-					ButtonActivateRemovableStorage.Foreground = (SolidColorBrush)Application.Current.Resources["SystemControlForegroundAccentBrush"];
-					ButtonActivateRemovableStorage.Focus(FocusState.Keyboard);
-					break;
-				default:
-					break;
+				ListDataSources.Visibility = Visibility.Collapsed;
+				ButtonClearRemovableCache.Visibility = Visibility.Collapsed;
 			}
 		}
 
-		private async void SettingsPage_Loaded(object sender, RoutedEventArgs e)
+		private void RefreshSettingsUI()
 		{
-			await dataSourceManager.ScanDataSource();
-
-			bool hasLocalDataSource = dataSourceManager.HasDataSource(DataSourceManager.DataSourceLocation.Local);
-			bool hasRemovableDataSource = dataSourceManager.HasDataSource(DataSourceManager.DataSourceLocation.Removable);
-
-			if (hasLocalDataSource == false && hasRemovableDataSource == false)
+			if (dataSourceManager.HasDataSources() == false)
 			{
 				Hyperlink hyperlink = new Hyperlink();
 				hyperlink.NavigateUri = new Uri("https://github.com/retropassdev/RetroPass#Setup");
@@ -135,6 +112,12 @@ namespace RetroPass
 			}
 
 			RefreshDataSourceUI();
+		}
+
+		private async void SettingsPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			await dataSourceManager.ScanDataSources();
+			RefreshSettingsUI();			
 		}
 
 		//on windows, windows key + backspace
@@ -153,11 +136,6 @@ namespace RetroPass
 
 			SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
-			dataSourceManager.OnImportStarted += OnImportStarted;
-			dataSourceManager.OnImportUpdateProgress += OnImportUpdateProgress;
-			dataSourceManager.OnImportFinished += OnImportFinished;
-			dataSourceManager.OnImportError += OnImportError;
-
 			AutoPlayVideoCheckBox.IsChecked = (bool)ApplicationData.Current.LocalSettings.Values[App.SettingsAutoPlayVideo];
 			EnableLoggingCheckBox.IsChecked = (bool)ApplicationData.Current.LocalSettings.Values[App.SettingsLoggingEnabled];
 
@@ -168,75 +146,31 @@ namespace RetroPass
 		{
 			SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
 
-			dataSourceManager.OnImportUpdateProgress -= OnImportUpdateProgress;
-			dataSourceManager.OnImportFinished -= OnImportFinished;
-			dataSourceManager.OnImportError -= OnImportError;
-
 			base.OnNavigatedFrom(e);
 		}
 
 		private void ButtonActivateRemovableStorage_Click(object sender, RoutedEventArgs e)
 		{
-			dataSourceManager.ActivateDataSource(DataSourceManager.DataSourceLocation.Removable);
+			ToggleButton button = sender as ToggleButton;
+			DataSource dataSourceItem = button.DataContext as DataSource;
+
+			if ((bool)button.IsChecked == true)
+			{
+				dataSourceManager.UpdateDataSourceStatus(dataSourceItem.retroPassConfig.name, DataSource.Status.Active);
+			}
+			else
+			{
+				dataSourceManager.UpdateDataSourceStatus(dataSourceItem.retroPassConfig.name, DataSource.Status.Inactive);
+			}
+			
 			RefreshDataSourceUI();
-		}
-
-		private void OnImportStarted()
-		{
-			var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-			{
-				ProgressSync.Value = 0;
-				ProgressSyncText.Text = "0%";
-				RefreshDataSourceUI();
-			});
-		}
-
-		public void OnImportUpdateProgress(float progress)
-		{
-			var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-			{
-				ProgressSync.Value = progress;
-				ProgressSyncText.Text = ((int)progress).ToString() + "%";
-			});
-		}
-
-		public void OnImportFinished(bool finished)
-		{
-			var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-			{
-				RefreshDataSourceUI();
-			});
-		}
-
-		public void OnImportError()
-		{
-		}
-
-		private async void ButtonImport_Click(object sender, RoutedEventArgs e)
-		{
-			//await dataSourceManager.CopyToLocalFolder();
-		}
-
-		private void ButtonImportCancel_Click(object sender, RoutedEventArgs e)
-		{
-			//dataSourceManager.CancelImport();
-		}
-
-		private void ButtonActivateLocalStorage_Click(object sender, RoutedEventArgs e)
-		{
-			dataSourceManager.ActivateDataSource(DataSourceManager.DataSourceLocation.Local);
-			RefreshDataSourceUI();
-		}
-
-		private async void ButtonDeleteLocalStorage_Click(object sender, RoutedEventArgs e)
-		{
-			await dataSourceManager.DeleteLocalDataSource();
-			StackPanelLocalStorage.Visibility = Visibility.Collapsed;
 		}
 
 		private async void ButtonClearRemovableCache_Click(object sender, RoutedEventArgs e)
 		{
-			await ThumbnailCache.Instance.Delete(DataSourceManager.DataSourceLocation.Removable);
+			dataSourceManager.DeleteUnavailableDataSources();
+			await ThumbnailCache.Instance.Delete();
+			RefreshSettingsUI();
 		}
 
 		private void AutoPlayVideoCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -260,5 +194,10 @@ namespace RetroPass
 			ApplicationData.Current.LocalSettings.Values[App.SettingsLoggingEnabled] = false;
 			LogPage.SetLogging();
 		}
+
+		/*private async void Button_Click(object sender, RoutedEventArgs e)
+		{
+			await ApplicationData.Current.ClearAsync();
+		}*/
 	}
 }

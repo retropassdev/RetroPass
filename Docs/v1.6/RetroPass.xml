@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<retropass version="1.6">
+  <dataSources>
+    <dataSource>
+      <name>Removable Drive</name>
+      <type>LaunchBox</type>
+      <relativePath>./LaunchBox</relativePath>    
+    </dataSource>
+  </dataSources>
+</retropass>
+
+

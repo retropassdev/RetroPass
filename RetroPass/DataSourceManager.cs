@@ -1,72 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Net.WebRequestMethods;
+
 
 namespace RetroPass
 {
 	public class DataSourceManager
 	{
-		public enum DataSourceLocation
-		{
-			None,
-			Local,
-			Removable
-		}
+		readonly string ActiveDataSourcesKey = "ActiveDataSourcesKey";
 
-		readonly string ActiveDataSourceLocationKey = "ActiveDataSourceLocationKey";
-		readonly string ImportFinishedKey = "ImportFinishedKey";
-
-		public bool ImportFinished
-		{
-			get
-			{
-				bool val = true;
-				if (ApplicationData.Current.LocalSettings.Values[ImportFinishedKey] != null)
-				{
-					val = (bool)ApplicationData.Current.LocalSettings.Values[ImportFinishedKey];
-				}
-				return val;
-			}
-			set
-			{
-				ApplicationData.Current.LocalSettings.Values[ImportFinishedKey] = value;
-			}
-		}
-
-		public DataSourceLocation ActiveDataSourceLocation
-		{
-			get
-			{
-				DataSourceLocation val = DataSourceLocation.None;
-				if (ApplicationData.Current.LocalSettings.Values[ActiveDataSourceLocationKey] != null)
-				{
-					val = Enum.Parse<DataSourceLocation>(ApplicationData.Current.LocalSettings.Values[ActiveDataSourceLocationKey] as string);
-				}
-				return val;
-			}
-			private set
-			{
-				ApplicationData.Current.LocalSettings.Values[ActiveDataSourceLocationKey] = value.ToString();
-			}
-		}
-
-		public Action OnImportStarted;
-		public Action<float> OnImportUpdateProgress;
-		public Action<bool> OnImportFinished;
-		public Action OnImportError;
-
-		private StorageFile removableStorageFile = null;
-		private StorageFile localStorageFile = null;
-		private DataSource dataSource;
-
-		static CancellationTokenSource tokenSource;
+		public ObservableCollection<DataSource> dataSources {get; private set; } = new ObservableCollection<DataSource>();
+		public Action DataSourcesChanged;
+		public Action ActiveDataSourcesChanged;
 
 		public DataSourceManager()
 		{
@@ -74,128 +32,250 @@ namespace RetroPass
 			//_ = ApplicationData.Current.ClearAsync();
 		}
 
-		public async Task ScanDataSource()
+		private void SaveActiveDataSources()
 		{
-			Trace.TraceInformation("DataSourceManager: ScanDataSource");
-			localStorageFile = await GetConfigurationFile(DataSourceLocation.Local);
-			removableStorageFile = await GetConfigurationFile(DataSourceLocation.Removable);
+			List<RetroPassConfig> list = dataSources.
+				Where(t => t.status == DataSource.Status.Active || t.status == DataSource.Status.Unavailable).
+				Select(r => r.retroPassConfig).ToList();
+			XmlSerializer serializer = new XmlSerializer(typeof(List<RetroPassConfig>));
+			using (StringWriter writer = new StringWriter())
+			{
+				serializer.Serialize(writer, list);
+				string stringListAsXml = writer.ToString();
+				ApplicationData.Current.LocalSettings.Values[ActiveDataSourcesKey] = stringListAsXml;
+			}
 		}
 
-		private async Task<RetroPassConfig> GetConfiguration(DataSourceLocation location)
+		private List<RetroPassConfig> LoadActiveDataSources()
 		{
-			var file = await GetConfigurationFile(location);
-			RetroPassConfig configuration = null;
+			List<RetroPassConfig> list = new List<RetroPassConfig>();
 
-			if (file != null)
+			if (ApplicationData.Current.LocalSettings.Values[ActiveDataSourcesKey] != null)
 			{
-				string xmlConfig = await FileIO.ReadTextAsync(file);
+				string listXml = (string)ApplicationData.Current.LocalSettings.Values[ActiveDataSourcesKey];
 
-				using (TextReader reader = new StringReader(xmlConfig))
+				// Deserialize the JSON string to get back the original list of strings
+				XmlSerializer serializer = new XmlSerializer(typeof(List<RetroPassConfig>));
+				using (StringReader reader = new StringReader(listXml))
 				{
-					XmlSerializer serializer = new XmlSerializer(typeof(RetroPassConfig));
-					// Call the Deserialize method to restore the object's state.
-					configuration = serializer.Deserialize(reader) as RetroPassConfig;
+					list = (List<RetroPassConfig>)serializer.Deserialize(reader);
 				}
 			}
-			return configuration;
+
+			return list;
 		}
 
-		private async Task<StorageFile> GetConfigurationFile(DataSourceLocation location)
+		public async Task ScanDataSources()
 		{
-			StorageFile file = null;
+			Trace.TraceInformation("DataSourceManager: ScanDataSource");
+			// Get the logical root folder for all external storage devices.
+			IReadOnlyList<StorageFolder> removableFolders = await KnownFolders.RemovableDevices.GetFoldersAsync();
 
-			switch (location)
+			List<DataSource> dataSourcesFromConfig = new List<DataSource>();
+			//read from settings all data sources that are saved as active
+			List<RetroPassConfig> activeDataSourceConfigsFromSettings = LoadActiveDataSources();
+
+			foreach (var folder in removableFolders)
 			{
-				case DataSourceLocation.None:
-					break;
-				case DataSourceLocation.Local:
-					file = await GetConfigFile(ApplicationData.Current.LocalCacheFolder);
-					break;
-				case DataSourceLocation.Removable:
-					// Get the logical root folder for all external storage devices.
-					IReadOnlyList<StorageFolder> removableFolders = await KnownFolders.RemovableDevices.GetFoldersAsync();
+				if (folder != null)
+				{
+					//check if the location exists
+					var item = await folder.TryGetItemAsync("RetroPass.xml");
 
-					foreach (var folder in removableFolders)
+					if (item != null)
 					{
-						file = await GetConfigFile(folder);
+						var dsConfig = await GetDataSourcesFromConfigurationFile(item as StorageFile);
+						dataSourcesFromConfig.AddRange(dsConfig);						
+					}
+				}
+			}
 
-						if (file != null)
+			List<string> allDataSourceNames = new List<string>();
+			allDataSourceNames.AddRange(dataSources.Select(t => t.retroPassConfig.name).ToList());
+			allDataSourceNames.AddRange(dataSourcesFromConfig.Select(t => t.retroPassConfig.name).ToList());
+			allDataSourceNames.AddRange(activeDataSourceConfigsFromSettings.Select(t => t.name).ToList());
+			allDataSourceNames = allDataSourceNames.Distinct().ToList();
+
+			List<DataSource> dataSourcesChanged = new List<DataSource>();
+			List<DataSource> activeDataSourcesChanged = new List<DataSource>();
+
+			foreach (var dataSourceName in allDataSourceNames)
+			{
+				DataSource dataSourceInCurrent = dataSources.FirstOrDefault(t => t.retroPassConfig.name == dataSourceName);
+				DataSource dataSourceInConfig = dataSourcesFromConfig.FirstOrDefault(t => t.retroPassConfig.name == dataSourceName);
+				RetroPassConfig dataSourceInActive = activeDataSourceConfigsFromSettings.FirstOrDefault(t => t.name == dataSourceName);
+				
+				//data source is already loaded, available from usb and set as active
+				//true true true
+				if (dataSourceInCurrent != null && dataSourceInConfig != null && dataSourceInActive != null)
+				{
+					if(dataSourceInCurrent.status != DataSource.Status.Active)
+					{
+						dataSourceInCurrent.status = DataSource.Status.Active;
+						dataSourcesChanged.Add(dataSourceInCurrent);
+						activeDataSourcesChanged.Add(dataSourceInCurrent);
+					}					
+				}
+				//data source is already loaded, available from usb and not set as active from previous sessions
+				//true true false
+				else if (dataSourceInCurrent != null && dataSourceInConfig != null && dataSourceInActive == null)
+				{
+					if (dataSourceInCurrent.status != DataSource.Status.Inactive)
+					{
+						if(dataSourceInCurrent.status == DataSource.Status.Active)
 						{
-							break;
+							activeDataSourcesChanged.Add(dataSourceInCurrent);
 						}
+
+						dataSourceInCurrent.status = DataSource.Status.Inactive;
+						dataSourcesChanged.Add(dataSourceInCurrent);
 					}
-					break;
-				default:
-					break;
-			}
-
-			return file;
-		}
-
-		public async Task<DataSource> GetDataSource(DataSourceLocation location)
-		{
-			DataSource dataSource = null;
-
-			switch (location)
-			{
-				case DataSourceLocation.None:
-					break;
-				case DataSourceLocation.Local:
-					if (localStorageFile != null)
+				}
+				//data source is already loaded, not available from usb and set as active from previous sessions
+				//true false true
+				else if (dataSourceInCurrent != null && dataSourceInConfig == null && dataSourceInActive != null)
+				{
+					if (dataSourceInCurrent.status != DataSource.Status.Unavailable)
 					{
-						dataSource = await GetDataSourceFromConfigurationFile(localStorageFile);
-					}
-					break;
-				case DataSourceLocation.Removable:
-					if (removableStorageFile != null)
+						if (dataSourceInCurrent.status == DataSource.Status.Active)
+						{
+							activeDataSourcesChanged.Add(dataSourceInCurrent);
+						}
+
+						dataSourceInCurrent.status = DataSource.Status.Unavailable;
+						dataSourcesChanged.Add(dataSourceInCurrent);
+					}					
+				}
+				//data source is already loaded, not available from usb and not set as active from previous sessions
+				//true false false
+				else if (dataSourceInCurrent != null && dataSourceInConfig == null && dataSourceInActive == null)
+				{
+					if (dataSourceInCurrent.status == DataSource.Status.Active)
 					{
-						dataSource = await GetDataSourceFromConfigurationFile(removableStorageFile);
+						activeDataSourcesChanged.Add(dataSourceInCurrent);
 					}
-					break;
-				default:
-					break;
+
+					dataSources.Remove(dataSourceInCurrent);
+					dataSourcesChanged.Add(null);
+				}
+				//data source is not already loaded, available from usb and set as active from previous sessions
+				//false true true
+				else if (dataSourceInCurrent == null && dataSourceInConfig != null && dataSourceInActive != null)
+				{
+					dataSourceInConfig.status = DataSource.Status.Active;
+					dataSources.Add(dataSourceInConfig);
+					dataSourcesChanged.Add(dataSourceInConfig);
+					activeDataSourcesChanged.Add(dataSourceInConfig);
+				}
+				//data source is not already loaded, available from usb and not set as active from previous sessions
+				//false true false
+				else if (dataSourceInCurrent == null && dataSourceInConfig != null && dataSourceInActive == null)
+				{
+					dataSourceInConfig.status = DataSource.Status.Inactive;
+					dataSources.Add(dataSourceInConfig);
+					dataSourcesChanged.Add(dataSourceInConfig);
+				}
+				//data source is not already loaded, not available from usb and set as active from previous sessions
+				//false false true
+				else if (dataSourceInCurrent == null && dataSourceInConfig == null && dataSourceInActive != null)
+				{
+					if (dataSourceInActive.type == RetroPassConfig.DataSourceType.LaunchBox)
+					{
+						DataSourceLaunchBox ds = new DataSourceLaunchBox("", dataSourceInActive);
+						ds.status = DataSource.Status.Unavailable;
+						dataSources.Add(ds);
+						dataSourcesChanged.Add(ds);
+					}
+					else if (dataSourceInActive.type == RetroPassConfig.DataSourceType.EmulationStation)
+					{
+						DataSourceEmulationStation ds = new DataSourceEmulationStation("", dataSourceInActive);
+						ds.status = DataSource.Status.Unavailable;
+						dataSources.Add(ds);
+						dataSourcesChanged.Add(ds);
+					}
+				}
+				//data source is not already loaded, not available from usb and set as active from previous sessions
+				//false false false
+				else if (dataSourceInCurrent == null && dataSourceInConfig == null && dataSourceInActive == null)
+				{
+					//nothing to do
+				}
 			}
 
-			return dataSource;
-		}
-
-		public async void ActivateDataSource(DataSourceLocation location)
-		{
-			ActiveDataSourceLocation = location;
-			dataSource = await GetDataSource(ActiveDataSourceLocation);
-			ThumbnailCache.Instance.Set(dataSource, ActiveDataSourceLocation);
-		}
-
-		public async Task<DataSource> GetActiveDataSource()
-		{
-			if (dataSource == null)
+			if(dataSourcesChanged.Count > 0)
 			{
-				await ScanDataSource();
-				dataSource = await GetDataSource(ActiveDataSourceLocation);
-				ThumbnailCache.Instance.Set(dataSource, ActiveDataSourceLocation);
+				DataSourcesChanged?.Invoke();
 			}
 
-			return dataSource;
-		}
-
-		public bool HasDataSource(DataSourceLocation dataSourceLocation)
-		{
-			switch (dataSourceLocation)
+			if (activeDataSourcesChanged.Count > 0)
 			{
-				case DataSourceLocation.None:
-					return false;
-				case DataSourceLocation.Local:
-					return localStorageFile != null;
-				case DataSourceLocation.Removable:
-					return removableStorageFile != null;
-				default:
-					return false;
+				ActiveDataSourcesChanged?.Invoke();
+			}
+		}		
+
+		public void UpdateDataSourceStatus(string name, DataSource.Status status)
+		{
+			var dataSource = dataSources.FirstOrDefault(t => t.retroPassConfig.name == name);
+			if (dataSource != null && dataSource.status != status)
+			{
+				//active data source is changed if it transitions from inactive/unavailable to active or
+				//from active to inactive/unavailable
+				if ((status == DataSource.Status.Active || dataSource.status == DataSource.Status.Active))
+				{
+					ActiveDataSourcesChanged?.Invoke();
+				}				
+				
+				dataSource.status = status;
+				SaveActiveDataSources();
+				DataSourcesChanged?.Invoke();
 			}
 		}
 
-		private async Task<DataSource> GetDataSourceFromConfigurationFile(StorageFile xmlConfigFile)
+		//Gets only those sources that are set by user as active and are connected as external devices
+		//It could be that although user activated some sources, they are unplugged, so they need to be filtered out
+		public async Task<List<DataSource>> GetPresentActiveDataSources()
 		{
-			DataSource dataSource = null;
+			List<DataSource> activeDataSources = new List<DataSource>();
+
+			if (dataSources.Count == 0)
+			{
+				//find all connected sources
+				await ScanDataSources();	
+			}
+
+			//filter out all that are not connected
+			activeDataSources = dataSources.Where(ds => ds.status == DataSource.Status.Active).ToList();
+			return activeDataSources;
+		}
+
+		public bool HasDataSources()
+		{
+			return dataSources.Count > 0;		
+		}
+
+		public void DeleteUnavailableDataSources()
+		{
+			bool found = false;
+
+			for (int i = dataSources.Count - 1; i >= 0; i--)
+			{
+				if (dataSources[i].status == DataSource.Status.Unavailable)
+				{
+					found = true;
+					dataSources.RemoveAt(i);
+				}
+			}
+
+			if(found)
+			{
+				SaveActiveDataSources();
+				DataSourcesChanged?.Invoke();
+			}
+		}
+
+		private async Task<List<DataSource>> GetDataSourcesFromConfigurationFile(StorageFile xmlConfigFile)
+		{
+			List<DataSource> dataSource = new List<DataSource>();
 
 			if (xmlConfigFile != null)
 			{
@@ -204,250 +284,56 @@ namespace RetroPass
 
 				using (TextReader reader = new StringReader(xmlConfig))
 				{
-					XmlSerializer serializer = new XmlSerializer(typeof(RetroPassConfig));
-					// Call the Deserialize method to restore the object's state.
-					RetroPassConfig configuration = serializer.Deserialize(reader) as RetroPassConfig;
+					List<RetroPassConfig> dataSourceConfigs = new List<RetroPassConfig>();
 
-					string rootFolder = Path.Combine(Path.GetDirectoryName(xmlConfigFile.Path), configuration.relativePath);
-					rootFolder = Path.GetFullPath(rootFolder);
+					string configVersionPattern = @"retropass\s+version\s*=\s*""([\d\.]+)""\s*";
+					Regex regex = new Regex(configVersionPattern);
+					Match match = regex.Match(xmlConfig);
 
-					if (configuration.type == RetroPassConfig.DataSourceType.LaunchBox)
+					if (match.Success && match.Groups[1].Value == "1.6")
 					{
-						dataSource = new DataSourceLaunchBox(rootFolder, configuration);
+						XmlSerializer serializer = new XmlSerializer(typeof(RetroPassConfig_V1_6));
+						RetroPassConfig_V1_6 configuration = serializer.Deserialize(reader) as RetroPassConfig_V1_6;
+						dataSourceConfigs.AddRange(configuration.dataSources);
 					}
-					else if (configuration.type == RetroPassConfig.DataSourceType.EmulationStation)
+					else
 					{
-						dataSource = new DataSourceEmulationStation(rootFolder, configuration);
+						XmlSerializer serializer = new XmlSerializer(typeof(RetroPassConfig));
+						RetroPassConfig configuration = serializer.Deserialize(reader) as RetroPassConfig;
+						//old config file probably doesn't have name of the data source, so make one
+						if (string.IsNullOrEmpty(configuration.name))
+						{
+							configuration.name = "Removable Storage";
+						}
+
+						dataSourceConfigs.Add(configuration);
 					}
 
-					/*if (dataSource != null)
+					foreach (var configuration in dataSourceConfigs)
 					{
 						string rootFolder = Path.Combine(Path.GetDirectoryName(xmlConfigFile.Path), configuration.relativePath);
-						dataSource.rootFolder = Path.GetFullPath(rootFolder);
-					}*/
+						rootFolder = Path.GetFullPath(rootFolder);
+
+						if (configuration.type == RetroPassConfig.DataSourceType.LaunchBox)
+						{
+							dataSource.Add(new DataSourceLaunchBox(rootFolder, configuration));
+						}
+						else if (configuration.type == RetroPassConfig.DataSourceType.EmulationStation)
+						{
+							dataSource.Add(new DataSourceEmulationStation(rootFolder, configuration));
+						}
+
+						/*if (dataSource != null)
+						{
+							string rootFolder = Path.Combine(Path.GetDirectoryName(xmlConfigFile.Path), configuration.relativePath);
+							dataSource.rootFolder = Path.GetFullPath(rootFolder);
+						}*/
+					}
 				}
 			}
 
 			return dataSource;
 		}
-
-		private async Task<StorageFile> GetConfigFile(StorageFolder folder)
-		{
-			StorageFile file = null;
-
-			if (folder != null)
-			{
-				//check if the location exists
-				var item = await folder.TryGetItemAsync("RetroPass.xml");
-
-				if (item != null)
-				{
-					file = item as StorageFile;
-				}
-			}
-
-			return file;
-		}
-
-		public async Task CopyFileAsync(StorageFile source, StorageFolder destinationContainer, bool overwriteIfNewer)
-		{
-			// Were we already canceled?
-			bool copyFile = true;
-
-			if (tokenSource.Token.IsCancellationRequested)
-			{
-				tokenSource.Token.ThrowIfCancellationRequested();
-			}
-
-			//get existing asset
-			if (overwriteIfNewer)
-			{
-				var existingAssetItem = (StorageFile)await destinationContainer.TryGetItemAsync(source.Name);
-				if (existingAssetItem != null)
-				{
-					BasicProperties existingAssetItemBasicProperties = await existingAssetItem.GetBasicPropertiesAsync();
-					BasicProperties newAssetItemBasicProperties = await source.GetBasicPropertiesAsync();
-
-					//do not copy file if timestamps are the same
-					if (newAssetItemBasicProperties.DateModified <= existingAssetItemBasicProperties.DateModified)
-					{
-						copyFile = false;
-					}
-				}
-			}
-
-			if (copyFile == true)
-			{
-				await source.CopyAsync(destinationContainer, source.Name, NameCollisionOption.ReplaceExisting);
-			}
-		}
-
-		public async Task CopyFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
-		{
-			StorageFolder destinationFolder = null;
-			destinationFolder = await destinationContainer.CreateFolderAsync(
-				desiredName ?? source.Name, CreationCollisionOption.OpenIfExists);
-
-			foreach (var file in await source.GetFilesAsync())
-			{
-				await CopyFileAsync(file, destinationFolder, true);
-				//await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
-			}
-			foreach (var folder in await source.GetFoldersAsync(CommonFolderQuery.DefaultQuery))
-			{
-				await CopyFolderAsync(folder, destinationFolder);
-			}
-		}
-
-		private async Task CopyToLocalFolderAsync()
-		{
-			// Perform background work here.
-			// Don't directly access UI elements from this method.
-			DataSource ds = await GetDataSource(DataSourceLocation.Removable);
-			await ds.Load();
-			string srcPath = ds.rootFolder;
-			string destPath = ApplicationData.Current.LocalCacheFolder.Path;
-
-			StorageFolder folderSrc;
-			StorageFolder folderDest;
-			//find folder
-			try
-			{
-				folderSrc = await StorageUtils.GetFolderFromPathAsync(srcPath);
-				folderDest = await StorageUtils.GetFolderFromPathAsync(destPath);
-			}
-			catch (Exception)
-			{
-				return;
-			}
-
-			List<string> assets = ds.GetAssets();
-
-			//create config file			
-			RetroPassConfig configRemovable = await GetConfiguration(DataSourceLocation.Removable);
-			RetroPassConfig config = new RetroPassConfig();
-			config.relativePath = "./DataSource";
-			config.type = configRemovable.type;
-			config.retroarch = ds.retroPassConfig.retroarch;
-
-			//save the file to app local directory
-			StorageFile filename = await folderDest.CreateFileAsync("RetroPass.xml", CreationCollisionOption.ReplaceExisting);
-			XmlSerializer x = new XmlSerializer(typeof(RetroPassConfig));
-			using (TextWriter writer = new StringWriter())
-			{
-				x.Serialize(writer, config);
-				await FileIO.WriteTextAsync(filename, writer.ToString());
-				localStorageFile = filename;
-			}
-
-			var destinationRootFolder = await folderDest.CreateFolderAsync("DataSource", CreationCollisionOption.OpenIfExists);
-			var sourceRootFolderPath = ds.rootFolder;
-			var sourceRootFolder = await StorageUtils.GetFolderFromPathAsync(sourceRootFolderPath);
-
-			int progress = 0;
-
-			foreach (var asset in assets)
-			{
-				string dstAssetRelativeDirectoryPath = Path.GetDirectoryName(asset);
-				StorageFolder dstAssetFolder = destinationRootFolder;
-
-				IStorageItem assetItem = await sourceRootFolder.TryGetItemAsync(asset);
-
-				if (assetItem == null)
-				{
-					continue;
-				}
-
-				//create all subdirectories so asset can be coppied into it
-				if (string.IsNullOrEmpty(dstAssetRelativeDirectoryPath) == false)
-				{
-					dstAssetFolder = await destinationRootFolder.CreateFolderAsync(dstAssetRelativeDirectoryPath, CreationCollisionOption.OpenIfExists);
-				}
-
-				if (assetItem is StorageFile)
-				{
-					await CopyFileAsync((StorageFile)assetItem, dstAssetFolder, true);
-				}
-				else if (assetItem is StorageFolder)
-				{
-					await CopyFolderAsync(assetItem as StorageFolder, dstAssetFolder);
-				}
-
-				progress++;
-
-				OnImportUpdateProgress?.Invoke((float)progress / assets.Count * 100.0f);
-			}
-		}
-
-		public async Task<bool> CopyToLocalFolder()
-		{
-			tokenSource = new CancellationTokenSource();
-			ImportFinished = false;
-			OnImportStarted?.Invoke();
-
-			try
-			{
-				await Task.Run(() => CopyToLocalFolderAsync(), tokenSource.Token);
-				ImportFinished = true;
-			}
-			catch (Exception)
-			{
-				//copy failed
-				ImportFinished = false;
-			}
-			finally
-			{
-				tokenSource.Dispose();
-				tokenSource = null;
-			}
-
-			OnImportFinished?.Invoke(ImportFinished);
-			return ImportFinished;
-		}
-
-		public void CancelImport()
-		{
-			tokenSource.Cancel();
-		}
-
-		public bool IsImportInProgress()
-		{
-			return tokenSource != null;
-		}
-
-		public async Task DeleteLocalDataSource()
-		{
-			ImportFinished = true;
-
-			DataSource ds = await GetDataSource(DataSourceLocation.Local);
-
-			if (ds != null)
-			{
-				await ds.playlistPlayLater.Delete();
-			}
-
-			if (ActiveDataSourceLocation == DataSourceLocation.Local)
-			{
-				ActiveDataSourceLocation = DataSourceLocation.None;
-				dataSource = null;
-			}
-
-			StorageFolder destPath = ApplicationData.Current.LocalCacheFolder;
-			IStorageItem assetItem = await destPath.TryGetItemAsync("DataSource");
-			if (assetItem != null)
-			{
-				await assetItem.DeleteAsync(StorageDeleteOption.PermanentDelete);
-			}
-			IStorageItem configItem = await destPath.TryGetItemAsync("RetroPass.xml");
-			if (configItem != null)
-			{
-				await configItem.DeleteAsync(StorageDeleteOption.PermanentDelete);
-			}
-
-			//delete cache
-			await ThumbnailCache.Instance.Delete(DataSourceLocation.Local);
-
-			localStorageFile = null;
-		}
 	}
+
 }

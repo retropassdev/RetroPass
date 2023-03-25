@@ -6,11 +6,11 @@ Retro Pass is a simple frontend for RetroArch, RetriX Gold, Dolphin, XBSX2 and X
 This frontend is made specifically for Xbox console and hopefully, should feel familiar to Xbox users right from the start.
 
 ## Limitations
- - Xbox only
- - optimized for gamepad only
- - no custom themes
- - zipped content supported only if specific emulator supports it
- - no scrapper
+- Xbox only
+- optimized for gamepad only
+- no custom themes
+- zipped content supported only if specific emulator supports it
+- no scrapper
   
 ## Prerequisites
 
@@ -22,7 +22,10 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 - If using Xenia Canary - version **1.1.0** or **higher**
 - For seamless experience, it is recommended to setup a hotkey for quitting RetroArch. When content is started from RetroPass, once user exits RetroArch either with the hotkey or through the menu, it will immediately return to RetroPass.
 - External storage of any type used for setting up content library
-- Additional computer for setting up content library
+- Additional computer for setting up content library with either
+	* for LaunchBox: Windows, macOS or Linux with Windows virtual machine
+	* for Emulation Station: Windows, macOS or Linux
+
 
 ## Installation
 
@@ -31,131 +34,38 @@ This frontend is made specifically for Xbox console and hopefully, should feel f
 	- RetroPass_x.y.z.0_x64.msix
 	- 3 appx dependencies in /Dependencies/x64/ folder. 
 
- ## Setup
+## Setup
 
 RetroPass can't be configured directly from Xbox because it doesn't have a built in scraper and doing all the configuration directly on Xbox would be fairly difficult. Instead, RetroPass is made compatible with:
 
-1. LaunchBox
-2. EmulationStation
-
-## Setup with LaunchBox
+- [LaunchBox](/Docs/SetupLaunchBox.md)
+- [EmulationStation](/Docs/SetupEmulationStation.md)
 
 LaunchBox is a preferred option, because it gives the best results when properly set up. Mainly:
- - It has support for multiple title and gameplay screenshots. 
- - Setup specific core for a game, if needed.
+- It has support for multiple title and gameplay screenshots. 
+- Setup specific core per game, if needed.
 
-1. Install LaunchBox directly to external storage.
-2. Setup and configure LaunchBox to work with any of:
- * RetroArch
- * [RetriX Gold](/Docs/SetupRetriXGold.md)
- * [Dolphin](/Docs/SetupDolphin.md)
- * [XBSX2](/Docs/SetupXBSX2.md)
- * [Xenia Canary](/Docs/SetupXeniaCanary.md)
-3. **IMPORTANT!!!** When you import your content, it will ask you to select which media type to download. If you are using LaunchBox just to configure RetroPass, there is no need to download all the media types because RetroPass needs only a subset. It will speed up your setup process and it will make less burden on LaunchBox database. You only need to check these media types:
-  - "Box - Front" 
-  - "Screenshot - Game Title"
-  - "Screenshot - Gameplay"
-  - "Screenshot - Game Select"
-  - "Video"
-
-  	![](/Docs/media_types.png)
-
-
-4. Make sure that **\<CommandLine>** property for each emulator is properly configured in **LaunchBox/Data/Emulators.xml**. The path is not important, as long as the core name is properly specified. RetroPass ignores the path part and gets only the name of the core. It knows how to properly pass it to RetroArch or RetriX Gold.
-
-	```XML
-	<CommandLine>-L "cores\<core_name>.dll"</CommandLine>
-	```
-	Where **\<core_name>** is the name of the core you wish to use for particular emulator.
-5. Optionally, if you need to set up a different core for a game, go to Launchbox, open "Edit Metadata/Media" and modify command line under Emulation.
- 	![](/Docs/core_per_game.png)
-6. If you want to specify the order of your playlists and platforms, you can do so by checking the [LaunchBox playlist and platform sorting](/Docs/SetupLaunchBoxSorting.md) section.
-7. [Download](/Docs/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
-8. Edit **RetroPass.xml** configuration file. 
-	
-	**\<relativePath>** points to LaunchBox directory on the external storage. Do not put absolute path like "E:\LaunchBox", because when external storage is plugged into Xbox, it might be recognized under a different letter. For example, if LaunchBox folder is in the root of external storage, then it should be configured like this:
-
-	```XML
-	<?xml version="1.0"?>
-	<dataSource>
-		<type>LaunchBox</type>
-		<relativePath>./LaunchBox</relativePath>
-	</dataSource>
-	```
-9. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
-
-## Setup with Emulation Station
-
-If you do not wish to use LaunchBox, it is also possible to create Emulation Station compatible metadata source.
-
-1. Setup and configure Emulation Station to work with RetroArch on PC, preferably directly on external storage.
-2. Download all images, descriptions and videos. There are various scrapers that can download assets from various databases and output to Emulation Station gamelist.xml files
-3. Edit **RetroPass.xml** configuration file. 
-	
-	**\<relativePath>** points to Emulation Station directory on the external storage. Do not put absolute path like "E:\EmulationStation", because when external storage is plugged into Xbox, it might be recognized under a different letter. For example, if EmulationStation folder is in the root of external storage, then it should be configured like this:
-
-	```XML
-	<?xml version="1.0"?>
-	<dataSource>
-		<type>EmulationStation</type>
-		<relativePath>./EmulationStation</relativePath>
-	</dataSource>
-	```
-4. Check that **es_systems.cfg** file exists somewhere in the Emulation Station directory and that it has valid systems defined. i.e.
-	- Ignore **\<path>** property, it doesn't have to be properly set.
-	- Make sure that **\<command>** property for each system is properly configured. Paths are not important, as long as the core name is properly specified. RetroPass ignores everything in the command line except the core name. It knows how to properly pass it to RetroArch.
-	- **\<fullname>** is what is actually displayed in RetroPass as the name of the system.
-	- In the example below, only relevant properties are shown:
-
-	```XML
-	<system>
-		<name>nes</name>
-		<fullname>Nintendo Entertainment System</fullname>	
-		<command>-L %HOME%\\systems\nestopia_libretro.dll</command>
-		<platform>nes</platform>
-	</system>
-	```
-5. Setup **gamelist.xml** for every system:
-	- **gamelist.xml** must be in its own directory which equals system's **\<name>** defined in **es_systems.cfg**. For example, based on the example in step 3, it is expected that for NES, it should be **/nes/gamelist.xml**.
-	- All paths defined in **\<path>**, **\<thumbnail>**, **\<image>**, **\<video>**  must be a relative path to **\<relativePath>** defined in step 3. 
-	- For example, if in **Retropass.xml** relative path is 	
-	```XML
-		<relativePath>./EmulationStation</relativePath>
-	```
-	- And 
-	```XML
-		<game>
-			<path>./contents/nes/Elite.nes</path>
-			<name>Elite</name>
-			<desc>The player...</desc>
-			<thumbnail>./downloaded_images/nes/covers/Elite-thumb.jpg</thumbnail>
-			<image>./downloaded_images/nes/Elite-image.jpg</image>
-			<video>./videos/nes/Elite.mp4</video>
-			<releasedate>19910101T000000</releasedate>
-			<developer>David Braben, Ian Bell</developer>
-			<publisher>Imagineer Co., Ltd.</publisher>
-			<genre>Action, Shooter</genre>
-		</game>
-	```
-	- Then the thumbnail full path would be
-	```
-		./EmulationStation/downloaded_images/nes/covers/Elite-thumb.jpg
-	```
-6. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
-
+Choose any of the above options and follow the link to set it up. After configuring, connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](#first-run-and-settings) section.
 
 ## First Run and Settings
 
 1. If RetroPass configuration file is found and properly configured, Settings screen is shown:
 
 	![](/Docs/first_settings.png)
-2. Click **Activate** button and then Back
-3. You should see a list of platforms and content
+1. Click **Activate** button and then Back
+1. You should see a list of platforms and content
+	- **Delete Cache** deletes all cached thumbnails, but also **Play Later** playlist.
+	- **Auto Play Video** automatically plays a video when content is selected.
+	- **Enable Logging** enables logging. See [Troubleshooting](#troubleshooting) section for more info.
 
-- **Delete Cache** deletes all cached thumbnails, but also **Play Later** playlist.
-- **Auto Play Video** automatically plays a video when content is selected.
-- **Enable Logging** enables logging. See [Troubleshooting](#troubleshooting) section for more info.
+## Advanced Setup - Multiple Data Sources
 
+RetroPass can be configured so that it recognizes more than one LaunchBox or EmulationStation data source. Here are a few example scenarios where you might find this setup useful:
+* You would like to connect two or more external storages. You have one USB stick that doesn't have enough free space and contains only a subset of your games. You also have a larger SSD where you keep the rest of your game collection.
+* You have a single SSD where you keep all your games. You would like to separate those into two data sources. One data source contains all your games and another one only games which are appropriate for players of all ages.
+
+For more information go to [Setup multiple data sources](/Docs/SetupMultipleDataSources.md)
+ 
 ## Controls
 - **Gamepad A** - Confirm
 - **Gamepad B** - Back, previous screen, close dialog

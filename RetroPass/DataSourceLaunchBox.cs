@@ -417,16 +417,9 @@ namespace RetroPass
 
 		public override async Task Load()
 		{
-			///////////////////load Play later playlist///////////////////////////////////////////////
-			await playlistPlayLater.Load(rootFolder);
-			playlistPlayLater.UpdateGamesLandingPage();
-			Playlists.Add(playlistPlayLater);
-			PlaylistImported?.Invoke(playlistPlayLater);
-			
 			//TODO: add platforms from playlistPlayLater to all platforms, so we don't repeat them
 			StorageFolder dataFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Data");
 			
-
 			///////////////////read and parse Emulators.xml///////////////////////////////////////////////
 			List<EmulatorsLaunchBox.EmulatorPlatform> emulatorPlatforms = await LoadEmulatorsXml(dataFolder);
 

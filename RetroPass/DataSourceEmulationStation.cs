@@ -140,12 +140,6 @@ namespace RetroPass
 
 		public override async Task Load()
 		{
-			///////////////////load Play later playlist///////////////////////////////////////////////
-			await playlistPlayLater.Load(rootFolder);
-			playlistPlayLater.UpdateGamesLandingPage();
-			Playlists.Add(playlistPlayLater);
-			PlaylistImported?.Invoke(playlistPlayLater);
-
 			StorageFolder dataFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder);
 			var playlistFolders = await dataFolder.GetFoldersAsync();
 
