@@ -137,7 +137,7 @@ namespace RetroPass
                         }
                         break;
 
-                    case "PlayMode":
+                    case "Player Mode":
                         playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.PlayMode != null && t.game.PlayMode.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
                         searchResultList.Clear();
                         foreach (PlaylistItem i in playlistItems)
@@ -201,31 +201,31 @@ namespace RetroPass
             
             if (SearchCriteria.SelectedItem.ToString() == "Developer")
             {
-                SearchText.PlaceholderText = "e.g - Activision/Microsoft/Rockstar";
+                SearchText.PlaceholderText = "e.g. - Activision/Microsoft/Rockstar";
             }
             else if (SearchCriteria.SelectedItem.ToString() == "Year")
             {
-                SearchText.PlaceholderText = "e.g - 1990/1996/2000";
+                SearchText.PlaceholderText = "e.g. - 1990/1996/2000";
             }
             else if (SearchCriteria.SelectedItem.ToString() == "Genre")
             {
-                SearchText.PlaceholderText = "e.g - Shooter/Racing/Strategy";
+                SearchText.PlaceholderText = "e.g. - Shooter/Racing/Strategy/Sports";
             }
             else if (SearchCriteria.SelectedItem.ToString() == "Player Mode")
             {
-                SearchText.PlaceholderText = "e.g - Single/Multi/Coop";
+                SearchText.PlaceholderText = "e.g. - Single/Multi/Coop";
             }
             else if (SearchCriteria.SelectedItem.ToString() == "Release")
             {
-                SearchText.PlaceholderText = "e.g - ROM Hack/Homebrew/Unlicensed";
+                SearchText.PlaceholderText = "e.g. - ROM Hack/Homebrew/Unlicensed";
             }
             else if (SearchCriteria.SelectedItem.ToString() == "Title")
             {
-                SearchText.PlaceholderText = "Search All Games";
+                SearchText.PlaceholderText = "Search Games...";
             }
             else // default placeholder text
             {
-                SearchText.PlaceholderText = "Search...";
+                SearchText.PlaceholderText = "Search Games...";
             }
             // add more conditions as needed for each option in the combo box
         }
