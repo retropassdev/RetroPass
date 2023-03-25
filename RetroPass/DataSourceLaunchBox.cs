@@ -260,17 +260,21 @@ namespace RetroPass
 			List<PlaylistLaunchBox> playlistLaunchBoxList = new List<PlaylistLaunchBox>();
 
 			StorageFolder playlistsFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Data\\Playlists");
-			IReadOnlyList<StorageFile> playlistFiles = await playlistsFolder.GetFilesAsync();
-			foreach (StorageFile xmlPlaylistFile in playlistFiles)
-			{
-				string xmlPlaylist = await FileIO.ReadTextAsync(xmlPlaylistFile);
 
-				using (TextReader reader = new StringReader(xmlPlaylist))
+			if (playlistsFolder != null)
+			{
+				IReadOnlyList<StorageFile> playlistFiles = await playlistsFolder.GetFilesAsync();
+				foreach (StorageFile xmlPlaylistFile in playlistFiles)
 				{
-					XmlSerializer serializer = new XmlSerializer(typeof(PlaylistLaunchBox));
-					// Call the Deserialize method to restore the object's state.
-					PlaylistLaunchBox playlistLaunchBox = serializer.Deserialize(reader) as PlaylistLaunchBox;
-					playlistLaunchBoxList.Add(playlistLaunchBox);
+					string xmlPlaylist = await FileIO.ReadTextAsync(xmlPlaylistFile);
+
+					using (TextReader reader = new StringReader(xmlPlaylist))
+					{
+						XmlSerializer serializer = new XmlSerializer(typeof(PlaylistLaunchBox));
+						// Call the Deserialize method to restore the object's state.
+						PlaylistLaunchBox playlistLaunchBox = serializer.Deserialize(reader) as PlaylistLaunchBox;
+						playlistLaunchBoxList.Add(playlistLaunchBox);
+					}
 				}
 			}
 
