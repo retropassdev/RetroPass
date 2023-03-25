@@ -128,7 +128,16 @@ namespace RetroPass
                         }
                         break;
 
-                    case "Play Mode":
+                    case "Genre":
+                        playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.Genre != null && t.game.Genre.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        searchResultList.Clear();
+                        foreach (PlaylistItem i in playlistItems)
+                        {
+                            searchResultList.Add(i);
+                        }
+                        break;
+
+                    case "PlayMode":
                         playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.PlayMode != null && t.game.PlayMode.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
                         searchResultList.Clear();
                         foreach (PlaylistItem i in playlistItems)
@@ -181,6 +190,44 @@ namespace RetroPass
             {
                 searchResultList.Clear();
             }
+        }
+
+        private void SearchCriteria_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SearchText == null) // check if the SearchText object is null
+            {
+                return; // exit the method early
+            }
+            
+            if (SearchCriteria.SelectedItem.ToString() == "Developer")
+            {
+                SearchText.PlaceholderText = "e.g - Activision/Microsoft/Rockstar";
+            }
+            else if (SearchCriteria.SelectedItem.ToString() == "Year")
+            {
+                SearchText.PlaceholderText = "e.g - 1990/1996/2000";
+            }
+            else if (SearchCriteria.SelectedItem.ToString() == "Genre")
+            {
+                SearchText.PlaceholderText = "e.g - Shooter/Racing/Strategy";
+            }
+            else if (SearchCriteria.SelectedItem.ToString() == "Player Mode")
+            {
+                SearchText.PlaceholderText = "e.g - Single/Multi/Coop";
+            }
+            else if (SearchCriteria.SelectedItem.ToString() == "Release")
+            {
+                SearchText.PlaceholderText = "e.g - ROM Hack/Homebrew/Unlicensed";
+            }
+            else if (SearchCriteria.SelectedItem.ToString() == "Title")
+            {
+                SearchText.PlaceholderText = "Search All Games";
+            }
+            else // default placeholder text
+            {
+                SearchText.PlaceholderText = "Search...";
+            }
+            // add more conditions as needed for each option in the combo box
         }
 
         private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -296,10 +343,6 @@ namespace RetroPass
         }
 
         private void SearchGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
-        private void SearchCriteria_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
     }

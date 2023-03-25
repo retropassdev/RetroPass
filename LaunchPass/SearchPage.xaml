@@ -49,7 +49,7 @@
                 <RowDefinition Height="10" />
                 <RowDefinition Height="0*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="29,17,27,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" VerticalAlignment="Top" Height="39" Grid.RowSpan="2">
+            <Grid Grid.Row="0" Margin="29,17,14,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" VerticalAlignment="Top" Height="39" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0*" />
                     <RowDefinition Height="16.8" />
@@ -62,12 +62,15 @@
                     <ColumnDefinition Width="130.4" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" Background="#66000000" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,-0.5,458,0" Height="36" CornerRadius="4,4,4,4" Grid.Row="1" Grid.RowSpan="4" FontFamily="{StaticResource ApplicationFonts}">
+                <ComboBox x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" Background="#66000000" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,-0.5,455,0" Height="36" CornerRadius="4,4,4,4" Grid.Row="1" Grid.RowSpan="4" FontFamily="{StaticResource ApplicationFonts}" SelectionChanged="SearchCriteria_SelectedIndexChanged">
                     <x:String>Title</x:String>
                     <x:String>Developer</x:String>
                     <x:String>Year</x:String>
+                    <x:String>Genre</x:String>
+                    <x:String>Player Mode</x:String>
+                    <x:String>Release</x:String>
                 </ComboBox>
-                <TextBox x:Name="SearchText" Grid.Column="2" Background="#66000000" Margin="0,0,0,0" Padding="10,6,0,0" CornerRadius="4,4,4,4" PlaceholderText="Search Games" TextChanged="TextBox_TextChanged" Grid.Row="1" Grid.RowSpan="4" FontSize="14" FontFamily="{StaticResource ApplicationFonts}" HorizontalAlignment="Right" VerticalContentAlignment="Center" Width="442" SelectionHighlightColor="{x:Null}" />
+                <TextBox x:Name="SearchText" Grid.Column="2" Background="White" Margin="0,0,0,0" Padding="10,6,0,0" CornerRadius="4,4,4,4" PlaceholderText="Search All Games" TextChanged="TextBox_TextChanged" Grid.Row="1" Grid.RowSpan="4" FontSize="14" FontFamily="{StaticResource ApplicationFonts}" HorizontalAlignment="Right" VerticalContentAlignment="Center" Width="442" SelectionHighlightColor="{x:Null}" PlaceholderForeground="#99000000" Foreground="#99000000" FocusVisualPrimaryBrush="#99000000" />
             </Grid>
 
             <GridView  x:Name="SearchGridView"
