@@ -28,10 +28,49 @@
                 Margin="0,0,0,0" Padding="0,0,0,0"
                 HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
                 BorderThickness="0" Background="Transparent">
-                    <Image   x:Name="ItemImage"
+                    <RelativePanel CornerRadius="4,4,4,4" Background="Transparent">
+                        <Image x:Name="ItemImage"
                         Width="116"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top" />
+                        <Border
+                        x:Name="GameNameDisplayEmpty"
+                        Background="Black"
+                        Opacity="0.9"
+                        CornerRadius="0,0,0,0"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.AlignBottomWithPanel="True"
+                        Visibility="Visible">
+                            <TextBlock
+                            x:Name="TextTitleEmpty"
+                            Padding="0,0,0,1"
+                            MaxLines="2"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            Text="{x:Bind game.Title}"
+                            FontSize="10"
+                            TextAlignment="Center"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="Wrap" />
+                        </Border>
+                        <Border
+                        x:Name="GameNameDisplay"
+                        Background="Black"
+                        Opacity="0.7"
+                        RelativePanel.AlignBottomWithPanel="True"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        Visibility="Collapsed">
+                            <TextBlock
+                            x:Name="TextTitle"
+                            Padding="10,10,5,10"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            Text="{x:Bind game.Title}"
+                            Foreground="White"
+                            TextAlignment="Left"
+                            TextWrapping="Wrap" />
+                        </Border>
+                    </RelativePanel>
                 </Button>
             </Grid>
         </DataTemplate>
