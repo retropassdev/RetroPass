@@ -19,7 +19,7 @@
                 Padding="0,0,0,0"
                 Background="Transparent"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Stretch"
+                VerticalAlignment="center"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
                 BorderThickness="0"

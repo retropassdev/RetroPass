@@ -114,7 +114,7 @@
         <!-- Platform Collection Grid-->
         <DataTemplate x:Key="PlaylistItemTemplate"
         x:DataType="local:PlaylistItem">
-            <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+            <Button HorizontalAlignment="Stretch" VerticalAlignment="Center"
                     Margin="0,0,0,0" Padding="0,0,0,0"
                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="Transparent"
                     BorderThickness="0"  CornerRadius="4,4,4,4" IsEnabled="True">
