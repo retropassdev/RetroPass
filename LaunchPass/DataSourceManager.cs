@@ -292,26 +292,17 @@ namespace RetroPass
             }
         }
 
-        // This method takes a source folder, a destination container, and an optional desired name for the new folder.
-        // It then asynchronously copies the contents of the source folder to the destination container.
         public async Task CopyFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
         {
             StorageFolder destinationFolder = null;
-
-            // If desiredName is not null, use it as the folder name; otherwise, use the source folder's name.
-            string folderName = desiredName != null ? desiredName : source.Name;
-
-            // Create the destination folder with the specified name or open it if it already exists.
             destinationFolder = await destinationContainer.CreateFolderAsync(
-                folderName, CreationCollisionOption.OpenIfExists);
+                desiredName ?? source.Name, CreationCollisionOption.OpenIfExists);
 
-            // Iterate through each file in the source folder and copy them to the destination folder replacing the file if there is a file collision.
             foreach (var file in await source.GetFilesAsync())
             {
-                await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
+                await CopyFileAsync(file, destinationFolder, true);
+                //await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
             }
-
-            // Iterate through each sub-folder in the source folder and copy them to the destination folder.
             foreach (var folder in await source.GetFoldersAsync(CommonFolderQuery.DefaultQuery))
             {
                 await CopyFolderAsync(folder, destinationFolder);

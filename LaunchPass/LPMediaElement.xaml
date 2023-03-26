@@ -1,11 +1,4 @@
-﻿<!-- 
-Summary: This is a UserControl for an Xbox UWP (Universal Windows Platform) application. 
-It consists of a MediaElement and an Image inside a Grid. The MediaElement is set to auto-play and loop, 
-and both MediaElement and Image are set to stretch and fill the available space.
-    
-"LaunchPass.LPMediaElement" Defines the UserControl class as LPMediaElement
--->
-    <UserControl
+﻿<UserControl
     x:Class="LaunchPass.LPMediaElement"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -16,14 +9,11 @@ and both MediaElement and Image are set to stretch and fill the available space.
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <!-- Define a Grid container to hold the child elements -->
-    <Grid> 
-        <!-- Image element with Stretch and Margin set -->
+    <Grid>
         <Image x:Name="image1" Stretch="Fill" Margin="0"
-               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" /> <!-- Set Horizontal and Vertical alignment -->
-        
-        <!-- MediaElement with auto-play, looping, stretch, and margin set -->
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
         <MediaElement x:Name="mediaElement1" AutoPlay="True" IsLooping="True" Margin="0" Stretch="Fill"
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />   <!-- Set Horizontal and Vertical alignment -->
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </Grid>
 </UserControl>
