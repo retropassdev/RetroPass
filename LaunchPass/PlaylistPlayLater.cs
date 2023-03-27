@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace RetroPass
 {
@@ -116,6 +117,7 @@ namespace RetroPass
                 foreach (var game in playlistRetroPass.games)
                 {
                     game.DataRootFolder = dataRootfolder;
+                    game.GamePlatform.BoxFrontPath = Path.Combine(game.GamePlatform.BoxFrontPath.Substring(0, game.GamePlatform.BoxFrontPath.LastIndexOf('\\')), ((App)Application.Current).CurrentThemeSettings.BoxArtType);
                     //game.GamePlatform = p;//platform read directly from file
                     game.GamePlatform.BoxFrontPath = game.GamePlatform.BoxFrontPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.BoxFrontPath));
                     game.GamePlatform.ScreenshotGameplayPath = game.GamePlatform.ScreenshotGameplayPath == "" ? "" : Path.GetFullPath(Path.Combine(game.DataRootFolder, game.GamePlatform.ScreenshotGameplayPath));
@@ -126,7 +128,12 @@ namespace RetroPass
                     game.Init();
 
                     PlaylistItem playlistItem = AddPlaylistItem(game);
-                    PlaylistItemsDict.Add(PlaylistItemKey(playlistItem), playlistItem);
+
+                    string key = PlaylistItemKey(playlistItem);
+
+                    if (PlaylistItemsDict.ContainsKey(key))
+                        PlaylistItemsDict.Remove(key);
+                    PlaylistItemsDict.Add(key, playlistItem);
                 }
             }
         }
