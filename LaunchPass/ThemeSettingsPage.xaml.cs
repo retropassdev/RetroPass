@@ -302,6 +302,8 @@ namespace LaunchPass
 
                     bool flag2 = ((App)Application.Current).CurrentThemeSettings.BoxArtType != boxArtType;
 
+                    ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
+
                     XmlSerializer x = new XmlSerializer(typeof(LaunchPassThemeSettings));
                     using (TextWriter writer = new StringWriter())
                     {
@@ -313,8 +315,6 @@ namespace LaunchPass
                     var file = await folderPath.GetFileAsync(((App)Application.Current).CurrentThemeSettings.Backgrounds.Background.FirstOrDefault(s => s.Page == "CustomizePage").File);
 
                     mediaPlayer.MediaPath = file.Path;
-
-                    ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
 
                     ((App)Application.Current).IsLoadMainPage = flag1 || flag2;
 
