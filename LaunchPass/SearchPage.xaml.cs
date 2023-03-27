@@ -82,6 +82,18 @@ namespace RetroPass
             this.Closing += OnClosing;
         }
 
+        private void GameButton_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Border gameNameDisplay = (sender as Button).FindName("GameNameDisplay") as Border;
+            gameNameDisplay.Visibility = Visibility.Visible;
+        }
+
+        private void GameButton_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Border gameNameDisplay = (sender as Button).FindName("GameNameDisplay") as Border;
+            gameNameDisplay.Visibility = Visibility.Collapsed;
+        }
+
         public void OnNavigatedFrom()
         {
             this.Closing -= OnClosing;
