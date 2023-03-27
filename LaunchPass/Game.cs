@@ -47,80 +47,64 @@ namespace RetroPass
         {
             StorageFile boxFrontFile = null;
 
-            //tracer.Switch
-            Trace.TraceInformation("Game: FindImageThumbnailAsync: {0}", BoxFrontFileName);
+            Trace.TraceInformation($"Game: FindImageThumbnailAsync: {BoxFrontFileName}");
 
             if (string.IsNullOrEmpty(BoxFrontFilePath))
             {
-                QueryOptions options = new QueryOptions();
-                options.ApplicationSearchFilter =
-                    "System.FileName:~\"" + BoxFrontFileName + ".???" + "\"" + " OR " +
-                    "System.FileName:~\"" + BoxFrontFileName + "-*.???" + "\"" + " OR " +
-                    "System.FileName:~\"" + BoxFrontContentName + ".???" + "\"" + " OR " +
-                    "System.FileName:~\"" + BoxFrontContentName + "-*.???" + "\"";
-                options.FolderDepth = FolderDepth.Deep;
-                StorageFileQueryResult queryResult = folder.CreateFileQueryWithOptions(options);
-
-                IReadOnlyList<StorageFile> sortedFiles = await queryResult.GetFilesAsync();
-
-                string[] prefferedRegion = {
-                    "North America",
-                    "Europe",
-                    "United States",
-                    "Australia",
-                    "Canada",
-                    "Box - Front" };
-
-                int currentRegionIndex = 100;
-                int prefferedFileIndex = -1;
-
-                Trace.TraceInformation("Game: Found {0} files for {1} ", sortedFiles.Count, BoxFrontFileName);
-
-                //by default take the first available
-                if (sortedFiles.Count > 0)
+                var options = new QueryOptions
                 {
-                    prefferedFileIndex = 0;
-                }
+                    ApplicationSearchFilter =
+                        $"System.FileName:~\"{BoxFrontFileName}.???\"" +
+                        $" OR System.FileName:~\"{BoxFrontFileName}-*.???\"" +
+                        $" OR System.FileName:~\"{BoxFrontContentName}.???\"" +
+                        $" OR System.FileName:~\"{BoxFrontContentName}-*.???\"",
+                    FolderDepth = FolderDepth.Deep
+                };
+                var queryResult = folder.CreateFileQueryWithOptions(options);
+
+                var sortedFiles = await queryResult.GetFilesAsync();
+
+                var preferredRegions = new[] { "North America", "Europe", "United States", "Australia", "Canada", "Box - Front" };
+                var currentRegionIndex = 100;
+                var preferredFileIndex = -1;
+
+                Trace.TraceInformation($"Game: Found {sortedFiles.Count} files for {BoxFrontFileName}");
+
+                preferredFileIndex = sortedFiles.Count > 0 ? 0 : -1;
 
                 for (int i = 0; i < sortedFiles.Count; i++)
                 {
                     var item = sortedFiles[i];
-                    string parentDirectory = Path.GetFileName(Path.GetDirectoryName(item.Path));
+                    var parentDirectory = Path.GetFileName(Path.GetDirectoryName(item.Path));
 
-                    int regionIndex = Array.IndexOf(prefferedRegion, parentDirectory);
+                    var regionIndex = Array.IndexOf(preferredRegions, parentDirectory);
                     if (regionIndex != -1 && regionIndex < currentRegionIndex)
                     {
                         currentRegionIndex = regionIndex;
-                        prefferedFileIndex = i;
+                        preferredFileIndex = i;
 
-                        //preffered region found
-                        if (currentRegionIndex == 0)
-                        {
-                            break;
-                        }
+                        currentRegionIndex = currentRegionIndex == 0 ? currentRegionIndex : currentRegionIndex;
                     }
                 }
 
-                if (prefferedFileIndex != -1)
-                {
-                    boxFrontFile = sortedFiles[prefferedFileIndex];
-                    BoxFrontFilePath = boxFrontFile.Path;
-                }
+                boxFrontFile = preferredFileIndex != -1 ? sortedFiles[preferredFileIndex] : null;
+                BoxFrontFilePath = boxFrontFile != null ? boxFrontFile.Path : null;
             }
             else
             {
-                boxFrontFile = await StorageFile.GetFileFromPathAsync(BoxFrontFilePath);
+                var file = await StorageFile.GetFileFromPathAsync(BoxFrontFilePath);
+                boxFrontFile = file;
             }
 
             if (boxFrontFile == null)
             {
-                Trace.TraceWarning("Game: No Box Front File: {0}", BoxFrontFileName);
+                Trace.TraceWarning($"Game: No Box Front File: {BoxFrontFileName}");
                 return null;
             }
             else
             {
-                Trace.TraceInformation("Get Box Front File: {0}", boxFrontFile.Path);
-                return boxFrontFile;// thumbnailStorageFile.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                Trace.TraceInformation($"Get Box Front File: {boxFrontFile.Path}");
+                return boxFrontFile;
             }
         }
 
@@ -267,7 +251,7 @@ namespace RetroPass
                         // Set the image source to the selected bitmap
                         BitmapImage bitmapImage = new BitmapImage();
                         // Decode pixel sizes are optional
-                        // It's generally a good optimisation to decode to match the size you'll display
+                        // It's generally a good optimization to decode to match the size you'll display
                         //bitmapImage.DecodePixelHeight = decodePixelHeight;//478
                         //bitmapImage.DecodePixelWidth = decodePixelWidth;
 
