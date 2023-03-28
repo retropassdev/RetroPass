@@ -129,7 +129,7 @@
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
                     <!--<Setter Property="IsFocusEngagementEnabled" Value="False" />-->
                     <!--<Setter Property="IsTabStop" Value="False" />-->
-
+                    <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="GridViewItem">
