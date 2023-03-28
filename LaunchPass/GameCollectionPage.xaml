@@ -42,7 +42,9 @@
                         <TextBlock
                             x:Name="TextTitleEmpty"
                             Style="{StaticResource BaseTextBlockStyle}"
-                            Text="{x:Bind game.Title}"/>
+                            Text="{x:Bind game.Title}"
+                            FontSize="10"
+                            Padding="10,0,10,0"/>
                     </Border>
                         
                     <Border
@@ -100,6 +102,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock
                         x:Name="NameCollection"
