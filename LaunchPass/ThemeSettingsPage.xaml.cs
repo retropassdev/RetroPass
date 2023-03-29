@@ -319,9 +319,9 @@ namespace LaunchPass
                     ((App)Application.Current).IsLoadMainPage = flag1 || flag2;
 
                     // Show the user that fonts were changed and application will be restarted
-                    if (isFontChanged)
+                    if (isFontChanged || flag2)
                     {
-                        var msgBox = new MessageDialog("You changed fonts. Application will be restarted!", "LaunchPass");
+                        var msgBox = new MessageDialog("You changed " + (isFontChanged ? "Fonts" : "Box Art") + ". Application will be restarted!", "LaunchPass");
                         await msgBox.ShowAsync();
                         await CoreApplication.RequestRestartAsync("Application Restart Programmatically.");
                     }
