@@ -22,7 +22,6 @@
                     <Setter Property="CornerRadius" Value="4,4,4,4" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ListViewItem">
@@ -113,20 +112,9 @@
         </ListView>
 
         <!-- Platform Collection Grid-->
-        <DataTemplate x:Key="PlaylistItemTemplate"
-        x:DataType="local:PlaylistItem">
-            <Button HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                    Margin="0,0,0,0" Padding="0,0,0,0"
-                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="Transparent"
-                    BorderThickness="0"  CornerRadius="4,4,4,4" IsEnabled="True">
-                <Grid Background="Transparent" Opacity="1">
-                    <!--<Game Grid Image Background Opacity />-->
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="0" x:Name="ItemImage" Stretch="Uniform">
-                    </Image>
-                </Grid>
+        <DataTemplate x:Key="PlaylistItemTemplate" x:DataType="local:PlaylistItem">
+            <Button Margin="0,0,0,0" Padding="0,0,0,0" Background="Transparent" BorderThickness="0"  CornerRadius="4,4,4,4" IsEnabled="True">
+                    <Image Grid.Row="0" x:Name="ItemImage" Stretch="Uniform" Height="Auto"/>
             </Button>
         </DataTemplate>
 
@@ -216,10 +204,7 @@
         </Style>
 
         <ItemsPanelTemplate x:Key="GamesListViewPanelTemplate">
-            <!--<ItemsStackPanel  Orientation="Horizontal" />-->
-            <ItemsWrapGrid Orientation="Horizontal"
-                           BringIntoViewRequested="PlatformItemsWrapGrid_BringIntoViewRequested"
-                           HorizontalAlignment="Center" />
+            <ItemsStackPanel  Orientation="Horizontal" />
         </ItemsPanelTemplate>
         <!-- Background Resource -->
         <!-- <ImageBrush x:Key="GridBackgroundImage" ImageSource="Assets/Background/Default.gif" Stretch="Fill" /> -->
