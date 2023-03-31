@@ -49,8 +49,7 @@
                         
                     <Border
                         x:Name="GameNameDisplay"
-                        Background="Black"
-                        Opacity="0.9"
+                        Background="#BF000000"
                         RelativePanel.AlignBottomWithPanel="True"
                         RelativePanel.AlignLeftWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True"
