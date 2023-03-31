@@ -19,7 +19,14 @@ namespace RetroPass
             PlaylistItem playlistItem = new PlaylistItem();
             playlistItem.playlist = this;
             playlistItem.game = game;
+
+            if (PlaylistItems.Any(p => p.game.Title == game.Title))
+            {
+                var playlistItem1 = PlaylistItems.FirstOrDefault(p => p.game.Title == game.Title);
+                PlaylistItems.Remove(playlistItem1);
+            }
             PlaylistItems.Add(playlistItem);
+
             return playlistItem;
         }
 

@@ -354,10 +354,8 @@ namespace RetroPass
             var item = e.ClickedItem as PlaylistItem;
             GameDetailsPage popup = new GameDetailsPage();
             popup.OnNavigatedTo(item);
-            mediaPlayer.Stop = true;
             await popup.ShowAsync();
             popup.OnNavigatedFrom();
-            mediaPlayer.Play = true;
         }
 
         private void GamesListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)

@@ -302,6 +302,8 @@ namespace LaunchPass
 
                     bool flag2 = ((App)Application.Current).CurrentThemeSettings.BoxArtType != boxArtType;
 
+                    ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
+
                     XmlSerializer x = new XmlSerializer(typeof(LaunchPassThemeSettings));
                     using (TextWriter writer = new StringWriter())
                     {
@@ -314,14 +316,12 @@ namespace LaunchPass
 
                     mediaPlayer.MediaPath = file.Path;
 
-                    ((App)Application.Current).CurrentThemeSettings.BoxArtType = boxArtType;
-
                     ((App)Application.Current).IsLoadMainPage = flag1 || flag2;
 
                     // Show the user that fonts were changed and application will be restarted
-                    if (isFontChanged)
+                    if (isFontChanged || flag2)
                     {
-                        var msgBox = new MessageDialog("You changed fonts. Application will be restarted!", "LaunchPass");
+                        var msgBox = new MessageDialog("You changed " + (isFontChanged ? "Fonts" : "Box Art") + ". Application will be restarted!", "LaunchPass");
                         await msgBox.ShowAsync();
                         await CoreApplication.RequestRestartAsync("Application Restart Programmatically.");
                     }
