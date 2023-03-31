@@ -123,7 +123,7 @@
                 </ScrollViewer>
             </Grid>
 
-            <Border x:Name="ImageOverlay" Visibility="Collapsed" CornerRadius="4,4,4,4">
+            <Border x:Name="ImageOverlay" Visibility="Collapsed" CornerRadius="4,4,4,4" Background="#BF000000">
                 <Image x:Name="OverlayImage" Stretch="Uniform" Width="852" Height="337" />
             </Border>
             <Border x:Name="DescriptionOverlay" Visibility="Collapsed" CornerRadius="4,4,4,4">
