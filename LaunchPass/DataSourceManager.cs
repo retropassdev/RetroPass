@@ -536,10 +536,10 @@ namespace RetroPass
                             bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Games-Default.mp4"));
                             await bgStoreFile.CopyAsync(bgFolder);
 
-                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Details-Default.png"));
+                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Details-Default.mp4"));
                             await bgStoreFile.CopyAsync(bgFolder);
 
-                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Search-Default.png"));
+                            bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Search-Default.mp4"));
                             await bgStoreFile.CopyAsync(bgFolder);
 
                             bgStoreFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Background/Customize-Default.mp4"));
@@ -573,8 +573,8 @@ namespace RetroPass
                                     {
                                          new Background() { Page = "MainPage", File = "Main-Default.mp4" },
                                          new Background() { Page = "GamePage", File = "Games-Default.mp4" },
-                                         new Background() { Page = "DetailsPage", File = "Details-Default.png" },
-                                         new Background() { Page = "SearchPage", File = "Search-Default.png" },
+                                         new Background() { Page = "DetailsPage", File = "Details-Default.mp4" },
+                                         new Background() { Page = "SearchPage", File = "Search-Default.mp4" },
                                          new Background() { Page = "CustomizePage", File = "Customize-Default.mp4" },
                                          new Background() { Page = "SettingsPage", File = "Settings-Default.mp4" },
                                     }

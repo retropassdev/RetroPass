@@ -182,10 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Background\Customize-Default.mp4" />
-    <Content Include="Assets\Background\Details-Default.png" />
+    <Content Include="Assets\Background\Details-Default.mp4" />
     <Content Include="Assets\Background\Games-Default.mp4" />
     <Content Include="Assets\Background\Main-Default.mp4" />
-    <Content Include="Assets\Background\Search-Default.png" />
+    <Content Include="Assets\Background\Search-Default.mp4" />
     <Content Include="Assets\Background\Settings-Default.mp4" />
     <Content Include="Assets\DescriptionBackground.png" />
     <Content Include="Assets\empty.png" />
