@@ -223,7 +223,7 @@ namespace RetroPass
             using (TextReader reader = new StringReader(xmlEmulators))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(EmulatorsLaunchBox));
-                // Call the Deserialize method to restore the object's state.
+                // Call the De-serialize method to restore the object's state.
                 EmulatorsLaunchBox emulators = serializer.Deserialize(reader) as EmulatorsLaunchBox;
                 emulatorPlatforms = emulators.emulatorPlatforms;
 
@@ -260,7 +260,7 @@ namespace RetroPass
             using (TextReader reader = new StringReader(xmlPlatforms))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(PlatformsLaunchBox));
-                // Call the Deserialize method to restore the object's state.
+                // Call the De-serialize method to restore the object's state.
                 platforms = serializer.Deserialize(reader) as PlatformsLaunchBox;
             }
 
@@ -280,7 +280,7 @@ namespace RetroPass
                 using (TextReader reader = new StringReader(xmlPlaylist))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(PlaylistLaunchBox));
-                    // Call the Deserialize method to restore the object's state.
+                    // Call the De-serialize method to restore the object's state.
                     PlaylistLaunchBox playlistLaunchBox = serializer.Deserialize(reader) as PlaylistLaunchBox;
                     playlistLaunchBoxList.Add(playlistLaunchBox);
                 }

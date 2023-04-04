@@ -85,7 +85,7 @@ namespace RetroPass
         //public override string BoxFrontFileName { get; set; }
     }
 
-    //for loading LaunchBox platform xml files which have a list of games, in /Data/Platforms directory
+    //for loading LaunchBox platform XML files which have a list of games, in /Data/Platforms directory
     [Serializable, XmlRoot("RetroPass")]
     public class PlaylistRetroPass
     {
