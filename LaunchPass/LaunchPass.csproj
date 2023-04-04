@@ -141,7 +141,6 @@
       <DependentUpon>ThemeSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataSource.cs" />
-    <Compile Include="DataSourceEmulationStation.cs" />
     <Compile Include="DataSourceLaunchBox.cs" />
     <Compile Include="DataSourceManager.cs" />
     <Compile Include="Game.cs" />

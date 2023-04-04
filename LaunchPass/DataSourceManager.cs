@@ -215,7 +215,7 @@ namespace RetroPass
                 using (TextReader reader = new StringReader(xmlConfig))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(LaunchPassConfig));
-                    // Call the Deserialize method to restore the object's state.
+                    // Call the De-serialize method to restore the object's state.
                     LaunchPassConfig configuration = serializer.Deserialize(reader) as LaunchPassConfig;
 
                     string rootFolder = Path.Combine(Path.GetDirectoryName(xmlConfigFile.Path), configuration.relativePath);
@@ -224,10 +224,6 @@ namespace RetroPass
                     if (configuration.type == LaunchPassConfig.DataSourceType.LaunchBox)
                     {
                         dataSource = new DataSourceLaunchBox(rootFolder, configuration);
-                    }
-                    else if (configuration.type == LaunchPassConfig.DataSourceType.EmulationStation)
-                    {
-                        dataSource = new DataSourceEmulationStation(rootFolder, configuration);
                     }
 
                     /*if (dataSource != null)
