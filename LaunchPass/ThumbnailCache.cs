@@ -121,7 +121,8 @@ namespace RetroPass
             string path = Path.GetRelativePath(dataSource.rootFolder, sourceFile.Path);
             string destPath = "";
 
-            while (numImagesProcessed > 5)
+            // how many images to process
+            while (numImagesProcessed > 8)
             {
                 await Task.Delay(10);
             }
