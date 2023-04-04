@@ -67,7 +67,7 @@ namespace RetroPass
         }
     }
 
-    //for loading LaunchBox playlist xml files in /Data/Playlists directory
+    //for loading LaunchBox playlist XML files in /Data/Playlists directory
     [Serializable, XmlRoot("LaunchBox")]
     public class PlaylistLaunchBox
     {
@@ -91,7 +91,7 @@ namespace RetroPass
         public PlaylistGame[] PlaylistGames;
     }
 
-    //for loading LaunchBox platform xml files which have a list of games, in /Data/Platforms directory
+    //for loading LaunchBox platform XML files which have a list of games, in /Data/Platforms directory
     [Serializable, XmlRoot("LaunchBox")]
     public class PlaylistPlatformLaunchBox
     {
@@ -465,14 +465,14 @@ namespace RetroPass
 
             List<PlaylistLaunchBox> playlistsLaunchbox = await LoadPlaylistsXmls(dataFolder);
 
-            //get all platform xml files
+            //get all platform XML files
             StorageFolder platformFolder = await StorageUtils.GetFolderFromPathAsync(rootFolder + "\\Data\\Platforms");
             IReadOnlyList<StorageFile> platformsFiles = await platformFolder.GetFilesAsync();
 
             //remove platforms that don't have en entry in emulator platforms
             platformsLaunchBox.platforms.RemoveAll(i => emulatorPlatforms.FindIndex(t => t.Platform == i.Name) == -1);
 
-            //remove platforms that don't have a valid platform xml file
+            //remove platforms that don't have a valid platform XML file
             platformsLaunchBox.platforms.RemoveAll(i => platformsFiles.FirstOrDefault(t => t.Name == i.Name + ".xml") == null);
 
             //join and sort platforms and playlists using "SortTitle" property
@@ -486,7 +486,7 @@ namespace RetroPass
                 if (playlist is PlatformsLaunchBox.Platform)
                 {
                     PlatformsLaunchBox.Platform platformLaunchBox = playlist as PlatformsLaunchBox.Platform;
-                    //load platform if it is not already loade
+                    //load platform if it is not already loaded
                     //if (Platforms.Exists(p => p.Name == platformLaunchBox.Name) == false)
                     //{
                     //launchbox platforms are loaded as Playlists
