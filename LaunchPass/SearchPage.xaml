@@ -51,9 +51,10 @@
                         <Image
                         x:Name="ItemImage"
                         Width="116"
+                            Source="{x:Bind bitmapImage}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center" RelativePanel.AlignTopWithPanel="True"
-                        Stretch="Uniform" />
+                        Stretch="Uniform"/>
 
                         <Border
                         x:Name="GameNameDisplay"
@@ -90,9 +91,9 @@
               SingleSelectionFollowsFocus="True"
               IsItemClickEnabled="False"
               IsTabStop="False"
-              ContainerContentChanging="SearchGridView_ContainerContentChanging"
+              
               ItemTemplate="{StaticResource GameTemplate}"
-              Padding="0,0,0,0" Margin="-12,0,-1,0" CornerRadius="4,4,4,4" Grid.RowSpan="2" SelectionChanged="SearchGridView_SelectionChanged" RenderTransformOrigin="0.5,0.316" Grid.Row="2">
+              Padding="0,0,0,0" Margin="-12,0,-1,0" CornerRadius="4,4,4,4" Grid.RowSpan="2" SelectionChanged="SearchGridView_SelectionChanged" RenderTransformOrigin="0.5,0.316" Grid.Row="2"><!--ContainerContentChanging="SearchGridView_ContainerContentChanging"-->
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Width" Value="116" />
@@ -103,6 +104,7 @@
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
                     <Setter Property="IsTabStop" Value="False" />
+                    <Setter Property="Height" Value="Auto"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="GridViewItem">
@@ -119,9 +121,10 @@
             </GridView.ItemContainerStyle>
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Margin="23,60,0,40" Orientation="Horizontal"
+                    <!--<ItemsWrapGrid  Orientation="Horizontal"
                                    BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
-							   HorizontalAlignment="Left" />
+							   HorizontalAlignment="Left"/>-->
+                    <lp:LaunchPassCustomPanel Margin="23,60,0,40" HorizontalAlignment="Left" BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

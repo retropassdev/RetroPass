@@ -106,7 +106,7 @@ namespace RetroPass
             //args.Cancel = true;
         }
 
-        private void UpdateSearchResults(string searchText)
+        async private void UpdateSearchResults(string searchText)
         {
             if (searchText.Length > 2)
             {
@@ -197,6 +197,18 @@ namespace RetroPass
                     default:
                         break;
                 }
+
+                if(searchResultList.Count > 0) 
+                {
+                    foreach (var item in searchResultList)
+                    {
+                        item.bitmapImage = await item.game.GetImageThumbnailAsync();
+                    }
+
+                    SearchGridView.ItemsSource = null;
+                    SearchGridView.ItemsSource = searchResultList;
+                    SearchGridView.UpdateLayout();
+                }
             }
             else
             {
@@ -210,7 +222,7 @@ namespace RetroPass
             {
                 return; // exit the method early
             }
-            
+
             if (SearchCriteria.SelectedItem.ToString() == "Developer")
             {
                 SearchText.PlaceholderText = "e.g. - Activision/Microsoft/Rockstar";
@@ -307,6 +319,8 @@ namespace RetroPass
                     bitmapImage.UriSource = new Uri(image.BaseUri, "Assets/empty.png");
                     image.Source = bitmapImage;
                 }
+                bitmapImage.DecodePixelHeight = Convert.ToInt32(image.ActualHeight);
+                bitmapImage.DecodePixelWidth = Convert.ToInt32(image.ActualWidth);
                 image.Opacity = 100;
                 args.Handled = true;
             }

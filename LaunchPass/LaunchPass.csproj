@@ -133,6 +133,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LaunchPassCustomPanel.cs" />
     <Compile Include="LaunchPassThemeSettings.cs" />
     <Compile Include="LPMediaElement.xaml.cs">
       <DependentUpon>LPMediaElement.xaml</DependentUpon>
