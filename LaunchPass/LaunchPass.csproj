@@ -182,12 +182,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Background\Customize-Default.mp4" />
-    <Content Include="Assets\Background\Details-Default.mp4" />
-    <Content Include="Assets\Background\Games-Default.mp4" />
-    <Content Include="Assets\Background\Main-Default.mp4" />
-    <Content Include="Assets\Background\Search-Default.mp4" />
-    <Content Include="Assets\Background\Settings-Default.mp4" />
+    <Content Include="Assets\Background\FutureLoops-LP.mp4" />
+    <Content Include="Assets\Background\LaunchPass-LP.mp4" />
+    <Content Include="Assets\Background\LowPolygon-LP.mp4" />
+    <Content Include="Assets\Background\Purpz-LP.mp4" />
+    <Content Include="Assets\Background\Waves-LP.mp4" />
+    <Content Include="Assets\Background\Zoom-LP.mp4" />
     <Content Include="Assets\DescriptionBackground.png" />
     <Content Include="Assets\empty.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
