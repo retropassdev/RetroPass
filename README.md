@@ -4,7 +4,7 @@ LaunchPass is a modified fork of [RetroPass](https://github.com/retropassdev/Ret
 ![Video](/Docs/collection.gif)
 
 
-This is made specifically for Xbox console and hopefully, should feel familiar to Xbox users right from the start with its classic xbox theme meets Game Pass Ultimate vibe.
+This is made specifically for Xbox console and hopefully, should feel familiar to Xbox users right from the start with its Game Pass Ultimate vibe.
 ## Usage
 [Check out our Wiki for setup and usage intructions](https://github.com/Misunderstood-Wookiee/LaunchPass/wiki)
 
