@@ -65,7 +65,7 @@ namespace RetroPass
 
         private static string GetUrlRetrix(Game game)
         {
-            //retrix uses the same uri scheme syntax as retroarch
+            //retrix uses the same Uri scheme syntax as retroarch
             string args = "cmd=" + "retroarch";
             args += " -L";
             args += " cores\\" + game.CoreName;
