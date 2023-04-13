@@ -40,6 +40,12 @@ namespace RetroPass
 
 		private async Task<StorageFile> FindImageThumbnailAsync(StorageFolder folder)
 		{
+			//prevent some exceptions if folder is not defined
+			if(folder == null)
+			{
+				return null;
+			}
+
 			StorageFile boxFrontFile = null;
 
 			//tracer.Switch

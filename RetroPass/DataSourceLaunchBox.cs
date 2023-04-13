@@ -273,7 +273,10 @@ namespace RetroPass
 						XmlSerializer serializer = new XmlSerializer(typeof(PlaylistLaunchBox));
 						// Call the Deserialize method to restore the object's state.
 						PlaylistLaunchBox playlistLaunchBox = serializer.Deserialize(reader) as PlaylistLaunchBox;
-						playlistLaunchBoxList.Add(playlistLaunchBox);
+						if (playlistLaunchBox.PlaylistGames != null)
+						{
+							playlistLaunchBoxList.Add(playlistLaunchBox);
+						}
 					}
 				}
 			}
