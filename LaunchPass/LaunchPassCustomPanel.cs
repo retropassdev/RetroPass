@@ -10,27 +10,32 @@ namespace LaunchPass
     {
         protected override Size ArrangeOverride(Size finalSize)
         {
+            int imagesPerRow = 6;
+            double x = 0;
             double y = 0;
             double rowHeight = 0;
-            double x = 0;
+            int imagesInCurrentRow = 0;
+
             foreach (var child in Children)
             {
                 var desiredSize = child.DesiredSize;
 
-                if ((x + desiredSize.Width) > finalSize.Width)
+                if (imagesInCurrentRow >= imagesPerRow || (x + desiredSize.Width) > finalSize.Width)
                 {
                     y += rowHeight + 4;
                     x = 0;
                     rowHeight = 0;
+                    imagesInCurrentRow = 0;
                 }
 
                 child.Arrange(new Rect(x, y, desiredSize.Width, desiredSize.Height));
-                x += desiredSize.Width + 4;
 
+                x += desiredSize.Width + 4;
                 rowHeight = Math.Max(rowHeight, desiredSize.Height);
+                imagesInCurrentRow++;
             }
 
-            return new Size(finalSize.Width, y + rowHeight);
+            return finalSize;
         }
 
         protected override Size MeasureOverride(Size availableSize)
