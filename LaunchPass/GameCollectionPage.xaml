@@ -153,13 +153,13 @@
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <!--<ItemsWrapGrid
-                        Margin="37,10,0,40"
+                        Margin="27,0,0,0"
                         HorizontalAlignment="Left"
                         BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
                         GotFocus="Grid_GotFocus"
                         LostFocus="Grid_LostFocus"
                         Orientation="Horizontal" />-->
-                        <lp:LaunchPassCustomPanel Margin="37,10,0,40" 
+                        <lp:LaunchPassCustomPanel Margin="27,0,0,0" 
                                                   VerticalAlignment="Top"
                                               HorizontalAlignment="Left" 
                                               GotFocus="Grid_GotFocus"

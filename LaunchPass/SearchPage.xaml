@@ -93,7 +93,7 @@
               IsTabStop="False"
               
               ItemTemplate="{StaticResource GameTemplate}"
-              Padding="0,0,0,0" Margin="-12,0,-1,0" CornerRadius="4,4,4,4" Grid.RowSpan="2" SelectionChanged="SearchGridView_SelectionChanged" RenderTransformOrigin="0.5,0.316" Grid.Row="2"><!--ContainerContentChanging="SearchGridView_ContainerContentChanging"-->
+              Padding="0,0,0,0" Margin="-6,0,-1,0" CornerRadius="4,4,4,4" Grid.RowSpan="2" SelectionChanged="SearchGridView_SelectionChanged" RenderTransformOrigin="0.5,0.316" Grid.Row="2"><!--ContainerContentChanging="SearchGridView_ContainerContentChanging"-->
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Background" Value="Transparent" />
@@ -126,7 +126,7 @@
             </GridView.ItemsPanel>
         </GridView>
 
-        <Grid Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4" ColumnSpacing="0" RowSpacing="0" Width="768" Height="432">
+        <Grid Margin="0,0,0,0" Padding="0,0,0,0" CornerRadius="4" ColumnSpacing="0" RowSpacing="0" Width="777" Height="432">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
                 <RowDefinition Height="5" />
@@ -134,7 +134,7 @@
                 <RowDefinition Height="10" />
                 <RowDefinition Height="0*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="20,17,20,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" VerticalAlignment="Top" Height="36" Grid.RowSpan="2">
+            <Grid Grid.Row="0" Margin="12,17,20,0" Padding="0,0,0,0" CornerRadius="4,4,4,4" VerticalAlignment="Top" Height="36" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0*" />
                     <RowDefinition Height="16.8" />
