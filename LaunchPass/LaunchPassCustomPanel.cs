@@ -13,7 +13,8 @@ namespace LaunchPass
             int imagesPerRow = 6;
             double x = 0;
             double y = 0;
-            double rowHeight = 0;
+            double[] rowHeights = new double[(Children.Count + imagesPerRow - 1) / imagesPerRow];
+            int currentRow = 0;
             int imagesInCurrentRow = 0;
 
             foreach (var child in Children)
@@ -22,16 +23,41 @@ namespace LaunchPass
 
                 if (imagesInCurrentRow >= imagesPerRow || (x + desiredSize.Width) > finalSize.Width)
                 {
-                    y += rowHeight + 4;
+                    currentRow++;
                     x = 0;
-                    rowHeight = 0;
                     imagesInCurrentRow = 0;
                 }
 
-                child.Arrange(new Rect(x, y, desiredSize.Width, desiredSize.Height));
+                rowHeights[currentRow] = Math.Max(rowHeights[currentRow], desiredSize.Height);
+                imagesInCurrentRow++;
+                x += desiredSize.Width + 4;
+            }
+
+            double totalHeight = rowHeights.Sum() + 4 * (rowHeights.Length - 1);
+            double remainingSpace = finalSize.Height - totalHeight;
+            double verticalMargin = remainingSpace / rowHeights.Length;
+
+            x = 0;
+            y = 0;
+            currentRow = 0;
+            imagesInCurrentRow = 0;
+
+            foreach (var child in Children)
+            {
+                var desiredSize = child.DesiredSize;
+
+                if (imagesInCurrentRow >= imagesPerRow || (x + desiredSize.Width) > finalSize.Width)
+                {
+                    currentRow++;
+                    x = 0;
+                    y += rowHeights[currentRow - 1] + verticalMargin;
+                    imagesInCurrentRow = 0;
+                }
+
+                double yAdjustment = (rowHeights[currentRow] - desiredSize.Height) / 2;
+                child.Arrange(new Rect(x, y + yAdjustment, desiredSize.Width, desiredSize.Height));
 
                 x += desiredSize.Width + 4;
-                rowHeight = Math.Max(rowHeight, desiredSize.Height);
                 imagesInCurrentRow++;
             }
 

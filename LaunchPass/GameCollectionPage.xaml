@@ -11,7 +11,7 @@
     mc:Ignorable="d" Background="#000000">
 
     <Page.Resources>
-<!-- PLayer Later Grid-->
+        <!-- PLayer Later Grid-->
         <DataTemplate x:Key="GameTemplate" x:DataType="local:PlaylistItem">
             <Button
                 x:Name="GameButton"
@@ -25,12 +25,7 @@
                 BorderThickness="0"
                 CornerRadius="4,4,4,4">
                 <RelativePanel CornerRadius="4,4,4,4" Background="Transparent">
-                    <Image
-                        x:Name="ItemImage"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        RelativePanel.AlignTopWithPanel="True"
-                        Stretch="Uniform" />
+
                     <Border
                         x:Name="GameNameDisplayEmpty"
                         Background="Transparent"
@@ -46,7 +41,13 @@
                             FontSize="10"
                             Padding="10,0,10,0"/>
                     </Border>
-                        
+                    <Image
+                        x:Name="ItemImage"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                         Source="{x:Bind bitmapImage}"
+                        RelativePanel.AlignTopWithPanel="True"
+                        Stretch="Uniform" />
                     <Border
                         x:Name="GameNameDisplay"
                         Background="#BF000000"
@@ -81,12 +82,37 @@
         <lp:LPMediaElement x:Name="mediaPlayer" Margin="0"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
-        <GridView
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBlock
+                        x:Name="NameCollection"
+                        Grid.Row="0"
+                        Margin="46,0,0,0"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text=""
+                        Foreground="White"
+                        FontFamily="{StaticResource ApplicationFonts}" />
+                <TextBlock
+                        x:Name="NumGamesCollectionText"
+                        Grid.Row="1"
+                        Margin="50,4,0,0"
+                        Style="{StaticResource BaseTextBlockStyle}"
+                        Text=""
+                        Foreground="White" />
+            </StackPanel>
+
+            <GridView
             x:Name="PlatformGridView"
+            Grid.Row="1"
             Background="Transparent"
             Margin="0,0,0,0"
             Padding="0,10,0,0"
-            ContainerContentChanging="GamesListView_ContainerContentChanging"
+           
             CornerRadius="4"
             IsItemClickEnabled="True"
             IsTabStop="True"
@@ -96,70 +122,56 @@
             SelectionMode="Single"
             SingleSelectionFollowsFocus="True"
             XYFocusKeyboardNavigation="Enabled">
-            <GridView.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock
-                        x:Name="NameCollection"
-                        Grid.Row="0"
-                        Margin="46,0,0,0"
-                        Style="{StaticResource SubheaderTextBlockStyle}"
-                        Text=""
-                        Foreground="White"
-                        FontFamily="{StaticResource ApplicationFonts}" />
-                    <TextBlock
-                        x:Name="NumGamesCollectionText"
-                        Grid.Row="1"
-                        Margin="50,4,0,0"
-                        Style="{StaticResource BaseTextBlockStyle}"
-                        Text=""
-                        Foreground="White" />
-                </Grid>
-            </GridView.Header>
-            <GridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="Width" Value="140" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Margin" Value="4,4,4,4" />
-                    <Setter Property="Padding" Value="0,0,0,0" />
-                    <Setter Property="CornerRadius" Value="4,4,4,4" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                    <!--<Setter Property="IsFocusEngagementEnabled" Value="False" />-->
-                    <!--<Setter Property="IsTabStop" Value="False" />-->
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="GridViewItem">
-                                <ListViewItemPresenter
+                <!--ContainerContentChanging="GamesListView_ContainerContentChanging"-->
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="Width" Value="140" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Margin" Value="4,4,4,4" />
+                        <Setter Property="Padding" Value="0,0,0,0" />
+                        <Setter Property="CornerRadius" Value="4,4,4,4" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <!--<Setter Property="IsFocusEngagementEnabled" Value="False" />-->
+                        <!--<Setter Property="IsTabStop" Value="False" />-->
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="GridViewItem">
+                                    <ListViewItemPresenter
                                     CornerRadius="4,4,4,4"
                                     PressedBackground="Transparent"
                                     SelectedPointerOverBackground="Transparent"
                                     SelectedBackground="Transparent"
                                     SelectedPressedBackground="Transparent" />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </GridView.ItemContainerStyle>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </GridView.ItemContainerStyle>
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!--<ItemsWrapGrid
                         Margin="37,10,0,40"
                         HorizontalAlignment="Left"
                         BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
                         GotFocus="Grid_GotFocus"
                         LostFocus="Grid_LostFocus"
-                        Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-        </GridView>
-        <local:PlayLaterControl x:Name="PlayLaterControl" />
-        <Grid
+                        Orientation="Horizontal" />-->
+                        <lp:LaunchPassCustomPanel Margin="37,10,0,40" 
+                                                  VerticalAlignment="Top"
+                                              HorizontalAlignment="Left" 
+                                              GotFocus="Grid_GotFocus"
+                                              LostFocus="Grid_LostFocus"
+                                              BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
+            
+            <local:PlayLaterControl x:Name="PlayLaterControl"  Grid.Row="1"/>
+            
+            <Grid
             x:Name="OverlaySearch"
             Height="19"
             MaxWidth="350"
@@ -167,19 +179,20 @@
             Padding="0,0,0,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            Visibility="Visible">
-            <Border
+            Visibility="Visible"
+             Grid.Row="0">
+                <Border
                 Background="Black"
                 CornerRadius="5"
                 Opacity="0.35" />
-            <TextBlock
+                <TextBlock
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 FontFamily="Segoe Xbox MDL2 Symbol"
                 FontSize="14"
                 Foreground="#FFD000"
                 Text="&#xE3CC;" />
-            <TextBlock
+                <TextBlock
                 x:Name="StatusText"
                 Margin="22,4,9,0"
                 Height="19"
@@ -189,6 +202,7 @@
                 FontSize="10"
                 Text="Search Collection"
                 FontFamily="{StaticResource ApplicationFonts}" />
+            </Grid>
         </Grid>
     </Grid>
 </Page>
