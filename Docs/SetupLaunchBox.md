@@ -27,7 +27,7 @@
 
  	![](/Docs/core_per_game.png)
 
-6. If you want to specify the order of your playlists and platforms, you can do so by checking the [LaunchBox playlist and platform sorting](/Docs/SetupLaunchBoxSorting.md) section.
+6. If you want to specify the order of your playlists, platforms and games, you can do so by checking the [LaunchBox playlists, platforms and games sorting](/Docs/SetupLaunchBoxSorting.md) section.
 
 7. [Download](/Docs/v1.5/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
 

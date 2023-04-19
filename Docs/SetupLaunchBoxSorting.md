@@ -1,6 +1,8 @@
-# LaunchBox playlist and platform sorting
+# LaunchBox playlists, platforms and games sorting
 
-If you wish to override default alphabetic sorting of platforms and playlists, provide **Sort Title** parameter. For example, in the following screenshots:
+## Playlists and platforms sorting
+
+If you wish to override default alphabetic sorting of **platforms and playlists**, provide **Sort Title** parameter. For example, in the following screenshots:
 - **Pinball** playlist **Sort Title** is set to **1**
 - **Nintendo Entertainment System** platform **Sort Title** is set to **2**  
   
@@ -12,6 +14,8 @@ When imported in RetroPass, **Pinball** is shown first, **Nintendo Entertainment
 <br> 
 ![](/Docs/setup_sort_platform.png)
 
-  
- 
+## Games sorting
+If you wish to override default alphabetic sorting of **games** within a platform playlist, provide **Sort Title** parameter in **Edit Game** dialog. For example:
+- **Lotus Turbo Challenge 2** in **Amiga** platform playlist normally shows under games starting with L letter. Setting **Sort Title** to **000_Lotus_Turbo_Challenge_2** will show it as first or one of the first games in the **Amiga** platform playlist.
 
+![](/Docs/setup_sort_games.png)
