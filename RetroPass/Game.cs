@@ -33,6 +33,7 @@ namespace RetroPass
 		[XmlIgnore] public virtual string Publisher { get; set; }
 		[XmlIgnore] public virtual string ReleaseDate { get; set; }
 		[XmlIgnore] public virtual string Genre { get; set; }
+		[XmlIgnore] public virtual string SortTitle { get; set; }
 
 		BitmapImage bitmapImage = null;
 
