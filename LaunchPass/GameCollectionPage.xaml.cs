@@ -42,7 +42,7 @@ namespace RetroPass
             this.Loaded += GameCollectionPage_Loaded;
         }
 
-        private void GameCollectionPage_Loaded(object sender, RoutedEventArgs e)
+        async private void GameCollectionPage_Loaded(object sender, RoutedEventArgs e)
         {
             mediaPlayer.MediaPath = ((App)Application.Current).CurrentThemeSettings.GetMediaPath("GamePage");
 
@@ -56,6 +56,18 @@ namespace RetroPass
             lock (imageloading)
             {
                 tasksImage.Clear();
+            }
+
+            if (playlist.PlaylistItems.Count > 0)
+            {
+                foreach (var item in playlist.PlaylistItems)
+                {
+                    item.bitmapImage = await item.game.GetImageThumbnailAsync();
+                }
+
+                PlatformGridView.ItemsSource = null;
+                PlatformGridView.ItemsSource = playlist.PlaylistItems;
+                PlatformGridView.UpdateLayout();
             }
         }
 
