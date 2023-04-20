@@ -28,6 +28,7 @@ namespace RetroPass
         [XmlElement(ElementName = "Version")] public override string Version { get; set; }
         [XmlElement(ElementName = "MaxPlayers")] public override string MaxPlayers { get; set; }
         [XmlElement(ElementName = "PlayTime")] public override string PlayTime { get; set; }
+        [XmlElement(ElementName = "SortTitle")] public override string SortTitle { get; set; }
 
         [XmlIgnore] public override string ApplicationPathFull { get { return Path.GetFullPath(Path.Combine(DataRootFolder, ApplicationPath)); } }
 
@@ -288,7 +289,16 @@ namespace RetroPass
 
             return playlistLaunchBoxList;
         }
-
+        private void AddGameToSortedDictionary(SortedDictionary<string, Game> sortedGames, Game game)
+        {
+            string key = string.IsNullOrEmpty(game.SortTitle) ? game.Title : game.SortTitle;
+            if (sortedGames.ContainsKey(key))
+            {
+                //if the key exists, still show the game, but just append a unique guid so it can be added to a dictionary
+                key += Guid.NewGuid().ToString();
+            }
+            sortedGames.Add(key, game);
+        }
         private void AddToDictionaryList<TKey, TValue>(IDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value)
         {
             if (!dictionary.ContainsKey(key))
@@ -411,11 +421,16 @@ namespace RetroPass
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(PlaylistPlatformLaunchBox));
                 PlaylistPlatformLaunchBox platformGames = serializer.Deserialize(reader) as PlaylistPlatformLaunchBox;
-
-                playlistTmp.Name = platformName;
+                SortedDictionary<string, Game> sortedGames = new SortedDictionary<string, Game>();
 
                 foreach (var game in platformGames.games)
                 {
+                    AddGameToSortedDictionary(sortedGames, game);
+                }
+                playlistTmp.Name = platformName;
+                foreach (var gameEntry in sortedGames)
+                {
+                    var game = gameEntry.Value as GameLaunchBox;
                     game.DataRootFolder = rootFolder;
                     game.GamePlatform = platform;
 
