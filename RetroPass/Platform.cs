@@ -13,6 +13,7 @@ namespace RetroPass
 			dolphin,
 			xenia,
 			xeniacanary,
+			ppsspp,
 		}
 		public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -58,6 +59,10 @@ namespace RetroPass
 			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("xenia", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				EmulatorType = EEmulatorType.xenia;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("ppsspp", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.ppsspp;
 			}
 			else
 			{
