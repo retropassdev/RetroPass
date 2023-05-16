@@ -61,7 +61,7 @@ namespace RetroPass
 
 		private static string GetUrlXBSX2(Game game)
 		{
-			string args = "cmd=" + "pcsx2.exe";
+			string args = "cmd=" + "xbsx2.exe";
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
