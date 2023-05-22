@@ -1,0 +1,74 @@
+﻿<Page
+    x:Class="RetroPass.SettingsPages.SettingsDataSourcePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroPass"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        
+        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+        </Style>
+        
+        <Style TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
+            <Setter Property="Width" Value="155"/>
+        </Style>
+        
+        <DataTemplate x:Key="DataSourceTemplate"  x:DataType="local:DataSource">
+            <StackPanel x:Name="StackPanelRemovableStorage" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Grid.Row="0" Orientation="Horizontal" Spacing="10">
+                <Border>
+                    <TextBlock Width="180" Text="{x:Bind retroPassConfig.name}" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <ToggleButton x:Name="ButtonActivateRemovableStorage" Click="ButtonActivateRemovableStorage_Click" Content="Activate"></ToggleButton>
+            </StackPanel>
+        </DataTemplate>
+        
+    </Page.Resources>
+
+   
+    <Grid RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="320" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--<Button Click="Button_Click">Remove app data</Button>-->
+        <!--<TextBlock Grid.Row="0" Margin="0,0,0,0" Text="Settings" Style="{StaticResource SubheaderTextBlockStyle}"/>-->
+
+        <ListView XYFocusKeyboardNavigation="Auto" 
+                      Grid.Row="0"                    
+                      x:Name="ListDataSources"
+                      XYFocusDown="{x:Bind ButtonAddSource}"
+                      ItemsSource="{x:Bind dataSourceManager.dataSources}"
+                      ItemTemplate="{StaticResource DataSourceTemplate}"
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      SelectionMode="None"
+                      IsItemClickEnabled="False"
+                      IsFocusEngagementEnabled="False"
+                      Margin="0,0,0,0"
+                      Padding="0,0,0,0"
+                      HorizontalAlignment="Stretch"
+                      IsMultiSelectCheckBoxEnabled="False">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="IsTabStop" Value="False" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <TextBlock Grid.Row="0" x:Name ="TextStatus" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0"/>
+            <Button Grid.Column="1" XYFocusUpNavigationStrategy="RectilinearDistance" x:Name="ButtonAddSource" Content="Add Source..." Click="ButtonAddSource_Click" />
+            <Button Grid.Column="2" XYFocusUpNavigationStrategy="RectilinearDistance" Margin="0,0,100,0" HorizontalAlignment="Right" x:Name="ButtonClearRemovableCache" Content="Delete Cache" Click="ButtonClearRemovableCache_Click" />
+        </Grid>
+    </Grid>
+</Page>

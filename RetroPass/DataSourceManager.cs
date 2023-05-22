@@ -4,17 +4,15 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
+using System.Reflection.PortableExecutable;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
-using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Net.WebRequestMethods;
-
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 
 namespace RetroPass
 {
@@ -25,6 +23,13 @@ namespace RetroPass
 		public ObservableCollection<DataSource> dataSources {get; private set; } = new ObservableCollection<DataSource>();
 		public Action DataSourcesChanged;
 		public Action ActiveDataSourcesChanged;
+
+		public enum ValidationResult
+		{
+			DUPLICATE_PATH,
+			UNKNOWN_DATA_SOURCE_TYPE,
+			DUPLICATE_NAME,
+		}
 
 		public DataSourceManager()
 		{
@@ -63,6 +68,118 @@ namespace RetroPass
 			}
 
 			return list;
+		}
+
+		public async Task<(DataSource dataSource, List<ValidationResult> validationResult)> ValidateDataSource(string path)
+		{
+			List<ValidationResult> validationResult = new List<ValidationResult>();
+
+			string pathRoot = Path.GetPathRoot(path);
+			string pathRelative = Path.GetRelativePath(pathRoot, path);
+			string pathConfig = Path.Combine(pathRoot, "RetroPass.xml");
+
+			//check if file path is already in data sources
+			if (dataSources.FirstOrDefault(t => string.IsNullOrEmpty(t.rootFolder) == false && 
+			StorageUtils.NormalizePath(t.rootFolder) == StorageUtils.NormalizePath(path)) != null)
+			{
+				validationResult.Add(ValidationResult.DUPLICATE_PATH);
+			}
+
+			//check if there is any valid data source on the path
+			string pathLb = Path.GetFullPath(Path.Combine(path, "Data", "Platforms.xml"));
+			
+			StorageFile lbFile = await StorageUtils.GetFileFromPathAsync(pathLb);
+			DataSource dataSource = null;
+			
+			//this is launchbox data source
+			if (lbFile != null)
+			{
+				RetroPassConfig retroPassConfig = new RetroPassConfig();
+				retroPassConfig.type = RetroPassConfig.DataSourceType.LaunchBox;
+				retroPassConfig.relativePath = Path.GetRelativePath(pathRoot, path);
+				retroPassConfig.name = Path.GetFileName(path);
+				dataSource = new DataSourceLaunchBox(path, retroPassConfig);
+			}
+			else
+			{
+				StorageFolder dataFolder = await StorageUtils.GetFolderFromPathAsync(path);
+
+				if(dataFolder != null)
+				{
+					//find es_systems.cfg file
+					QueryOptions options = new QueryOptions();
+					options.ApplicationSearchFilter = "System.FileName:~\"" + "es_systems.cfg" + "\"";
+					options.FolderDepth = FolderDepth.Deep;
+					StorageFileQueryResult queryResult = dataFolder.CreateFileQueryWithOptions(options);
+					IReadOnlyList<StorageFile> sortedFiles = await queryResult.GetFilesAsync();
+					if (sortedFiles.Count > 0)
+					{
+						RetroPassConfig retroPassConfig = new RetroPassConfig();
+						retroPassConfig.type = RetroPassConfig.DataSourceType.EmulationStation;
+						retroPassConfig.relativePath = Path.GetRelativePath(pathRoot, path);
+						retroPassConfig.name = Path.GetFileName(path);
+						dataSource = new DataSourceEmulationStation(path, retroPassConfig);
+					}
+				}				
+			}
+
+			if (dataSource == null)
+			{
+				validationResult.Add(ValidationResult.UNKNOWN_DATA_SOURCE_TYPE);
+			}
+			//check if there is already a data source with exact name
+			else if (dataSources.FirstOrDefault(t => t.retroPassConfig.name == dataSource.retroPassConfig.name) != null)
+			{
+				validationResult.Add(ValidationResult.DUPLICATE_NAME);
+			}
+
+			return (dataSource, validationResult);
+		}
+
+		public async Task AddDataSource(DataSource dataSource)
+		{
+			string pathRoot = Path.GetPathRoot(dataSource.rootFolder);
+
+			if (dataSource != null)
+			{
+				StorageFolder volume = await StorageFolder.GetFolderFromPathAsync(pathRoot);
+
+				if(volume != null)
+				{
+					var xmlConfigFile = await volume.TryGetItemAsync("RetroPass.xml") as StorageFile;
+					var dataSources = await GetDataSourcesFromConfigurationFile(xmlConfigFile);
+					dataSources.Add(dataSource);
+					await SaveDataSourcesToConfigurationFile(dataSources, xmlConfigFile);
+				}
+				else
+				{
+					StorageFile xmlConfigFile = await volume.CreateFileAsync("RetroPass.xml");
+					List<DataSource> dataSources = new List<DataSource>();
+					dataSources.Add(dataSource);
+					await SaveDataSourcesToConfigurationFile(dataSources, xmlConfigFile);
+				}
+			}
+		}
+
+		private async Task SaveDataSourcesToConfigurationFile(List<DataSource> dataSources, StorageFile xmlConfigFile)
+		{
+			List<RetroPassConfig> list = dataSources.Select(r => r.retroPassConfig).ToList();
+			RetroPassConfig_V1_6 config = new RetroPassConfig_V1_6();
+			
+			config.dataSources = list;
+			XmlSerializer serializer = new XmlSerializer(typeof(RetroPassConfig_V1_6));
+			XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+			namespaces.Add("", "");
+			using (StringWriter writer = new StringWriter())
+			{
+				serializer.Serialize(writer, config, namespaces);
+				string stringListAsXml = writer.ToString();
+
+				using (TextWriter fileWriter = File.CreateText(xmlConfigFile.Path))
+				{
+					await fileWriter.WriteAsync(stringListAsXml);
+				}
+			}
 		}
 
 		public async Task ScanDataSources()
@@ -300,6 +417,9 @@ namespace RetroPass
 					{
 						XmlSerializer serializer = new XmlSerializer(typeof(RetroPassConfig));
 						RetroPassConfig configuration = serializer.Deserialize(reader) as RetroPassConfig;
+
+						//TODO: try to convert into version 1.6 and save, if it doesn't succeed, load it as old version
+
 						//old config file probably doesn't have name of the data source, so make one
 						if (string.IsNullOrEmpty(configuration.name))
 						{

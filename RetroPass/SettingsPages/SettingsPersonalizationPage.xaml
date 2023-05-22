@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="RetroPass.SettingsPages.SettingsPersonalizationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">           
+        </Style>
+    </Page.Resources>
+
+    <Grid RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <CheckBox Grid.Row="0" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Mode:</TextBlock>
+            <StackPanel x:Name="RadioButtonsMode" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="System" Tag="Default" Checked="RadioButtonMode_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Dark" Tag="Dark" Checked="RadioButtonMode_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Light" Tag="Light" Checked="RadioButtonMode_Checked"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

@@ -37,6 +37,7 @@ namespace RetroPass
 		{
 			this.InitializeComponent();
 			mediaPlayerElement.MediaPlayer.IsLoopingEnabled = true;
+			RequestedTheme = ThemeManager.Instance.CurrentMode;
 		}
 
 		public void OnNavigatedTo(PlaylistItem playlistItem)

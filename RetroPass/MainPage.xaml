@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required" 
     FontFamily="Segoe UI"
-    Background="{StaticResource PageBackgroundMain}">
+    Background="{ThemeResource PageBackgroundMain}">
 
     <Page.Resources>
 
@@ -18,7 +18,7 @@
         </Style>
 
         <Style x:Name="ButtonTopMenuStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-            <Setter Property="Background" Value="{StaticResource ButtonTopMenuBackground}" />
+            <Setter Property="Background" Value="{ThemeResource ButtonTopMenuBackground}" />
             <Setter Property="Template" Value="{StaticResource ButtonTopMenuControlTemplate}" />
         </Style>
 
@@ -207,8 +207,8 @@
         </ScrollViewer>
         <local:PlayLaterControl x:Name="PlayLaterControl"></local:PlayLaterControl>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,20,28,0" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" >
-            <Border Background="{StaticResource OverlayBackgroundBrush}" CornerRadius="5"></Border>
-            <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="{StaticResource OverlaySearchTextBrush}" FontFamily="Segoe Xbox MDL2 Symbol" 
+            <Border Background="{ThemeResource OverlayBackgroundBrush}" CornerRadius="5"></Border>
+            <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="{ThemeResource OverlaySearchTextBrush}" FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CC;" FontSize="20"/>
             <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  

@@ -2,12 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-
-// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+using Windows.UI.Xaml.Navigation;
 
 namespace RetroPass
 {
@@ -40,7 +40,7 @@ namespace RetroPass
 		public LogLevel Level { get; set; }
 	}
 
-	public sealed partial class LogPage : ContentDialog
+	public sealed partial class LogPage : Page
 	{
 
 		public LogPage()
@@ -49,8 +49,7 @@ namespace RetroPass
 		}
 
 		private static LogPage instance = null;
-		public bool IsOpened { get; private set; }
-
+		private static Stream logStream = null;
 		private ObservableCollection<LogItem> logEntries = new ObservableCollection<LogItem>();
 
 		public static LogPage Instance
@@ -64,31 +63,33 @@ namespace RetroPass
 				return instance;
 			}
 		}
-		public static async void SetLogging()
-		{
+		public static async Task SetLogging()
+		{			
 			if ((bool)ApplicationData.Current.LocalSettings.Values[App.SettingsLoggingEnabled] == true)
 			{
-				var file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync("RetroPass.log", CreationCollisionOption.ReplaceExisting);
-				Stream logStream = await file.OpenStreamForWriteAsync();
-				var logFileTraceListener = new TextWriterTraceListener(logStream, "logFileTraceListener");
-				Trace.Listeners.Add(logFileTraceListener);
+				if (logStream == null)
+				{
+					var file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync("RetroPass.log", CreationCollisionOption.ReplaceExisting);
+					logStream = await file.OpenStreamForWriteAsync();
+					var logFileTraceListener = new TextWriterTraceListener(logStream, "logFileTraceListener");
+					Trace.Listeners.Add(logFileTraceListener);
+				}
 			}
 			else
 			{
+				if (logStream != null)
+				{
+					logStream.Dispose();
+					logStream = null;
+				}
 				Trace.Listeners.Clear();
 			}
 			//Trace.AutoFlush = true;
 		}
 
-		protected override void OnGotFocus(RoutedEventArgs e)
-		{
-			base.OnGotFocus(e);
-		}
-
-		public async void OnNavigatedTo()
+		protected async override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			//LogListView.ItemsSource = logEntries;
-			IsOpened = true;
 			var file = await ApplicationData.Current.LocalCacheFolder.GetFileAsync("RetroPass.log");
 			string text = await FileIO.ReadTextAsync(file);
 
@@ -103,17 +104,7 @@ namespace RetroPass
 
 			LogListView.SelectedIndex = LogListView.Items.Count - 1;
 
-			this.Closing += OnClosing;
-		}
-
-		public void OnNavigatedFrom()
-		{
-			this.Closing -= OnClosing;
-		}
-
-		private void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
-		{
-			IsOpened = false;
+			base.OnNavigatedTo(e);
 		}
 
 		private void LogListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)

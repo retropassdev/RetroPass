@@ -163,10 +163,23 @@
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SettingsPage.xaml.cs">
+    <Compile Include="SettingsPages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsPages\SettingsAddDataSourcePage.xaml.cs">
+      <DependentUpon>SettingsAddDataSourcePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsPages\SettingsDataSourcePage.xaml.cs">
+      <DependentUpon>SettingsDataSourcePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsPages\SettingsLogPage.xaml.cs">
+      <DependentUpon>SettingsLogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsPages\SettingsPersonalizationPage.xaml.cs">
+      <DependentUpon>SettingsPersonalizationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StorageUtils.cs" />
+    <Compile Include="ThemeManager.cs" />
     <Compile Include="ThumbnailCache.cs" />
     <Compile Include="UrlSchemeGenerator.cs" />
     <Compile Include="Utils.cs" />
@@ -264,7 +277,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingsPage.xaml">
+    <Page Include="SettingsPages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsPages\SettingsAddDataSourcePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsPages\SettingsDataSourcePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsPages\SettingsLogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsPages\SettingsPersonalizationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

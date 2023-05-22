@@ -3,7 +3,6 @@ using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
-using Windows.UI.ViewManagement;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,6 +17,7 @@ namespace RetroPass
 	{
 		public static readonly string SettingsAutoPlayVideo = "SettingsAutoPlayVideo";
 		public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
+		public static readonly string SettingsMode = "SettingsMode";
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
@@ -47,6 +47,11 @@ namespace RetroPass
 			{
 				localSettings.Values[SettingsLoggingEnabled] = false;
 			}
+
+			if (localSettings.Values[SettingsMode] == null)
+			{
+				localSettings.Values[SettingsMode] = "Default";
+			}
 		}
 
 		private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -73,8 +78,10 @@ namespace RetroPass
 			{
 				// Create a Frame to act as the navigation context and navigate to the first page
 				rootFrame = new Frame();
-
+				
 				rootFrame.NavigationFailed += OnNavigationFailed;
+				//TODO: set theme color
+				//rootFrame.Background
 
 				if (previousExecutionState == ApplicationExecutionState.Terminated)
 				{
@@ -92,11 +99,27 @@ namespace RetroPass
 					// When the navigation stack isn't restored navigate to the first page,
 					// configuring the new page by passing required information as a navigation
 					// parameter
-					rootFrame.Navigate(typeof(MainPage), null);
+					//On first load, wait until theme resources are initalized and then go to main page
+					if(ThemeManager.Instance.IsInitialized == false)
+					{
+						ThemeManager.Instance.ThemeInitialization_Finished += ThemeResourcesLoaded;
+						ThemeManager.Instance.Init();
+					}
+					else
+					{
+						rootFrame.Navigate(typeof(MainPage));
+					}
 				}
 				// Ensure the current window is active
 				Window.Current.Activate();
 			}
+		}
+
+		private void ThemeResourcesLoaded()
+		{
+			Frame frame = Window.Current.Content as Frame;
+			ThemeManager.Instance.ThemeInitialization_Finished -= ThemeResourcesLoaded;
+			frame.Navigate(typeof(MainPage));
 		}
 
 		/// <summary>

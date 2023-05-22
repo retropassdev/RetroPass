@@ -52,7 +52,10 @@ namespace RetroPass
 
 	[Serializable, XmlRoot("retropass")]
 	public class RetroPassConfig_V1_6
-	{	
+	{
+		[XmlAttribute("version")]
+		public string Version = "1.6";
+
 		[XmlArrayItem("dataSource", typeof(RetroPassConfig))]
 		public List<RetroPassConfig> dataSources;
 	}
