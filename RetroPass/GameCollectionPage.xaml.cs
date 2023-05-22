@@ -274,12 +274,24 @@ namespace RetroPass
 		{
 			var item = e.OriginalSource as DependencyObject;
 			var childListView = Utils.FindChild<UIElement>(item, "GameNameDisplay");
-			childListView.Visibility = Visibility.Collapsed;
+			if (childListView != null)
+			{
+				childListView.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		private async void PlatformGridView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var item = e.ClickedItem as PlaylistItem;
+			GameDetailsPage popup = new GameDetailsPage();
+			popup.OnNavigatedTo(item);
+			ContentDialogResult result = await popup.ShowAsync();
+			popup.OnNavigatedFrom();
+		}
+
+		private async void GameButton_Click(object sender, RoutedEventArgs e)
+		{
+			var item = (sender as FrameworkElement)?.DataContext as PlaylistItem;
 			GameDetailsPage popup = new GameDetailsPage();
 			popup.OnNavigatedTo(item);
 			ContentDialogResult result = await popup.ShowAsync();

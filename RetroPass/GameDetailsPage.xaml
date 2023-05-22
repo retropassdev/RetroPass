@@ -8,16 +8,28 @@
     mc:Ignorable="d">
 
     <ContentDialog.Resources>
-        <x:Double x:Key="ContentDialogMaxWidth">960</x:Double>
-        <x:Double x:Key="ContentDialogMaxHeight">540</x:Double>
-        <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
-        <Thickness x:Key="ContentDialogBorderWidth">0</Thickness>
-        <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="SubtitleBrush" Color="#909090"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="SubtitleBrush" Color="#727272"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <x:Double x:Key="ContentDialogMaxWidth">960</x:Double>
+            <x:Double x:Key="ContentDialogMaxHeight">540</x:Double>
+            <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
+            <Thickness x:Key="ContentDialogBorderWidth">0</Thickness>
+            <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
+            <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+            </Style>
+        </ResourceDictionary>
     </ContentDialog.Resources>
-
-
+    
     <RelativePanel>
-        <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="960" Height="478" Background="#1E1E1E">
+        <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="960" Height="478" Background="{ThemeResource PageBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="110" />
                 <RowDefinition Height="Auto" />
@@ -28,14 +40,14 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="800" Text="{x:Bind playlistItem.game.Title}" TextWrapping="Wrap"></TextBlock>
-                <TextBlock Grid.Row="1" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="500"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="#909090"></TextBlock>
+                <TextBlock Grid.Row="1" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="500"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="{ThemeResource SubtitleBrush}"></TextBlock>
             </Grid>
             <ScrollViewer Margin="0,0,0,0" Grid.Row="1" Name="ScrollViewer1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" Height="280"  
                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <StackPanel Padding="0,0,0,0" Background="Transparent" XYFocusKeyboardNavigation="Enabled" Orientation="Horizontal" Height="280" Spacing="8" BringIntoViewRequested="StackPanel_BringIntoViewRequested">
                     <Border Margin="0,0,0,0" Padding="0,0,0,0" Width="62"></Border>
 
-                    <Button x:Name="ButtonPlay" Margin="0,0,0,0" Padding="0,0,0,0" Width="190" Background="#292929"
+                    <Button x:Name="ButtonPlay" Margin="0,0,0,0" Padding="0,0,0,0" Width="190" 
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Click="ButtonPlay_Click">
                         <Grid>
@@ -44,30 +56,29 @@
                         </Grid>
                     </Button>
 
-                    <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="0,0,0,0" Width="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#292929" Click="ButtonVideo_Click">
-                        <MediaPlayerElement  Margin="0,0,0,0" Padding="0,0,0,0" x:Name="mediaPlayerElement" Stretch="Uniform"
+                    <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="0,0,0,0" Width="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Click="ButtonVideo_Click">
+                        <MediaPlayerElement Margin="0,0,0,0" Padding="0,0,0,0" x:Name="mediaPlayerElement" Stretch="Uniform"
                                  AutoPlay="False"
                                  AreTransportControlsEnabled="False">
                             <MediaPlayerElement.TransportControls>
                                 <MediaTransportControls                                    
-                        IsZoomButtonVisible="False" 
-                        IsZoomEnabled="False"
-                        IsPlaybackRateButtonVisible="False"
-                        IsPlaybackRateEnabled="False"
-                        IsVolumeButtonVisible="False"
-                        IsFullWindowButtonVisible="False"
-                        IsCompact="False"
-                        IsCompactOverlayButtonVisible="False"
-                        IsSeekBarVisible="False"
-                        IsSeekEnabled="False"
-                        IsFastForwardButtonVisible="False"
-                        IsCompactOverlayEnabled="False"
-                        />
+                                    IsZoomButtonVisible="False" 
+                                    IsZoomEnabled="False"
+                                    IsPlaybackRateButtonVisible="False"
+                                    IsPlaybackRateEnabled="False"
+                                    IsVolumeButtonVisible="False"
+                                    IsFullWindowButtonVisible="False"
+                                    IsCompact="False"
+                                    IsCompactOverlayButtonVisible="False"
+                                    IsSeekBarVisible="False"
+                                    IsSeekEnabled="False"
+                                    IsFastForwardButtonVisible="False"
+                                    IsCompactOverlayEnabled="False"/>
                             </MediaPlayerElement.TransportControls>
                         </MediaPlayerElement>
                     </Button>
 
-                    <Button x:Name="ButtonDescription" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" Width="245" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#292929" Click="ButtonDescription_Click">
+                    <Button x:Name="ButtonDescription" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" Width="245" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ButtonDescription_Click">
                         <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind playlistItem.game.Description}" TextWrapping="Wrap"></TextBlock>
                     </Button>
 
@@ -106,20 +117,20 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-        <Border x:Name="ImageOverlay" Visibility="Collapsed" Background="#1E1E1E">
+        <Border x:Name="ImageOverlay" Visibility="Collapsed" Background="{ThemeResource PageBackground}">
             <Image x:Name="OverlayImage" Stretch="Uniform" Width="960" Height="478"/>
         </Border>
-        <Border x:Name="DescriptionOverlay" Visibility="Collapsed" Background="#1E1E1E">
+        <Border x:Name="DescriptionOverlay" Visibility="Collapsed" Background="{ThemeResource PageBackground}">
             <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="960" Height="478" TextWrapping="Wrap"></TextBlock>
         </Border>
         <Grid RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"
-              Width="143" Height="34" Margin="0,0,0,50" Padding="0,0,0,0" >
-            <Border Opacity="0.7" Background="#1E1E1E"></Border>            
+              Width="143" Height="34" Margin="0,0,0,24" Padding="0,0,0,0" >
+            <Border Opacity="0.7" Background="{ThemeResource PageBackground}"></Border>
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="16,2,0,0"
                        FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CD;" FontSize="20"/>
             <TextBlock Margin="45,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"  Text="Close"></TextBlock>
-        </Grid>        
+        </Grid>
     </RelativePanel>
 
 </ContentDialog>

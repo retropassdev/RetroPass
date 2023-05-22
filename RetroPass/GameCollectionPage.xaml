@@ -7,12 +7,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     NavigationCacheMode="Required"    
-    Background="#1F1F1F">
+    Background= "{ThemeResource PageBackground}">
 
     <Page.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+        </Style>
+       
         <DataTemplate x:Key="GameTemplate"
                       x:DataType="local:PlaylistItem">
-            <Button x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            <Button DataContext="{x:Bind}" x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="GameButton_Click"
                     Margin="0,0,0,0" Padding="0,0,0,0" 
                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                     BorderThickness="0">
@@ -29,7 +33,7 @@
                             RelativePanel.AlignVerticalCenterWithPanel="True">
                         <TextBlock MaxLines="10" TextTrimming="WordEllipsis" x:Name="TextTitleEmpty" 
                                    TextAlignment="Center" Text="{x:Bind game.Title}" 
-                                   TextWrapping="Wrap" Padding="5,0,5,0" Style="{StaticResource  BaseTextBlockStyle}"/>
+                                   TextWrapping="Wrap" Padding="5,0,5,0" Style="{StaticResource  BaseTextBlockStyle}" Foreground="White"/>
                     </Border>
                     <Border x:Name="GameNameDisplay"
                             Visibility="Collapsed" 
@@ -40,7 +44,7 @@
                         <TextBlock x:Name="TextTitle"
                                    TextAlignment="Left"
                                    Text="{x:Bind game.Title}" 
-                                   TextWrapping="Wrap" Padding="10,10,5,10" Style="{StaticResource  BaseTextBlockStyle}"/>
+                                   TextWrapping="Wrap" Padding="10,10,5,10" Style="{StaticResource  BaseTextBlockStyle}" Foreground="White"/>
                     </Border>                  
                 </RelativePanel>
             </Button>
@@ -71,9 +75,9 @@
             </GridView.Header>
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
+                    <Setter Property="IsTabStop" Value="false" />
                     <Setter Property="Width" Value="137" />
                     <Setter Property="Height" Value="210" />
-                    <Setter Property="Background" Value="#272926"/>
                     <Setter Property="Margin" Value="4,4,4,4" />
                     <Setter Property="Padding" Value="0,0,0,0" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -85,10 +89,18 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="GridViewItem">
                                 <ListViewItemPresenter
-                                SelectedBackground="Transparent"
-                                SelectedPointerOverBackground="Transparent"
-                                PressedBackground="Transparent"
-                                SelectedPressedBackground="Transparent"
+                                    DragBackground="{StaticResource SystemControlTransparentBrush}"
+                                    DragForeground="{StaticResource SystemControlTransparentBrush}"
+                                    FocusBorderBrush="{StaticResource SystemControlTransparentBrush}"
+                                    FocusSecondaryBorderBrush="{StaticResource SystemControlTransparentBrush}"
+                                    PlaceholderBackground="{StaticResource SystemControlTransparentBrush}"
+                                    PointerOverBackground="{StaticResource SystemControlTransparentBrush}"
+                                    PointerOverForeground="{StaticResource SystemControlTransparentBrush}"
+                                    SelectedBackground="{StaticResource SystemControlTransparentBrush}"
+                                    SelectedForeground="{StaticResource SystemControlTransparentBrush}"
+                                    SelectedPointerOverBackground="{StaticResource SystemControlTransparentBrush}"
+                                    PressedBackground="{StaticResource SystemControlTransparentBrush}"
+                                    SelectedPressedBackground="{StaticResource SystemControlTransparentBrush}"
                                 />
                             </ControlTemplate>
                         </Setter.Value>
@@ -101,11 +113,11 @@
 							   HorizontalAlignment="Left"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
-        </GridView>        
+        </GridView>
         <local:PlayLaterControl x:Name="PlayLaterControl"></local:PlayLaterControl>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,20,28,0" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" >
-            <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>
-            <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="#FFD000" FontFamily="Segoe Xbox MDL2 Symbol" 
+            <Border Background="{StaticResource OverlayBackgroundBrush}" CornerRadius="5"></Border>
+            <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="{StaticResource OverlaySearchTextBrush}" FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CC;" FontSize="20"/>
             <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  

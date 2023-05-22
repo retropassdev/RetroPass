@@ -5,18 +5,16 @@
     xmlns:local="using:RetroPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-    <Page.Background>
-        <LinearGradientBrush EndPoint="0.5,0.27" StartPoint="0.5,0">
-            <GradientStop Color="#030303"/>
-            <GradientStop Color="#1F1F1F" Offset="1"/>
-        </LinearGradientBrush>
-    </Page.Background>
+    mc:Ignorable="d"
+    Background="{StaticResource PageBackgroundMain}">
+
     <Page.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Width" Value="155"/>            
+        
+        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
         </Style>
-        <Style TargetType="ToggleButton">
+        
+        <Style TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
             <Setter Property="Width" Value="155"/>
         </Style>
 
@@ -70,8 +68,8 @@
 
         </Grid>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-            <Border Opacity="0.78" Background="Black" CornerRadius="5"></Border>
-            <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="#FFFFFFFF" FontFamily="Segoe Xbox MDL2 Symbol" 
+            <Border Opacity="0.78" Background="{ThemeResource PageBackground}" CornerRadius="5"></Border>
+            <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CD;" FontSize="20"/>
             <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  

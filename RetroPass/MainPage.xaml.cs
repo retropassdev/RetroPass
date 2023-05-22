@@ -383,7 +383,16 @@ namespace RetroPass
 
 		private async void OnItemClick(object sender, ItemClickEventArgs e)
 		{
-			var item = e.ClickedItem as PlaylistItem;
+			/*var item = e.ClickedItem as PlaylistItem;
+			GameDetailsPage popup = new GameDetailsPage();
+			popup.OnNavigatedTo(item);
+			await popup.ShowAsync();
+			popup.OnNavigatedFrom();*/
+		}
+
+		private async void PlaylistItem_Click(object sender, RoutedEventArgs e)
+		{
+			var item = (sender as FrameworkElement)?.DataContext as PlaylistItem;
 			GameDetailsPage popup = new GameDetailsPage();
 			popup.OnNavigatedTo(item);
 			await popup.ShowAsync();
