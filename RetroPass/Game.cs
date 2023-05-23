@@ -262,6 +262,12 @@ namespace RetroPass
 
 				foreach (StorageFile item in sortedFiles.Take(count))
 				{
+					//do not load more than 4 images
+					if(imageList.Count >= 4)
+					{
+						break;
+					}
+
 					StorageFile ImageFile = await StorageFile.GetFileFromPathAsync(item.Path);
 
 					using (IRandomAccessStream fileStream = await ImageFile.OpenAsync(Windows.Storage.FileAccessMode.Read))

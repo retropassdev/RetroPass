@@ -118,7 +118,13 @@
             </ScrollViewer>
         </Grid>
         <Border x:Name="ImageOverlay" Visibility="Collapsed" Background="{ThemeResource PageBackground}">
-            <Image x:Name="OverlayImage" Stretch="Uniform" Width="960" Height="478"/>
+            <Grid>
+                <Image x:Name="OverlayImage" Stretch="Uniform" Width="960" Height="478"/>
+                <TextBlock x:Name="OverlayImageLeft" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                           FontFamily="Segoe MDL2 Assets" Margin="40,0,0,0" Text="&#xE76B;" FontSize="28"/>
+                <TextBlock x:Name="OverlayImageRight" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                           Margin="0,0,40,0" FontFamily="Segoe MDL2 Assets" Text="&#xE76C;" FontSize="28"/>
+            </Grid>
         </Border>
         <Border x:Name="DescriptionOverlay" Visibility="Collapsed" Background="{ThemeResource PageBackground}">
             <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="960" Height="478" TextWrapping="Wrap"></TextBlock>

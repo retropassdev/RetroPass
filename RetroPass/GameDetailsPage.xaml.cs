@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Media.Core;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+using Image = Windows.UI.Xaml.Controls.Image;
 
 namespace RetroPass
 {
@@ -19,15 +20,9 @@ namespace RetroPass
 		public string path { get; set; }
 	}
 
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class GameDetailsPage : ContentDialog
 	{
 		public PlaylistItem playlistItem;
-		//BitmapImage ImagePoster;
-
-		//private ObservableCollection<DetailImage> imageList = new ObservableCollection<DetailImage>();
 		private bool detailsPopupActive = false;
 		private bool descriptionPopupActive = false;
 		public string Subtitle { get; set; }
@@ -40,11 +35,71 @@ namespace RetroPass
 			RequestedTheme = ThemeManager.Instance.CurrentMode;
 		}
 
+		protected override void OnPreviewKeyDown(KeyRoutedEventArgs e)
+		{
+			if (ImageOverlay.Visibility == Visibility.Visible)
+			{
+				switch (e.Key)
+				{
+					case VirtualKey.GamepadLeftThumbstickLeft:
+					case VirtualKey.GamepadDPadLeft:
+					case VirtualKey.Left:
+						
+						//navigate to previous image
+						int index = IndexOfImageInGridView(OverlayImage);
+
+						if (index != -1)
+						{
+							int newIndex = Math.Max(index - 1, 0);
+							RefreshImage(newIndex);
+							e.Handled = true;
+						}
+						break;
+					case VirtualKey.GamepadLeftThumbstickRight:
+					case VirtualKey.GamepadDPadRight:
+					case VirtualKey.Right:
+
+						//navigate to next image
+						index = IndexOfImageInGridView(OverlayImage);
+
+						if (index != -1)
+						{
+							int newIndex = Math.Min(index + 1, GameDetailsGridView.Items.Count - 1);
+							RefreshImage(newIndex);
+							e.Handled = true;
+						}
+						break;
+				}
+			}
+
+			base.OnPreviewKeyDown(e);
+		}
+
+		private void RefreshImage(int index)
+		{
+			var imageList = GameDetailsGridView.ItemsSource as ObservableCollection<DetailImage>;
+			OverlayImageLeft.Visibility = index == 0 ?
+									OverlayImageLeft.Visibility = Visibility.Collapsed :
+									OverlayImageLeft.Visibility = Visibility.Visible;
+			OverlayImageRight.Visibility = index == imageList.Count - 1 ?
+									OverlayImageRight.Visibility = Visibility.Collapsed :
+									OverlayImageRight.Visibility = Visibility.Visible;
+			OverlayImage.Source = imageList[index].image;
+		}
+
+		private void GameDetailsPage_LosingFocus(UIElement sender, LosingFocusEventArgs args)
+		{
+			if (ImageOverlay.Visibility == Visibility.Visible ||
+				DescriptionOverlay.Visibility == Visibility.Visible)
+			{
+				args.Cancel = true;
+			}
+		}
+
 		public void OnNavigatedTo(PlaylistItem playlistItem)
 		{
-			//CoreWindow.GetForCurrentThread().KeyDown += OnKeyDown;
-			//SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 			this.Closing += OnGameDetailsClosing;
+			this.LosingFocus += GameDetailsPage_LosingFocus;
 
 			this.playlistItem = playlistItem;
 			Game game = playlistItem.game;
@@ -63,6 +118,7 @@ namespace RetroPass
 
 		public void OnNavigatedFrom()
 		{
+			this.LosingFocus -= GameDetailsPage_LosingFocus;
 			this.Closing -= OnGameDetailsClosing;
 		}
 
@@ -156,13 +212,33 @@ namespace RetroPass
 			ScrollToCenter(sender, args);
 		}
 
+		private int IndexOfImageInGridView(Image image)
+		{
+			int index = -1;
+			var collection = GameDetailsGridView.ItemsSource as ObservableCollection<DetailImage>;
+			var imageInList = collection.FirstOrDefault(t => t.image == image.Source);
+
+
+			if (imageInList != null)
+			{
+				index = collection.IndexOf(imageInList);
+			}
+
+			return index;
+		}
+
 		private void ButtonDetail_Click(object sender, RoutedEventArgs e)
 		{
 			Button button = sender as Button;
 			Image image = button.Content as Image;
+			int index = IndexOfImageInGridView(image);
+
+			if (index != -1)
+			{
+				RefreshImage(index);
+			}
 
 			detailsPopupActive = true;
-			OverlayImage.Source = image.Source;
 			ImageOverlay.Visibility = Visibility.Visible;
 		}
 
