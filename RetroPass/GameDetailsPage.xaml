@@ -56,33 +56,14 @@
                         </Grid>
                     </Button>
 
-                    <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0,0,0,0" Padding="0,0,0,0" Width="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Click="ButtonVideo_Click">
-                        <MediaPlayerElement Margin="0,0,0,0" Padding="0,0,0,0" x:Name="mediaPlayerElement" Stretch="Uniform"
-                                 AutoPlay="False"
-                                 AreTransportControlsEnabled="False">
-                            <MediaPlayerElement.TransportControls>
-                                <MediaTransportControls                                    
-                                    IsZoomButtonVisible="False" 
-                                    IsZoomEnabled="False"
-                                    IsPlaybackRateButtonVisible="False"
-                                    IsPlaybackRateEnabled="False"
-                                    IsVolumeButtonVisible="False"
-                                    IsFullWindowButtonVisible="False"
-                                    IsCompact="False"
-                                    IsCompactOverlayButtonVisible="False"
-                                    IsSeekBarVisible="False"
-                                    IsSeekEnabled="False"
-                                    IsFastForwardButtonVisible="False"
-                                    IsCompactOverlayEnabled="False"/>
-                            </MediaPlayerElement.TransportControls>
-                        </MediaPlayerElement>
+                    <Button x:Name="ButtonVideo" Visibility="Collapsed" Margin="0" Padding="0" 
+                            HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="500" Height="280" Click="ButtonVideo_Click">
+                        <Grid x:Name="MediaPlayerContainerButtonVideo" Width="500" Height="280" VerticalAlignment="Stretch" />
                     </Button>
 
                     <Button x:Name="ButtonDescription" Visibility="Visible" Margin="0,0,0,0" Padding="0,0,0,0" Width="245" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ButtonDescription_Click">
                         <TextBlock Margin="0,0,0,0" Padding="5,5,5,5" Text="{x:Bind playlistItem.game.Description}" TextWrapping="Wrap"></TextBlock>
                     </Button>
-
-                    
 
                     <GridView x:Name="GameDetailsGridView"             
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
@@ -126,6 +107,10 @@
                            Margin="0,0,40,0" FontFamily="Segoe MDL2 Assets" Text="&#xE76C;" FontSize="28"/>
             </Grid>
         </Border>
+        <Button x:Name="VideoOverlay" Visibility="Collapsed" Margin="0" Padding="0" Width="960" Height="478" Background="{ThemeResource PageBackground}"
+                 HorizontalAlignment="Center" HorizontalContentAlignment="Center" >
+            <Grid x:Name="MediaPlayerContainerVideoOverlay" Width="960" Height="478" />
+        </Button>
         <Border x:Name="DescriptionOverlay" Visibility="Collapsed" Background="{ThemeResource PageBackground}">
             <TextBlock Margin="0,0,0,0" Padding="20,20,20,20" Text="{x:Bind playlistItem.game.Description}" Width="960" Height="478" TextWrapping="Wrap"></TextBlock>
         </Border>

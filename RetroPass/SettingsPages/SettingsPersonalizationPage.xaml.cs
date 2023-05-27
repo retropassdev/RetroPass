@@ -16,7 +16,8 @@ namespace RetroPass.SettingsPages
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			AutoPlayVideoCheckBox.IsChecked = (bool)ApplicationData.Current.LocalSettings.Values[App.SettingsAutoPlayVideo];
-		
+			PlayFullScreenVideoCheckBox.IsChecked = (bool)ApplicationData.Current.LocalSettings.Values[App.SettingsPlayFullScreenVideo];
+
 			//set first selected
 			var buttonsMode = this.RadioButtonsMode.Children.OfType<RadioButton>();
 			var selectedButtonMode = buttonsMode.FirstOrDefault(t => t.Tag as string == ThemeManager.Instance.CurrentMode.ToString());
@@ -41,6 +42,16 @@ namespace RetroPass.SettingsPages
         {
 			RadioButton item = sender as RadioButton;
 			ThemeManager.Instance.ChangeMode(item.Tag.ToString());
+		}
+
+        private void PlayFullScreenVideoCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+			ApplicationData.Current.LocalSettings.Values[App.SettingsPlayFullScreenVideo] = true;
+		}
+
+        private void PlayFullScreenVideoCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+			ApplicationData.Current.LocalSettings.Values[App.SettingsPlayFullScreenVideo] = false;
 		}
     }
 }

@@ -3,11 +3,15 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Media.Core;
+using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Image = Windows.UI.Xaml.Controls.Image;
@@ -25,13 +29,14 @@ namespace RetroPass
 		public PlaylistItem playlistItem;
 		private bool detailsPopupActive = false;
 		private bool descriptionPopupActive = false;
+		private bool videoPopupActive = false;
 		public string Subtitle { get; set; }
 		private MediaSource mediaSource;
+		private MediaPlayer mediaPlayer;
 
 		public GameDetailsPage()
 		{
 			this.InitializeComponent();
-			mediaPlayerElement.MediaPlayer.IsLoopingEnabled = true;
 			RequestedTheme = ThemeManager.Instance.CurrentMode;
 		}
 
@@ -72,34 +77,42 @@ namespace RetroPass
 				}
 			}
 
+			//disable navigation when overlay is visible
+			if (ImageOverlay.Visibility == Visibility.Visible || 
+				DescriptionOverlay.Visibility == Visibility.Visible ||
+				VideoOverlay.Visibility == Visibility.Visible)
+			{
+				switch (e.Key)
+				{
+					case VirtualKey.Space:
+					case VirtualKey.GamepadA:
+
+					case VirtualKey.GamepadLeftThumbstickLeft:
+					case VirtualKey.GamepadDPadLeft:
+					case VirtualKey.Left:
+
+					case VirtualKey.GamepadLeftThumbstickRight:
+					case VirtualKey.GamepadDPadRight:
+					case VirtualKey.Right:
+
+					case VirtualKey.GamepadLeftThumbstickDown:
+					case VirtualKey.GamepadDPadDown:
+					case VirtualKey.Down:
+
+					case VirtualKey.GamepadLeftThumbstickUp:
+					case VirtualKey.GamepadDPadUp:
+					case VirtualKey.Up:
+						e.Handled = true;
+						break;
+				}
+			}
+
 			base.OnPreviewKeyDown(e);
 		}
-
-		private void RefreshImage(int index)
-		{
-			var imageList = GameDetailsGridView.ItemsSource as ObservableCollection<DetailImage>;
-			OverlayImageLeft.Visibility = index == 0 ?
-									OverlayImageLeft.Visibility = Visibility.Collapsed :
-									OverlayImageLeft.Visibility = Visibility.Visible;
-			OverlayImageRight.Visibility = index == imageList.Count - 1 ?
-									OverlayImageRight.Visibility = Visibility.Collapsed :
-									OverlayImageRight.Visibility = Visibility.Visible;
-			OverlayImage.Source = imageList[index].image;
-		}
-
-		private void GameDetailsPage_LosingFocus(UIElement sender, LosingFocusEventArgs args)
-		{
-			if (ImageOverlay.Visibility == Visibility.Visible ||
-				DescriptionOverlay.Visibility == Visibility.Visible)
-			{
-				args.Cancel = true;
-			}
-		}
-
+		
 		public void OnNavigatedTo(PlaylistItem playlistItem)
 		{
 			this.Closing += OnGameDetailsClosing;
-			this.LosingFocus += GameDetailsPage_LosingFocus;
 
 			this.playlistItem = playlistItem;
 			Game game = playlistItem.game;
@@ -118,8 +131,76 @@ namespace RetroPass
 
 		public void OnNavigatedFrom()
 		{
-			this.LosingFocus -= GameDetailsPage_LosingFocus;
 			this.Closing -= OnGameDetailsClosing;
+		}
+
+		public async static Task StartContent(PlaylistItem playlistItem)
+		{
+			var game = playlistItem.game;
+			playlistItem.playlist.SetLastPlayed(playlistItem);
+
+			//check if it exists
+			try
+			{
+				StorageFile file = await StorageFile.GetFileFromPathAsync(game.ApplicationPathFull);
+				string urlScheme = UrlSchemeGenerator.GetUrl(game);
+				Uri uri = new Uri(urlScheme);
+				Trace.TraceInformation("GameDetailsPage: LaunchUriAsync: {0}", uri.ToString());
+				Launcher.LaunchUriAsync(uri);
+			}
+			catch (Exception)
+			{
+				Trace.TraceError("GameDetailsPage: Content not found: {0}", game.ApplicationPathFull);
+			}
+		}
+
+		private void RefreshImage(int index)
+		{
+			var imageList = GameDetailsGridView.ItemsSource as ObservableCollection<DetailImage>;
+			OverlayImageLeft.Visibility = index == 0 ?
+									OverlayImageLeft.Visibility = Visibility.Collapsed :
+									OverlayImageLeft.Visibility = Visibility.Visible;
+			OverlayImageRight.Visibility = index == imageList.Count - 1 ?
+									OverlayImageRight.Visibility = Visibility.Collapsed :
+									OverlayImageRight.Visibility = Visibility.Visible;
+			OverlayImage.Source = imageList[index].image;
+		}
+
+		private void RenderVideo(FrameworkElement element, FrameworkElement backElement)
+		{
+			double width = element.ActualWidth;
+			double height = element.ActualHeight;
+
+			mediaPlayer.SetSurfaceSize(new Size(width, height));
+
+			var compositor = ElementCompositionPreview.GetElementVisual(backElement).Compositor;
+			MediaPlayerSurface surface = mediaPlayer.GetSurface(compositor);
+
+			SpriteVisual spriteVisual = compositor.CreateSpriteVisual();
+			spriteVisual.Size =	new System.Numerics.Vector2((float)width, (float)height);
+
+			CompositionBrush brush = compositor.CreateSurfaceBrush(surface.CompositionSurface);
+			spriteVisual.Brush = brush;
+
+			ContainerVisual container = compositor.CreateContainerVisual();
+			container.Children.InsertAtTop(spriteVisual);
+
+			ElementCompositionPreview.SetElementChildVisual(element, container);
+		}
+
+		private int IndexOfImageInGridView(Image image)
+		{
+			int index = -1;
+			var collection = GameDetailsGridView.ItemsSource as ObservableCollection<DetailImage>;
+			var imageInList = collection.FirstOrDefault(t => t.image == image.Source);
+
+
+			if (imageInList != null)
+			{
+				index = collection.IndexOf(imageInList);
+			}
+
+			return index;
 		}
 
 		private void OnGameDetailsClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
@@ -136,15 +217,20 @@ namespace RetroPass
 				DescriptionOverlay.Visibility = Visibility.Collapsed;
 				args.Cancel = true;
 			}
+			else if(videoPopupActive == true)
+			{
+				VideoOverlay.Visibility = Visibility.Collapsed;
+				RenderVideo(MediaPlayerContainerButtonVideo, ButtonVideo);
+				mediaPlayer.Pause();
+				videoPopupActive = false;
+				args.Cancel = true;
+			}
 			else if (mediaSource != null)
 			{
-				mediaPlayerElement.MediaPlayer.Pause();
-				mediaPlayerElement.Source = null;
+				mediaPlayer.Pause();
 				mediaSource.Dispose();
 				mediaSource = null;
 			}
-
-			//ButtonDescription.Visibility = Visibility.Collapsed;
 		}
 
 		private async void GetDetailsImages()
@@ -156,17 +242,28 @@ namespace RetroPass
 
 			/////////////////////////////////////search for video/////////////////////////////////
 			mediaSource = await game.GetVideo();
-			mediaPlayerElement.Source = mediaSource;
-
-			if (mediaPlayerElement.Source != null)
+			
+			if (mediaSource != null)
 			{
-				mediaPlayerElement.MediaPlayer.Play();
+				mediaPlayer = new MediaPlayer
+				{
+					Source = new MediaPlaybackItem(mediaSource),
+					IsLoopingEnabled = true
+				};
+
+				ButtonVideo.Visibility = Visibility.Visible;
+				ButtonVideo.UpdateLayout();
+				RenderVideo(MediaPlayerContainerButtonVideo, ButtonVideo);
+
 				if ((bool)ApplicationData.Current.LocalSettings.Values[App.SettingsAutoPlayVideo] == false)
 				{
-					mediaPlayerElement.MediaPlayer.PlaybackSession.Position = TimeSpan.FromSeconds(0.7);
-					mediaPlayerElement.MediaPlayer.Pause();
+					mediaPlayer.PlaybackSession.Position = TimeSpan.FromSeconds(0.7);
+					mediaPlayer.Pause();
 				}
-				ButtonVideo.Visibility = Visibility.Visible;
+				else
+				{
+					mediaPlayer.Play();
+				}
 			}
 
 			if (string.IsNullOrEmpty(game.Description) == false)
@@ -212,21 +309,6 @@ namespace RetroPass
 			ScrollToCenter(sender, args);
 		}
 
-		private int IndexOfImageInGridView(Image image)
-		{
-			int index = -1;
-			var collection = GameDetailsGridView.ItemsSource as ObservableCollection<DetailImage>;
-			var imageInList = collection.FirstOrDefault(t => t.image == image.Source);
-
-
-			if (imageInList != null)
-			{
-				index = collection.IndexOf(imageInList);
-			}
-
-			return index;
-		}
-
 		private void ButtonDetail_Click(object sender, RoutedEventArgs e)
 		{
 			Button button = sender as Button;
@@ -250,33 +332,25 @@ namespace RetroPass
 
 		private void ButtonVideo_Click(object sender, RoutedEventArgs e)
 		{
-			if (mediaPlayerElement.MediaPlayer.PlaybackSession.PlaybackState == Windows.Media.Playback.MediaPlaybackState.Playing)
+			bool fullscreenVideo = (bool)ApplicationData.Current.LocalSettings.Values[App.SettingsPlayFullScreenVideo];
+
+			//if it is overlay video, show overlay
+			if (fullscreenVideo == true)
 			{
-				mediaPlayerElement.MediaPlayer.Pause();
+				VideoOverlay.Visibility = Visibility.Visible;
+				VideoOverlay.UpdateLayout();
+				RenderVideo(MediaPlayerContainerVideoOverlay, VideoOverlay);
+				mediaPlayer.Play();
+				videoPopupActive = true;
+			}
+			else if (mediaPlayer.PlaybackSession.PlaybackState == MediaPlaybackState.Playing)
+			{
+				mediaPlayer.Pause();
 			}
 			else
 			{
-				mediaPlayerElement.MediaPlayer.Play();
-			}
-		}
-
-		public async static Task StartContent(PlaylistItem playlistItem)
-		{
-			var game = playlistItem.game;
-			playlistItem.playlist.SetLastPlayed(playlistItem);
-
-			//check if it exists
-			try
-			{
-				StorageFile file = await StorageFile.GetFileFromPathAsync(game.ApplicationPathFull);
-				string urlScheme = UrlSchemeGenerator.GetUrl(game);
-				Uri uri = new Uri(urlScheme);
-				Trace.TraceInformation("GameDetailsPage: LaunchUriAsync: {0}", uri.ToString());
-				Launcher.LaunchUriAsync(uri);
-			}
-			catch (Exception)
-			{
-				Trace.TraceError("GameDetailsPage: Content not found: {0}", game.ApplicationPathFull);
+				RenderVideo(MediaPlayerContainerButtonVideo, ButtonVideo);
+				mediaPlayer.Play();
 			}
 		}
 
@@ -285,7 +359,7 @@ namespace RetroPass
 			//stop playing media
 			if (mediaSource != null)
 			{
-				mediaPlayerElement.MediaPlayer.Pause();
+				mediaPlayer.Pause();
 			}
 
 			await StartContent(playlistItem);

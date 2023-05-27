@@ -16,9 +16,9 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <CheckBox Grid.Row="0" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -30,5 +30,7 @@
                 <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Light" Tag="Light" Checked="RadioButtonMode_Checked"/>
             </StackPanel>
         </Grid>
+        <CheckBox Grid.Row="1" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
+        <CheckBox Grid.Row="2" x:Name="PlayFullScreenVideoCheckBox" FlowDirection="RightToLeft" Content="Play Full Screen Video:" Checked="PlayFullScreenVideoCheckBox_Checked" Unchecked="PlayFullScreenVideoCheckBox_Unchecked"/>
     </Grid>
 </Page>

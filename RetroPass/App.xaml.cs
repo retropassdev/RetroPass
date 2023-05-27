@@ -16,6 +16,7 @@ namespace RetroPass
 	sealed partial class App : Application
 	{
 		public static readonly string SettingsAutoPlayVideo = "SettingsAutoPlayVideo";
+		public static readonly string SettingsPlayFullScreenVideo = "SettingsPlayFullScreenVideo";
 		public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
 		public static readonly string SettingsMode = "SettingsMode";
 		/// <summary>
@@ -41,6 +42,11 @@ namespace RetroPass
 			if (localSettings.Values[SettingsAutoPlayVideo] == null)
 			{
 				localSettings.Values[SettingsAutoPlayVideo] = false;
+			}
+
+			if (localSettings.Values[SettingsPlayFullScreenVideo] == null)
+			{
+				localSettings.Values[SettingsPlayFullScreenVideo] = true;
 			}
 
 			if (localSettings.Values[SettingsLoggingEnabled] == null)

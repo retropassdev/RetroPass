@@ -23,7 +23,7 @@
     </UserControl.Resources>
     
     <Grid x:Name="OverlayPlayLater" Visibility="Collapsed" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-        <Border Background ="{StaticResource BackgroundBrush}"  CornerRadius="5"></Border>
+        <Border Background ="{ThemeResource BackgroundBrush}"  CornerRadius="5"></Border>
         <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="#318DAC" FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CB;" FontSize="20"/>
         <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
