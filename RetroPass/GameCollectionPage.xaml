@@ -40,12 +40,23 @@
                             RelativePanel.AlignLeftWithPanel="True" 
                             RelativePanel.AlignRightWithPanel="True" 
                             RelativePanel.AlignBottomWithPanel="True"                          
-                            Background="Black" Opacity="0.74">
+                            Background="Transparent" Opacity="0.74">
                         <TextBlock x:Name="TextTitle"
                                    TextAlignment="Left"
                                    Text="{x:Bind game.Title}" 
                                    TextWrapping="Wrap" Padding="10,10,5,10" Style="{StaticResource  BaseTextBlockStyle}" Foreground="White"/>
-                    </Border>                  
+                    </Border>
+                    <Border x:Name="GameOverlay" 
+                            RelativePanel.AlignLeftWithPanel="True" 
+                            RelativePanel.AlignRightWithPanel="True" 
+                            RelativePanel.AlignBottomWithPanel="True"  
+                            RelativePanel.AlignTopWithPanel="True"  
+                            Visibility="Visible"
+                            Background="{StaticResource SystemAccentColorDark2}">
+                        <Border.OpacityTransition>
+                            <ScalarTransition Duration="0:0:0.3"/>
+                        </Border.OpacityTransition>
+                    </Border>
                 </RelativePanel>
             </Button>
         </DataTemplate>

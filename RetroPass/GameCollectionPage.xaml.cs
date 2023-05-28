@@ -220,18 +220,24 @@ namespace RetroPass
 			if (args.InRecycleQueue)
 			{
 				SetItemRecycled(args.ItemContainer.ContentTemplateRoot);
+				ShowItemOverlay(args.ItemContainer.ContentTemplateRoot, 1.0f);
 				args.Handled = true;
 			}
 
 			if (args.Phase == 0)
 			{
 				SetItemText(args.ItemContainer.ContentTemplateRoot);
-
-				var templateRoot = args.ItemContainer.ContentTemplateRoot as Button;
-				var image = (Image)templateRoot.FindName("ItemImage");
+				ShowItemOverlay(args.ItemContainer.ContentTemplateRoot, 1.0f);
 				args.RegisterUpdateCallback(ShowImage);
 				args.Handled = true;
 			}
+		}
+
+		private void ShowItemOverlay(UIElement item, float opacity)
+		{
+			var button = item as Button;
+			var Overlay = (Border)button.FindName("GameOverlay");
+			Overlay.Opacity = opacity;
 		}
 
 		private async void ShowImage(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -256,6 +262,7 @@ namespace RetroPass
 					SetItemText(args.ItemContainer.ContentTemplateRoot);
 				}
 
+				ShowItemOverlay(args.ItemContainer.ContentTemplateRoot, 0.0f);
 				args.Handled = true;
 			}
 		}	
