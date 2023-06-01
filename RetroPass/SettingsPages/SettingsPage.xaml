@@ -10,12 +10,20 @@
     Background="{ThemeResource PageBackgroundMain}">
 
     <Page.Resources>
-        <StaticResource x:Key="NavigationViewContentBackground" ResourceKey="SystemControlTransparentBrush" />
-        <StaticResource x:Key="NavigationViewItemBackgroundSelected" ResourceKey="SystemAccentColor" />
-        <StaticResource x:Key="NavigationViewSelectionIndicatorForeground" ResourceKey="SystemControlTransparentBrush" />
-        <!--TODO: theme color not applied correctly-->
-        <ThemeResource x:Key="NavigationViewContentGridBorderBrush" ResourceKey="ButtonBackground" />
-        <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="#303030"/>                   
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="#FFF3F3F3"/>                   
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <StaticResource x:Key="NavigationViewContentBackground" ResourceKey="SystemControlTransparentBrush" />
+            <StaticResource x:Key="NavigationViewItemBackgroundSelected" ResourceKey="SystemAccentColor" />
+            <StaticResource x:Key="NavigationViewSelectionIndicatorForeground" ResourceKey="SystemControlTransparentBrush" />
+            <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid Margin="0,14,0,0">

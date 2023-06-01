@@ -40,7 +40,7 @@
                             RelativePanel.AlignLeftWithPanel="True" 
                             RelativePanel.AlignRightWithPanel="True" 
                             RelativePanel.AlignBottomWithPanel="True"                          
-                            Background="Transparent" Opacity="0.74">
+                            Background="Black" Opacity="0.74">
                         <TextBlock x:Name="TextTitle"
                                    TextAlignment="Left"
                                    Text="{x:Bind game.Title}" 
@@ -69,6 +69,7 @@
               SingleSelectionFollowsFocus="True"
               IsItemClickEnabled="True"
               IsTabStop="True"
+              UseSystemFocusVisuals="False"
               ContainerContentChanging="GamesListView_ContainerContentChanging"
               ItemTemplate="{StaticResource GameTemplate}"
               ItemClick="PlatformGridView_ItemClick"              

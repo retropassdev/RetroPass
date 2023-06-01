@@ -11,6 +11,13 @@
 
         <ResourceDictionary x:Key="Dark">
 
+            <!--<SolidColorBrush x:Key="SystemControlRevealFocusVisualBrush" Color="Transparent"/>-->
+            <SolidColorBrush x:Key="SystemControlFocusVisualSecondaryBrush" Color="Transparent"/>
+            <!--<SolidColorBrush x:Key="FocusVisualPrimaryBrush" Color="Transparent"/>
+            <SolidColorBrush x:Key="FocusVisualSecondaryBrush" Color="Transparent"/>-->
+            <!--<Thickness x:Key="FocusVisualPrimaryThickness">0</Thickness>
+            <Thickness x:Key="FocusVisualSecondaryThickness">0</Thickness>-->
+
             <!-- Main page gradient -->
             <LinearGradientBrush x:Key="PageBackgroundMain" EndPoint="0.5,0.27" StartPoint="0.5,0">
                 <GradientStop Color="#090909"/>
@@ -47,6 +54,14 @@
         
         <ResourceDictionary x:Key="Light">
 
+            <!--<SolidColorBrush x:Key="SystemControlRevealFocusVisualBrush" Color="Transparent"/>-->
+            <SolidColorBrush x:Key="SystemControlFocusVisualSecondaryBrush" Color="Transparent"/>
+            <!--<SolidColorBrush x:Key="FocusVisualPrimaryBrush" Color="Transparent"/>
+            <SolidColorBrush x:Key="FocusVisualSecondaryBrush" Color="Transparent"/>-->
+            <!--<Thickness x:Key="FocusVisualPrimaryThickness">0</Thickness>
+            <Thickness x:Key="FocusVisualSecondaryThickness">0</Thickness>-->
+
+            
             <!-- Main page gradient -->
             <LinearGradientBrush x:Key="PageBackgroundMain" EndPoint="0.5,0.27" StartPoint="0.5,0">
                 <GradientStop Color="#424242"/>
