@@ -337,7 +337,7 @@ namespace RetroPass
 		{
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
 			//remember currently focused element
 			FocusManager.GetFocusedElement();
@@ -345,6 +345,8 @@ namespace RetroPass
 			Button b = sender as Button;
 			//currentButton = b;
 			Playlist p = b.DataContext as Playlist;
+
+			await Task.Delay(10);
 			this.Frame.Navigate(typeof(GameCollectionPage), new GameCollectionPage.GameCollectionPageNavigateParams(null, p, playlistPlayLater));
 		}
 

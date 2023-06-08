@@ -22,8 +22,11 @@
             <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
             <Thickness x:Key="ContentDialogBorderWidth">0</Thickness>
             <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
+            <Style x:Key="ButtonDefault" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            </Style>
             <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
                 <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+                <Setter Property="ClickMode" Value="Release" />
             </Style>
         </ResourceDictionary>
     </ContentDialog.Resources>
@@ -41,6 +44,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Width="800" Text="{x:Bind playlistItem.game.Title}" TextWrapping="Wrap"></TextBlock>
                 <TextBlock Grid.Row="1" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" Width="500"  Text="{x:Bind Subtitle}" TextWrapping="Wrap" Foreground="{ThemeResource SubtitleBrush}"></TextBlock>
+                <Button Style="{StaticResource ButtonDefault}" FocusVisualPrimaryThickness="0" FocusVisualPrimaryBrush="Transparent" FocusVisualSecondaryBrush="Transparent" Grid.Row="0" x:Name="Dummy" Width="40" Margin="0" Padding="0"></Button>
             </Grid>
             <ScrollViewer Margin="0,0,0,0" Grid.Row="1" Name="ScrollViewer1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" Height="280"  
                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">

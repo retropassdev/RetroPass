@@ -7,7 +7,12 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Style TargetType="RadioButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">           
+        <Style TargetType="RadioButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
+            <Setter Property="Template" Value="{StaticResource ToggleButtonControlTemplate}" />
+        </Style>
+
+        <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
+            <Setter Property="Template" Value="{StaticResource CheckBoxControlTemplate}" />
         </Style>
     </Page.Resources>
 

@@ -12,6 +12,7 @@
     <Page.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+            <Setter Property="ClickMode" Value="Release" />
         </Style>
        
         <DataTemplate x:Key="GameTemplate"

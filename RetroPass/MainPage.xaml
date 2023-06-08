@@ -15,11 +15,13 @@
 
         <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+            <Setter Property="ClickMode" Value="Release" />
         </Style>
 
         <Style x:Name="ButtonTopMenuStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Background" Value="{ThemeResource ButtonTopMenuBackground}" />
             <Setter Property="Template" Value="{StaticResource ButtonTopMenuControlTemplate}" />
+            <Setter Property="ClickMode" Value="Release" />
         </Style>
 
         <ControlTemplate x:Name="ListViewPlatformControlTemplate" TargetType="ListViewItem">

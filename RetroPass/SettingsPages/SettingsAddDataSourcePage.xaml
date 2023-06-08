@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+
     <ContentDialog.Resources>
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
@@ -24,6 +25,9 @@
             <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
             <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
                 <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+                <Setter Property="Template" Value="{StaticResource TextboxControlTemplate}" />               
             </Style>
         </ResourceDictionary>
     </ContentDialog.Resources>
@@ -64,7 +68,7 @@
                     <TextBox Grid.Row="1" Grid.Column="0" x:Name="TextBoxDataSourceType" IsReadOnly="True" IsTabStop="False" 
                              Background="Transparent"
                              BorderBrush="{StaticResource ButtonDisabledBorderThemeBrush}" Header="Type" />
-                    <TextBox Grid.Row="2" Grid.Column="0" x:Name="TextBoxDataSourceName" Header="Name" 
+                    <TextBox Grid.Row="2" Grid.Column="0" BorderThickness="0" x:Name="TextBoxDataSourceName" Header="Name" 
                              IsTextPredictionEnabled="False" IsSpellCheckEnabled="False"
                              TextChanged="TextBoxName_TextChanged"/>
 

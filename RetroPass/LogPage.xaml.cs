@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -140,6 +141,18 @@ namespace RetroPass
 
 				args.Handled = true;
 			}
+		}
+
+		private void LogListView_GotFocus(object sender, RoutedEventArgs e)
+		{
+			var fc = LogListView.FindDescendant<FocusControl>();
+			fc.Enabled = true;
+		}
+
+		private void LogListView_LostFocus(object sender, RoutedEventArgs e)
+		{
+			var fc = LogListView.FindDescendant<FocusControl>();
+			fc.Enabled = false;
 		}
 	}
 }

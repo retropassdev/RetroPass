@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -110,7 +111,7 @@ namespace RetroPass
 			base.OnPreviewKeyDown(e);
 		}
 		
-		public void OnNavigatedTo(PlaylistItem playlistItem)
+		public async void OnNavigatedTo(PlaylistItem playlistItem)
 		{
 			this.Closing += OnGameDetailsClosing;
 
@@ -127,6 +128,9 @@ namespace RetroPass
 			string[] arr = { game.Developer, game.Publisher, date, game.Genre };
 			arr = Array.FindAll(arr, t => string.IsNullOrEmpty(t) == false);
 			Subtitle = string.Join(" · ", arr);
+
+			await Task.Delay(40);
+			Dummy.Visibility = Visibility.Collapsed;
 		}
 
 		public void OnNavigatedFrom()
@@ -209,12 +213,14 @@ namespace RetroPass
 			{
 				detailsPopupActive = false;
 				ImageOverlay.Visibility = Visibility.Collapsed;
+				SetFocusVisibility(true);
 				args.Cancel = true;
 			}
 			else if (descriptionPopupActive == true)
 			{
 				descriptionPopupActive = false;
 				DescriptionOverlay.Visibility = Visibility.Collapsed;
+				SetFocusVisibility(true);
 				args.Cancel = true;
 			}
 			else if(videoPopupActive == true)
@@ -222,6 +228,7 @@ namespace RetroPass
 				VideoOverlay.Visibility = Visibility.Collapsed;
 				RenderVideo(MediaPlayerContainerButtonVideo, ButtonVideo);
 				mediaPlayer.Pause();
+				SetFocusVisibility(true);
 				videoPopupActive = false;
 				args.Cancel = true;
 			}
@@ -309,6 +316,21 @@ namespace RetroPass
 			ScrollToCenter(sender, args);
 		}
 
+		void SetFocusVisibility(bool enabled)
+		{
+			Button button = FocusManager.GetFocusedElement() as Button;
+
+			if(button != null )
+			{
+				FocusControl currentFocusControl = button.FindDescendant<FocusControl>();
+
+				if(currentFocusControl != null)
+				{
+					currentFocusControl.Enabled = enabled;
+				}
+			}
+		}
+
 		private void ButtonDetail_Click(object sender, RoutedEventArgs e)
 		{
 			Button button = sender as Button;
@@ -320,12 +342,14 @@ namespace RetroPass
 				RefreshImage(index);
 			}
 
+			SetFocusVisibility(false);
 			detailsPopupActive = true;
 			ImageOverlay.Visibility = Visibility.Visible;
 		}
 
 		private void ButtonDescription_Click(object sender, RoutedEventArgs e)
 		{
+			SetFocusVisibility(false);
 			descriptionPopupActive = true;
 			DescriptionOverlay.Visibility = Visibility.Visible;
 		}
@@ -338,6 +362,7 @@ namespace RetroPass
 			if (fullscreenVideo == true)
 			{
 				VideoOverlay.Visibility = Visibility.Visible;
+				SetFocusVisibility(false);
 				VideoOverlay.UpdateLayout();
 				RenderVideo(MediaPlayerContainerVideoOverlay, VideoOverlay);
 				mediaPlayer.Play();

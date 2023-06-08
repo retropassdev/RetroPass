@@ -14,8 +14,13 @@
         <Thickness x:Key="ContentDialogBorderWidth">0</Thickness>
         <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
 
+
         <StaticResource x:Key="ComboBoxBackgroundBorderBrushFocused" ResourceKey="SystemControlHighlightTransparentBrush" />
 
+        <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Setter Property="Template" Value="{StaticResource TextboxControlTemplate}" />
+        </Style>
+        
         <DataTemplate x:Key="GameTemplate"
                     x:DataType="local:PlaylistItem">
             <Grid>

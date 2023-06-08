@@ -14,6 +14,7 @@
         </Style>
         
         <Style TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
+            <Setter Property="Template" Value="{StaticResource ToggleButtonControlTemplate}" />
             <Setter Property="Width" Value="155"/>
         </Style>
         
