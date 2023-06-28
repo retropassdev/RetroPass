@@ -16,7 +16,7 @@
         <x:Double x:Key="BlurRadiusLow">18</x:Double>
 
         <media:AttachedCardShadow x:Key="RevealShadow"  BlurRadius="{StaticResource BlurRadiusLow}"
-                                    CornerRadius="5"                                    
+                                    CornerRadius="6"
                                     Color="{StaticResource SystemAccentColor}"
                                     Offset="0,0"
                                     Opacity="1"/>
@@ -27,10 +27,10 @@
     </UserControl.Resources>
 
     <Grid XYFocusKeyboardNavigation="Disabled" Visibility="Visible" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False">
-        <Popup x:Name="MyPopup" IsTapEnabled="False" AllowFocusWhenDisabled="True" IsDoubleTapEnabled="False" 
+        <Popup x:Name="RetroPassPopup" IsTapEnabled="False" AllowFocusWhenDisabled="True" IsDoubleTapEnabled="False" 
                IsHoldingEnabled="False" IsRightTapEnabled="False" XYFocusKeyboardNavigation="Disabled" 
                KeyboardAcceleratorPlacementMode="Hidden" KeyTipPlacementMode="Hidden">
-            <Grid>
+            <Grid x:Name="RetroPassFocusRoot">
                 <Grid x:Name="RetroPassFocus"
                       BorderBrush = "{StaticResource SystemAccentColor}"
                       ui:Effects.Shadow ="{StaticResource RevealShadow}" 
@@ -48,10 +48,14 @@
                     Visibility="Visible"  x:Name="RetroPassBorder" 
                     Opacity="1" 
                     BorderBrush= "{StaticResource SystemAccentColor}"
-                    BorderThickness= "2.7"
+                    BorderThickness= "2.6"
                     CornerRadius="6" >
                 </Border>
             </Grid>
         </Popup>
+        <Grid Visibility="Collapsed" x:Name="RetroPassGrid" IsTapEnabled="False" AllowFocusWhenDisabled="True" IsDoubleTapEnabled="False" 
+               IsHoldingEnabled="False" IsRightTapEnabled="False" XYFocusKeyboardNavigation="Disabled" 
+               KeyboardAcceleratorPlacementMode="Hidden" KeyTipPlacementMode="Hidden">
+        </Grid>
     </Grid>
 </UserControl>

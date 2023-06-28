@@ -11,7 +11,7 @@
 
     <Page.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-            <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+            <Setter Property="Template" Value="{StaticResource ButtonInGridViewControlTemplate}" />
             <Setter Property="ClickMode" Value="Release" />
         </Style>
        
@@ -83,7 +83,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="NameCollection" Margin="46,0,0,0" Text="" Grid.Row="0" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                    <TextBlock x:Name="NumGamesCollectionText" Margin="46,4,0,0" Text="" Grid.Row="1" Style="{StaticResource BaseTextBlockStyle}"/>
+                    <TextBlock x:Name="NumGamesCollectionText" Margin="46,4,0,20" Text="" Grid.Row="1" Style="{StaticResource BaseTextBlockStyle}"/>
                 </Grid>
             </GridView.Header>
             <GridView.ItemContainerStyle>
@@ -122,8 +122,8 @@
             </GridView.ItemContainerStyle>
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Margin="40,20,0,40"  GotFocus="Grid_GotFocus" LostFocus="Grid_LostFocus" Orientation="Horizontal" BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
-							   HorizontalAlignment="Left"/>
+                    <ItemsWrapGrid Margin="0,0,0,0"  GroupPadding="40,0,0,40" GotFocus="Grid_GotFocus" LostFocus="Grid_LostFocus" Orientation="Horizontal" BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"
+							   HorizontalAlignment="Left" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

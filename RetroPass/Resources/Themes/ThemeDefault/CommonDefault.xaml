@@ -205,7 +205,9 @@
               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
               AutomationProperties.AccessibilityView="Raw">
             </ContentPresenter>
-            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False" FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
+            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False"
+                             CornerRadius="{TemplateBinding CornerRadius}"
+                             FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
         </Grid>
     </ControlTemplate>
 
@@ -311,7 +313,117 @@
               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
               AutomationProperties.AccessibilityView="Raw">
             </ContentPresenter>
-            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False" FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
+            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False" 
+                             CornerRadius="{TemplateBinding CornerRadius}"
+                             FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Name="ButtonInGridViewControlTemplate" TargetType="Button">
+        <Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+
+                        <Storyboard>
+                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                        </Storyboard>
+                    </VisualState>
+
+                    <VisualState x:Name="PointerOver">
+
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>-->
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                        </Storyboard>
+                    </VisualState>
+
+                    <VisualState x:Name="Pressed">
+
+                        <Storyboard>
+                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                            </ObjectAnimationUsingKeyFrames>-->
+                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                            </ObjectAnimationUsingKeyFrames>-->
+                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                            </ObjectAnimationUsingKeyFrames>-->
+                            <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                            <PointerDownThemeAnimation Storyboard.TargetName="FocusControl" />
+                        </Storyboard>
+                    </VisualState>
+
+                    <VisualState x:Name="Disabled">
+
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                            </ObjectAnimationUsingKeyFrames>-->
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+
+                </VisualStateGroup>
+
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusControl" Storyboard.TargetProperty="Enabled">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="True"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>-->
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Unfocused">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusControl" Storyboard.TargetProperty="Enabled">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="False"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+
+            </VisualStateManager.VisualStateGroups>
+            <ContentPresenter x:Name="ContentPresenter"              
+              Background="{TemplateBinding Background}"
+              BackgroundSizing="{TemplateBinding BackgroundSizing}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              Content="{TemplateBinding Content}"
+              ContentTemplate="{TemplateBinding ContentTemplate}"
+              ContentTransitions="{TemplateBinding ContentTransitions}"
+              CornerRadius="{TemplateBinding CornerRadius}"
+              Padding="{TemplateBinding Padding}"
+              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+              AutomationProperties.AccessibilityView="Raw">
+            </ContentPresenter>
+            <rp:FocusControl Name="FocusControl" IsPopup="False" Enabled="False" IsTabStop="False"
+                             CornerRadius="{TemplateBinding CornerRadius}"
+                             FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
         </Grid>
     </ControlTemplate>
 
@@ -535,7 +647,9 @@
 
                
             </ContentPresenter>
-            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False" FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
+            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False"
+                             CornerRadius="{TemplateBinding CornerRadius}"
+                             FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
         </Grid>      
     </ControlTemplate>
 
@@ -978,7 +1092,9 @@
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"                            
                             AutomationProperties.AccessibilityView="Raw"
                             TextWrapping="Wrap" />
-            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False" FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
+            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False" 
+                             CornerRadius="{TemplateBinding CornerRadius}"
+                             FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
         </Grid>
 
     </ControlTemplate>
@@ -1009,7 +1125,9 @@
                       Padding="{TemplateBinding Padding}" />
                 </ScrollViewer>
             </Border>
-            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False" FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
+            <rp:FocusControl Name="FocusControl" Enabled="False" IsTabStop="False"
+                             CornerRadius="{TemplateBinding CornerRadius}"
+                             FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
         </Grid>
     </ControlTemplate>
 
@@ -1271,7 +1389,8 @@
                             x:Load="False"/>
             <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2">
                 <rp:FocusControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                                 Name="FocusControl" Enabled="False" IsTabStop="False" 
+                                 Name="FocusControl" Enabled="False" IsTabStop="False"
+                                 CornerRadius="{TemplateBinding CornerRadius}"
                                  FocusVisualMargin="{TemplateBinding FocusVisualMargin}"/>
             </Grid>
         </Grid>

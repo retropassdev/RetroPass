@@ -9,15 +9,15 @@
 
 
 
-    <ListView XYFocusKeyboardNavigation="Enabled" 
+    <ListView XYFocusKeyboardNavigation="Enabled"
               Template="{StaticResource ListViewControlTemplate}"
               IsTabStop="True" HorizontalAlignment="Stretch" Name="LogListView" 
               ItemsSource="{x:Bind logEntries}" 
               ContainerContentChanging="LogListView_ContainerContentChanging"
               GotFocus="LogListView_GotFocus"
               LostFocus="LogListView_LostFocus"
-               Margin="0,0,0,0" Padding="8,8,8,8">
-        <ListView.ItemTemplate>            
+              Margin="0,0,0,0" Padding="8,8,8,8" CornerRadius="6">
+        <ListView.ItemTemplate>
             <DataTemplate x:DataType="local:LogItem">
                 <TextBlock TextWrapping="Wrap" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="12" Text="{x:Bind Text}"/>
             </DataTemplate>
