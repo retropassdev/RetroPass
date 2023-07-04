@@ -5,91 +5,324 @@
     xmlns:local="using:RetroPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
+
     <ContentDialog.Resources>
-        <x:Double x:Key="ContentDialogMaxWidth">960</x:Double>
-        <x:Double x:Key="ContentDialogMaxHeight">540</x:Double>
-        <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
-        <Thickness x:Key="ContentDialogBorderWidth">0</Thickness>
-        <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="TextControlBackgroundColorFocused">#1F2526</Color>
+                    <SolidColorBrush x:Key="SystemControlBackgroundChromeWhiteBrush" Color="{StaticResource TextControlBackgroundColorFocused}" />
+                    <StaticResource x:Key="TextControlBackgroundFocused" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+                    <BitmapImage x:Key="SearchBackgroundImage" UriSource="Resources\SearchBackgroundDark_128.png"/>                    
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <Color x:Key="TextControlBackgroundColorFocused">#ECECEC</Color>
+                    <SolidColorBrush x:Key="SystemControlBackgroundChromeWhiteBrush" Color="{StaticResource TextControlBackgroundColorFocused}" />
+                    <StaticResource x:Key="TextControlBackgroundFocused" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+                    <BitmapImage x:Key="SearchBackgroundImage" UriSource="Resources\SearchBackgroundLight_128.png"/>
+                    
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <x:Double x:Key="ContentDialogMaxWidth">960</x:Double>
+            <x:Double x:Key="ContentDialogMaxHeight">540</x:Double>
+            <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
+            <Thickness x:Key="ContentDialogBorderWidth">0</Thickness>
+            <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
+            
+            <StaticResource x:Key="ComboBoxBackgroundBorderBrushFocused" ResourceKey="SystemControlHighlightTransparentBrush" />
 
+            <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+                <Setter Property="Template" Value="{StaticResource TextboxControlTemplate}" />
+            </Style>
 
-        <StaticResource x:Key="ComboBoxBackgroundBorderBrushFocused" ResourceKey="SystemControlHighlightTransparentBrush" />
-
-        <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
-            <Setter Property="Template" Value="{StaticResource TextboxControlTemplate}" />
-        </Style>
-        
-        <DataTemplate x:Key="GameTemplate"
+            <DataTemplate x:Key="GameTemplate"
                     x:DataType="local:PlaylistItem">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Button Click="GameButton_Click" Grid.Row="0" x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                Margin="0,0,0,0" Padding="0,0,0,0" 
-                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                BorderThickness="0" Background="Transparent">
-                    <Image   x:Name="ItemImage"
-                        Stretch="UniformToFill"
-                        Opacity="1" VerticalAlignment="Top" />
-                </Button>
-                <StackPanel Grid.Row="1" RelativePanel.Below="GameButton">
-                    <TextBlock LineHeight="15" MaxLines="2"
-                        Margin="0,0,0,0" Padding="1,10,10,0" Style="{StaticResource  CaptionTextBlockStyle}"
+
+                <Button Click="GameButton_Click" x:Name="GameButton"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                        Margin="0,0,0,0" Padding="0,0,0,0" 
+                        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        BorderThickness="0" Background="{ThemeResource SearchButtonBackgroundBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="140"/>
+                            <RowDefinition Height="43"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" x:Name="ItemImage" Stretch="UniformToFill" Opacity="1" VerticalAlignment="Top" />
+                        <TextBlock Grid.Row="1" LineHeight="15" MaxLines="2"
+                        Margin="0,0,0,0" Padding="10,6,10,0" Style="{StaticResource  CaptionTextBlockStyle}"
                         Text="{x:Bind game.Title}" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
-                    <TextBlock LineHeight="15" MaxLines="2"
-                        Margin="0,0,0,0" Padding="1,5,5,0"
+                        <TextBlock Grid.Row="2" LineHeight="15" MaxLines="2" VerticalAlignment="Bottom"
+                        Margin="0,0,0,0" Padding="10,0,10,2"
                         Text="{x:Bind game.GamePlatform.Name}" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="10" Style="{StaticResource CaptionTextBlockStyle}"/>
-                </StackPanel>
-            </Grid>           
-        </DataTemplate>
+                        <!--<StackPanel Grid.Row="1"
+                                RelativePanel.Below="GameButton" 
+                                Background="{ThemeResource SearchButtonBackgroundBrush}">
+                       
+                    </StackPanel-->
+                    </Grid>
+                </Button>
+
+            </DataTemplate>
+
+            <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="Template" Value="{StaticResource ButtonInGridViewControlTemplate}" />
+                <Setter Property="ClickMode" Value="Release" />
+            </Style>
+
+            <Style x:Key="NavigationViewItemPresenterStyleWhenOnTopPaneWithRevealFocus" TargetType="NavigationViewItemPresenter">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="NavigationViewItemPresenter">
+                            <Grid 
+                        x:Name="LayoutRoot"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Background="{TemplateBinding Background}"
+                        Control.IsTemplateFocusTarget="True">
+
+                                <VisualStateManager.VisualStateGroups>
+
+                                    <VisualStateGroup x:Name="DisabledStates">
+                                        <VisualState x:Name="Enabled" />
+
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="Icon.Foreground" Value="{ThemeResource TopNavigationViewItemForegroundDisabled}" />
+                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TopNavigationViewItemForegroundDisabled}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Target="SelectionIndicatorWithoutAnimation.Opacity" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Background" Value="{ThemeResource TopNavigationViewItemRevealBackgroundFocused}" />
+                                                <Setter Target="Icon.Foreground" Value="{ThemeResource TopNavigationViewItemRevealIconForegroundFocused}" />
+                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TopNavigationViewItemRevealContentForegroundFocused}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Unfocused" />
+                                        <VisualState x:Name="PointerFocused" />
+
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="NavigationViewIconPositionStates">
+                                        <VisualState x:Name="IconOnLeft" />
+                                        <VisualState x:Name="IconOnly">
+                                            <VisualState.Setters>
+                                                <Setter Target="PointerRectangle.Visibility" Value="Visible" />
+                                                <Setter Target="LayoutRoot.Width" Value="48" />
+                                                <Setter Target="ContentPresenter.Visibility" Value="Collapsed" />
+                                                <Setter Target="SelectionIndicatorGrid.Margin" Value="4,0" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="ContentOnly">
+                                            <VisualState.Setters>
+                                                <Setter Target="IconBox.Visibility" Value="Collapsed" />
+                                                <Setter Target="ContentPresenter.Margin" Value="12,0" />
+                                                <Setter Target="SelectionIndicatorGrid.Margin" Value="12,0" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+
+                                </VisualStateManager.VisualStateGroups>
+                                <Rectangle 
+                            x:Name="PointerRectangle" 
+                            Fill="Transparent"
+                            Visibility="Collapsed" />
+                                <Grid x:Name="ContentGrid">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Viewbox 
+                                x:Name="IconBox" 
+                                Height="16"
+                                Width="16"
+                                Margin="16,0,0,0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                                        <ContentPresenter 
+                                    x:Name="Icon" 
+                                    Content="{TemplateBinding Icon}"
+                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}" />
+                                    </Viewbox>
+                                    <ContentPresenter
+                                x:Name="ContentPresenter"
+                                Grid.Column="1"
+                                Margin="8,0,16,0"
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+                                TextWrapping="NoWrap"
+                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Content="{TemplateBinding Content}"
+                                VerticalAlignment="Center"
+                                AutomationProperties.AccessibilityView="Raw"/>
+
+                                </Grid>
+                                <Grid 
+                            x:Name="SelectionIndicatorGrid"
+                            Margin="0,0,0,4" 
+                            VerticalAlignment="Bottom" CornerRadius="2">
+                                    <!--<Rectangle
+                                x:Name="SelectionIndicator"
+                                Height="2"
+                                Fill="{ThemeResource NavigationViewSelectionIndicatorForeground}"
+                                Opacity="0" />-->
+                                    <Rectangle
+                                x:Name="SelectionIndicatorWithoutAnimation"
+                                Height="3"
+                                Fill="{ThemeResource SystemAccentColor}"
+                                Opacity="0"/>
+                                </Grid>
+                            </Grid>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Name="NavItemStyle" TargetType="NavigationViewItem">
+                <Setter Property="Foreground" Value="{ThemeResource NavigationViewItemForeground}" />
+                <Setter Property="Background" Value="{ThemeResource NavigationViewItemBackground}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrush}" />
+                <Setter Property="BorderThickness" Value="{StaticResource NavigationViewItemBorderThickness}" />
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="NavigationViewItem">
+                            <NavigationViewItemPresenter x:Name="NavigationViewItemPresenter" 
+                                                     Icon="{TemplateBinding Icon}" 
+                                                     ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                                     ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                     Margin="{TemplateBinding Margin}" 
+                                                     Padding="{TemplateBinding Padding}" 
+                                                     Foreground="{TemplateBinding Foreground}" 
+                                                     Background="{TemplateBinding Background}" 
+                                                     BorderBrush="{TemplateBinding BorderBrush}" 
+                                                     BorderThickness="{TemplateBinding BorderThickness}" 
+                                                     UseSystemFocusVisuals="{TemplateBinding UseSystemFocusVisuals}" 
+                                                     VerticalAlignment="{TemplateBinding VerticalAlignment}" 
+                                                     HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                     ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" 
+                                                     Content="{TemplateBinding Content}" 
+                                                     IsTabStop="False"
+                                                     CornerRadius="3">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="ItemOnNavigationViewListPositionStates">
+                                        <VisualState x:Name="OnLeftNavigation">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnLeftPane}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="OnLeftNavigationReveal">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnLeftPaneWithRevealFocus}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="OnTopNavigationPrimary">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnTopPane}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="OnTopNavigationPrimaryReveal">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnTopPaneWithRevealFocus}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="OnTopNavigationOverflow">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnTopPaneOverflow}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+
+                                </VisualStateManager.VisualStateGroups>
+                            </NavigationViewItemPresenter>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary> 
     </ContentDialog.Resources>
 
+    <ContentDialog.Background>
+        <ImageBrush ImageSource="{ThemeResource SearchBackgroundImage}" />
+    </ContentDialog.Background>
 
-    <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="960" Height="478" Background="{ThemeResource PageBackground}">
+    <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="960" Height="540" >
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="75" />
-            <RowDefinition Height="403" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="420"/>
             <RowDefinition Height="20" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="50,18,50,0" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <ComboBox BorderThickness="0" FocusVisualMargin="0" x:Name="SearchCriteria" SelectedIndex="0" Grid.Column="0" HorizontalAlignment="Stretch">
-                <x:String>Title</x:String>
-                <x:String>Developer</x:String>
-                <x:String>Year</x:String>
-            </ComboBox>
-            <TextBox x:Name="SearchText" BorderThickness="0" Grid.Column="1" Margin="20,0,0,0" PlaceholderText="Search RetroPass" TextChanged="TextBox_TextChanged"/>
-        </Grid>
+       
+        <Grid Grid.Row="0" Margin="0,34,0,0" Padding="0,0,0,0" HorizontalAlignment="Center" Visibility="Visible"
+               VerticalAlignment="Top" RowSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <TextBox Grid.Row="0" x:Name="SearchText" Width="512" Height="28" Visibility="Visible" MinHeight="28"
+                     BorderThickness="0" CornerRadius="14" Text=""
+                     PlaceholderText="Search RetroPass" TextChanged="TextBox_TextChanged"
+                     Background="{ThemeResource SearchButtonBackgroundBrush}" Opacity="0.95">
+            </TextBox>
+            
+            <NavigationView Grid.Row="1" x:Name="SearchCriteria" PaneDisplayMode="Top" SelectionFollowsFocus="Enabled" IsBackButtonVisible="Collapsed" 
+                            IsSettingsVisible="False" HorizontalAlignment="Center" IsPaneToggleButtonVisible="False"
+                            IsTextScaleFactorEnabled="False" MenuItemContainerStyle="{StaticResource NavItemStyle}"
+                            SelectionChanged="SearchCriteria_SelectionChanged" Margin="120,0,0,0">
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Height="32" Content="Title" Tag="Title" IsSelected="True"/>
+                    <NavigationViewItem Height="32" Content="Developer" Tag="Developer"/>
+                    <NavigationViewItem Height="32" Content="Year" Tag="Year" />
+                </NavigationView.MenuItems>
+            </NavigationView>
 
-        <GridView Grid.Row="1"  x:Name="SearchGridView"
+        </Grid>
+        <GridView Grid.Row="1" x:Name="SearchGridView"
               XYFocusKeyboardNavigation="Enabled"
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
               SelectionMode="Single"
               SingleSelectionFollowsFocus="True"
-              IsItemClickEnabled="False"                  
+              IsItemClickEnabled="False"
               IsTabStop="False"
               ContainerContentChanging="SearchGridView_ContainerContentChanging"
-              ItemTemplate="{StaticResource GameTemplate}"              
+              ItemTemplate="{StaticResource GameTemplate}"
               Margin="0,0,0,0"
-              Padding="0,0,0,0">
+              Padding="0,4,0,0">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="Width" Value="100" />
-                    <Setter Property="Height" Value="180" />
+                    <Setter Property="Width" Value="140" />
+                    <Setter Property="Height" Value="198" />
                     <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Margin" Value="4,4,4,20" />
+                    <Setter Property="Margin" Value="0,8,8,0" />
                     <Setter Property="Padding" Value="0,0,0,0" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
-
                     <Setter Property="IsFocusEngagementEnabled" Value="False"/>
                     <Setter Property="IsTabStop" Value="False"/>
                     <Setter Property="Template">
@@ -99,8 +332,7 @@
                                 SelectedBackground="Transparent"
                                 SelectedPointerOverBackground="Transparent"
                                 PressedBackground="Transparent"
-                                SelectedPressedBackground="Transparent"
-                                />
+                                SelectedPressedBackground="Transparent" />
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -108,13 +340,12 @@
             </GridView.ItemContainerStyle>
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Margin="40,15,0,40" Orientation="Horizontal" 
-                                   BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested"                                   
-							   HorizontalAlignment="Left"/>
+                    <ItemsWrapGrid Margin="0,0,0,0" GroupPadding="40,0,0,40" Orientation="Horizontal"
+                                   BringIntoViewRequested="ItemsWrapGrid_BringIntoViewRequested" HorizontalAlignment="Left"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
+
         </GridView>
         <TextBox Grid.Row="2" Width="960" GettingFocus="DummyReturnFocusTextBox_GettingFocus" FocusVisualPrimaryThickness="0" Margin="0,0,0,0" />
-
     </Grid>
 </ContentDialog>

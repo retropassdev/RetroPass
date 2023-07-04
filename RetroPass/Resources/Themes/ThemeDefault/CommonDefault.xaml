@@ -49,6 +49,9 @@
             <!-- Search overlay text color -->
             <SolidColorBrush x:Key="OverlaySearchTextBrush" Color="#FFD000" />
 
+            <!-- Search page background color -->
+            <SolidColorBrush x:Key="SearchButtonBackgroundBrush" Color="#2F3239"/>
+
             <!-- Background of GameCollectionPage -->
             <SolidColorBrush x:Key="PageBackground" Color="#1F1F1F"/>
 
@@ -91,6 +94,9 @@
             <SolidColorBrush x:Key="OverlayBackgroundBrush" Color="White" Opacity="0.78"/>
             <!-- Search overlay text color -->
             <SolidColorBrush x:Key="OverlaySearchTextBrush" Color="#E29B00" />
+
+            <!-- Search page background color -->
+            <SolidColorBrush x:Key="SearchButtonBackgroundBrush" Color="#CFCFD7"/>
 
             <!-- Background of GameCollectionPage -->
             <SolidColorBrush x:Key="PageBackground" Color="#DBDBDB"/>

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 
-// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 namespace RetroPass
 {
 	public sealed partial class SearchPage : ContentDialog
@@ -37,6 +38,19 @@ namespace RetroPass
 		public SearchPage()
 		{
 			this.InitializeComponent();
+			RequestedTheme = ThemeManager.Instance.CurrentMode;
+		}
+
+		protected override void OnPreviewKeyDown(KeyRoutedEventArgs e)
+		{
+			switch (e.Key)
+			{
+				case VirtualKey.GamepadB:
+				case VirtualKey.Escape:
+					selectedPlaylistItem = null;
+					break;
+			}
+			base.OnPreviewKeyDown(e);
 		}
 
 		protected override void OnGotFocus(RoutedEventArgs e)
@@ -52,6 +66,15 @@ namespace RetroPass
 
 		public void OnNavigatedTo(List<Playlist> playlists)
 		{
+			if(RequestedTheme != ThemeManager.Instance.CurrentMode)
+			{
+				RequestedTheme = ThemeManager.Instance.CurrentMode;
+			}
+
+			if(SearchCriteria.SelectedItem == null)
+			{
+				SearchCriteria.SelectedItem = SearchCriteria.MenuItems[0];
+			}
 			firstFocus = true;
 			IsOpened = true;
 			SearchGridView.ItemsSource = searchResultList;
@@ -92,9 +115,15 @@ namespace RetroPass
 
 		private void UpdateSearchResults(string searchText)
 		{
+			if (playlists == null)
+			{
+				return;
+			}
+
 			if (searchText.Length > 2)
 			{
-				string searchCriteria = SearchCriteria.SelectedValue as string;
+				//string searchCriteria = SearchCriteria.SelectedValue as string;
+				string searchCriteria = (SearchCriteria.SelectedItem as NavigationViewItem).Tag.ToString();
 				switch (searchCriteria)
 				{
 					case "Title":
@@ -242,6 +271,11 @@ namespace RetroPass
 			//underlying controls in the MainPage or GameCollectionPage.
 			//To prevent that, a dummy text box exists below SearchGridView to catch focus and cancel it.
 			args.TryCancel();
+		}
+
+		private void SearchCriteria_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+		{
+			UpdateSearchResults(SearchText.Text);
 		}
 	}
 }
