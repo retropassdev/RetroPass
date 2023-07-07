@@ -5,7 +5,6 @@
     xmlns:local="using:RetroPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource PageBackgroundMain}">
 
@@ -21,7 +20,6 @@
             </ResourceDictionary.ThemeDictionaries>
             <StaticResource x:Key="NavigationViewContentBackground" ResourceKey="SystemControlTransparentBrush" />
             <StaticResource x:Key="NavigationViewItemBackgroundSelected" ResourceKey="SystemAccentColor" />
-            <StaticResource x:Key="NavigationViewSelectionIndicatorForeground" ResourceKey="SystemControlTransparentBrush" />
             <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
         </ResourceDictionary>
     </Page.Resources>
@@ -34,30 +32,24 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Settings" Style="{StaticResource SubheaderTextBlockStyle}"/>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <muxc:NavigationView SelectionFollowsFocus="Enabled" Grid.Row="1"
-                                     x:Name="NavigationViewSettings"
-                                     VerticalAlignment="Stretch"
-                                     PaneDisplayMode="Left"
-                                     SelectionChanged="NavigationViewSettings_SelectionChanged"
-                                     AlwaysShowHeader="False"
-                                     IsSettingsVisible="False"
-                                     IsBackButtonVisible="Collapsed"
-                                     IsBackEnabled="False"
-                                     IsTabStop="False"
-                                     IsPaneToggleButtonVisible="False"
-                                     OpenPaneLength="170">
-                    <muxc:NavigationView.MenuItems>
-                        <muxc:NavigationViewItem x:Name="Item1" 
-                                                 GettingFocus="Item_GettingFocus" 
-                                                 IsTabStop="True" UseSystemFocusVisuals="False" Content="Sources" Tag="SettingsPageDataSource"/>
-                        <muxc:NavigationViewItem x:Name="Item2" 
-                                                 GettingFocus="Item_GettingFocus" 
-                                                 IsTabStop="True" UseSystemFocusVisuals="False" Content="Personalization" Tag="SettingsPagePersonalization" />
-                        <muxc:NavigationViewItem x:Name="Item3" 
-                                                 GettingFocus="Item_GettingFocus" 
-                                                 IsTabStop="True"  UseSystemFocusVisuals="False" Content="Logging" Tag="SettingsPageLogging"/>
-                    </muxc:NavigationView.MenuItems>
-                </muxc:NavigationView>
+                <NavigationView Grid.Row="1" x:Name="NavigationViewSettings"
+                                    PaneDisplayMode="Left"
+                                    SelectionFollowsFocus="Enabled" 
+                                    IsBackButtonVisible="Collapsed"
+                                    IsSettingsVisible="False"
+                                    VerticalAlignment="Stretch"
+                                    IsPaneToggleButtonVisible="False"
+                                    MenuItemContainerStyle="{StaticResource NavItemStyle}"
+                                    SelectionChanged="NavigationViewSettings_SelectionChanged"
+                                    IsBackEnabled="False"
+                                    IsTabStop="False"
+                                    OpenPaneLength="170">
+                    <NavigationView.MenuItems>
+                        <NavigationViewItem x:Name="Item1" Content="Sources" Tag="SettingsPageDataSource"/>
+                        <NavigationViewItem x:Name="Item2" Content="Personalization" Tag="SettingsPagePersonalization" />
+                        <NavigationViewItem x:Name="Item3" Content="Logging" Tag="SettingsPageLogging"/>
+                    </NavigationView.MenuItems>
+                </NavigationView>
                 <Frame x:Name="ContentFrame" Margin="20,6,20,0" Width="690">
                 </Frame>
             </StackPanel>

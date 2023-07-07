@@ -4,12 +4,12 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Controls;
 using System.Diagnostics;
+using Windows.UI.Xaml.Controls;
 
 namespace RetroPass
 {
-	public sealed partial class SettingsPage : Windows.UI.Xaml.Controls.Page
+	public sealed partial class SettingsPage : Page
 	{
 		DataSourceManager dataSourceManager;
 		string AppVersion { get; set; }
@@ -68,19 +68,6 @@ namespace RetroPass
 						ContentFrame.Navigate(typeof(SettingsLogPage));
 						break;
 				}
-			}
-		}
-
-		private void Item_GettingFocus(UIElement sender, GettingFocusEventArgs args)
-		{
-			FrameworkElement lostFocus = args.OldFocusedElement as FrameworkElement;
-
-			//if focuse moved from elements on the settings page into navigation view, keep focus on the last
-			//selected navigation view item 
-			if (lostFocus != null && NavigationViewSettings.MenuItems.Contains(lostFocus) == false)
-			{
-				var selected = NavigationViewSettings.SelectedItem as NavigationViewItem;
-				args.TrySetNewFocusedElement(selected);
 			}
 		}
 	}
