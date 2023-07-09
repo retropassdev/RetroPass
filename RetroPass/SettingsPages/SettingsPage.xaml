@@ -12,23 +12,20 @@
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Dark">
-                    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="#303030"/>                   
+                    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="#303030"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="#FFF3F3F3"/>                   
+                    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="#FFF3F3F3"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
-            <StaticResource x:Key="NavigationViewContentBackground" ResourceKey="SystemControlTransparentBrush" />
-            <StaticResource x:Key="NavigationViewItemBackgroundSelected" ResourceKey="SystemAccentColor" />
-            <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
         </ResourceDictionary>
     </Page.Resources>
 
     <Grid Margin="0,14,0,0">
         <Grid Margin="46,14,0,46">
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>              
+                <RowDefinition Height="75"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Settings" Style="{StaticResource SubheaderTextBlockStyle}"/>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
@@ -50,20 +47,19 @@
                         <NavigationViewItem x:Name="Item3" Content="Logging" Tag="SettingsPageLogging"/>
                     </NavigationView.MenuItems>
                 </NavigationView>
-                <Frame x:Name="ContentFrame" Margin="20,6,20,0" Width="690">
-                </Frame>
+                <Frame x:Name="ContentFrame" Margin="10,6,20,0" Padding="14,0,0,0" Width="690" BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}" BorderThickness="1,0,0,0" />
             </StackPanel>
         </Grid>
         <Grid x:Name="OverlaySearch" Visibility="Visible" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-            <Border Opacity="0.78" Background="{ThemeResource PageBackground}" CornerRadius="5"></Border>
+            <Border Opacity="0.78" Background="{ThemeResource PageBackground}" CornerRadius="5"/>
             <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CD;" FontSize="20"/>
             <TextBlock x:Name="StatusText" Margin="38,0,9,0" 
                    HorizontalAlignment="Right" VerticalAlignment="Center"  
-                   Text="Back" FontSize="12" CharacterSpacing="40"></TextBlock>
+                   Text="Back" FontSize="12" CharacterSpacing="40"/>
         </Grid>
         <TextBlock Margin="0,-4,20,0" 
                    HorizontalAlignment="Right" VerticalAlignment="Top"  
-                   Text="{x:Bind AppVersion,Mode=OneWay}" FontSize="12" CharacterSpacing="40"></TextBlock>
+                   Text="{x:Bind Mode=OneWay, Path=AppVersion}" FontSize="12" CharacterSpacing="40"/>
     </Grid>
 </Page>

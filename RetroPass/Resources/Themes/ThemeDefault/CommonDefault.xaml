@@ -1590,7 +1590,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="NavigationViewItemPresenter" x:Key="NavigationViewItemPresenterStyleWhenOnLeftPaneWithRevealFocus">
+    <Style x:Key="NavigationViewItemPresenterStyleWhenOnLeftPaneWithRevealFocus" TargetType="NavigationViewItemPresenter">
         <Setter Property="Foreground" Value="{ThemeResource NavigationViewItemForeground}" />
         <Setter Property="Background" Value="{ThemeResource NavigationViewItemBackground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrush}" />

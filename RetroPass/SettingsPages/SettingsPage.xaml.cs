@@ -2,9 +2,7 @@
 using Windows.ApplicationModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 
 namespace RetroPass
@@ -20,6 +18,17 @@ namespace RetroPass
 
 			AppVersion = string.Format("v{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 			InitializeComponent();
+			Loaded += SettingsPage_Loaded;
+		}
+
+		private void SettingsPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			//remove shadow on navigation view
+			SplitView content = Utils.FindChild<SplitView>(NavigationViewSettings, "RootSplitView");
+			if (content != null)
+			{
+				content.Pane.Translation = new System.Numerics.Vector3(0, 0, 0);
+			}
 		}
 
 		//on windows, windows key + backspace
