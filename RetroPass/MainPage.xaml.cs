@@ -248,10 +248,7 @@ namespace RetroPass
 			listView.ItemTemplate = (DataTemplate)Resources["PlaylistItemTemplate"];
 			listView.ItemsSource = playlist.PlaylistItemsLandingPage;
 			listView.ItemsPanel = (ItemsPanelTemplate)Resources["GamesListViewPanelTemplate"];
-
-			ListView lvTemplate = (ListView)Resources["ListViewPlatformTemplate"];
-			listView.ItemContainerStyle = lvTemplate.ItemContainerStyle;
-
+			listView.ItemContainerStyle = (Style)Resources["ListViewPlatformItemContainerTemplateStyle"];
 			listView.ContainerContentChanging += GamesListView_ContainerContentChanging;
 			listView.SelectionMode = ListViewSelectionMode.Single;
 			listView.SingleSelectionFollowsFocus = true;
@@ -261,12 +258,16 @@ namespace RetroPass
 			listView.SelectedIndex = 0;
 
 			StackPanel stackPanel = new StackPanel();
+			stackPanel.Style = (Style)Resources["StackPanelPlatformTemplateStyle"];
 			Button button = new Button();
 			button.DataContext = playlist;
 			button.BringIntoViewRequested += Grid_BringIntoViewRequested;
 			button.Style = (Style)Resources["PlatformFirstItemButtonStyle"];
 			button.Click += Button_Click;
 			button.GotFocus += Button_GotFocus;
+			//First button doesn't have popup reveal, to prevent page transition glitch where focus is immediately
+			//visible. But then elevate the index to appaear on top of other buttons 
+			Canvas.SetZIndex(button, 10);
 
 			stackPanel.Orientation = Orientation.Horizontal;
 			stackPanel.Children.Add(button);

@@ -88,28 +88,14 @@ namespace RetroPass.SettingsPages
 			RefreshSettingsUI();
 		}
 
-		//on windows, windows key + backspace
-		private void OnBackRequested(object sender, BackRequestedEventArgs e)
-		{
-			if (Frame.CanGoBack)
-			{
-				Frame.GoBack();
-				e.Handled = true;
-			}
-		}
-
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			dataSourceManager = e.Parameter as DataSourceManager;
-
-			SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 			base.OnNavigatedTo(e);
 		}
 
 		protected override void OnNavigatedFrom(NavigationEventArgs e)
 		{
-			SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
-
 			base.OnNavigatedFrom(e);
 		}
 

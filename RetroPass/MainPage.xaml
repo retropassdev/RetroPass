@@ -112,20 +112,21 @@
 
         </ControlTemplate>
 
-        <ListView x:Name="ListViewPlatformTemplate">            
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Width" Value="136" />
-                    <Setter Property="Height" Value="280" />
-                    <Setter Property="Margin" Value="4,14,4,14" />
-                    <Setter Property="Padding" Value="0,0,0,0" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                    <Setter Property="IsTabStop" Value="False" />
-                    <Setter Property="Template" Value="{StaticResource ListViewPlatformControlTemplate}" />
-                </Style>
-            </ListView.ItemContainerStyle>            
-        </ListView>
+        <Style x:Name="ListViewPlatformItemContainerTemplateStyle" TargetType="ListViewItem">
+            <Setter Property="Width" Value="136" />
+            <Setter Property="Height" Value="280" />
+            <Setter Property="Margin" Value="4,14,4,14" />
+            <Setter Property="Padding" Value="0,0,0,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Template" Value="{StaticResource ListViewPlatformControlTemplate}" />
+        </Style>
+
+        <Style x:Name="StackPanelPlatformTemplateStyle" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="Padding" Value="20,0,0,0" />
+        </Style>
 
         <DataTemplate x:Key="PlaylistItemTemplate"
                       x:DataType="local:PlaylistItem" >
@@ -170,7 +171,8 @@
             <Setter Property="Width" Value="136"/>
             <Setter Property="Height" Value="280"/>
             <Setter Property="ContentTemplate" Value="{StaticResource PlatformFirstItemButtonContent}"/>
-            <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}" />
+            <Setter Property="Template" Value="{StaticResource ButtonInGridViewControlTemplate}" />
+            <Setter Property="ClickMode" Value="Release" />
         </Style>
 
         <ItemsPanelTemplate x:Key="GamesListViewPanelTemplate">
@@ -183,11 +185,11 @@
     </Page.Resources>
     <Grid Margin="0,0,0,0" Padding="0,0,0,0" XYFocusKeyboardNavigation="Enabled">
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" 			
-				  HorizontalAlignment="Left" Margin="48,0,48,0">
+				  HorizontalAlignment="Left" Margin="28,0,48,0">
             <StackPanel XYFocusKeyboardNavigation="Enabled" Name="StackPanelMain" Spacing="0" 
                         XYFocusUpNavigationStrategy="RectilinearDistance" 
                         XYFocusDownNavigationStrategy="RectilinearDistance">
-                <StackPanel x:Name = "StackPanelMenu" Orientation="Horizontal" Spacing="8" Margin="0,20,0,6">
+                <StackPanel x:Name = "StackPanelMenu" Orientation="Horizontal" Spacing="8" Margin="0,20,0,6" Padding="20,0,0,0">
                     <Button x:Name="Search" Width="155" Height="32" XYFocusRight="{x:Bind Settings}" Click="Search_Click" HorizontalContentAlignment="Left" Style="{StaticResource ButtonTopMenuStyle}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Border VerticalAlignment="Center">
