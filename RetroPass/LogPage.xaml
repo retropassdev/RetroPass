@@ -7,7 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="LogInfoTextBrush" Color="White"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="LogInfoTextBrush" Color="Black"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <ListView XYFocusKeyboardNavigation="Enabled"
               Template="{StaticResource ListViewControlTemplate}"
@@ -19,7 +30,8 @@
               Margin="0,0,0,0" Padding="8,8,8,8" CornerRadius="6">
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="local:LogItem">
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="12" Text="{x:Bind Text}"/>
+                <TextBlock TextWrapping="Wrap" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="12" Text="{x:Bind Text}" 
+                           Foreground="{ThemeResource LogInfoTextBrush}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
         <ListView.ItemContainerStyle>

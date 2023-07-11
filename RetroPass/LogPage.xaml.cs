@@ -52,6 +52,10 @@ namespace RetroPass
 		private static LogPage instance = null;
 		private static Stream logStream = null;
 		private ObservableCollection<LogItem> logEntries = new ObservableCollection<LogItem>();
+		//when accessing through Resource, theme resources not loaded properly
+		//so set in code explicitly		
+		private SolidColorBrush warningBrush = new SolidColorBrush(Windows.UI.Colors.Yellow);
+		private SolidColorBrush errorBrush = new SolidColorBrush(Windows.UI.Colors.Red);
 
 		public static LogPage Instance
 		{
@@ -104,7 +108,6 @@ namespace RetroPass
 			}
 
 			LogListView.SelectedIndex = LogListView.Items.Count - 1;
-
 			base.OnNavigatedTo(e);
 		}
 
@@ -120,20 +123,16 @@ namespace RetroPass
 				var item = args.Item as LogItem;
 				var container = args.ItemContainer.ContentTemplateRoot as TextBlock;
 
-				var whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
-				var yellowBrush = new SolidColorBrush(Windows.UI.Colors.Yellow);
-				var redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
-
 				switch (item.Level)
 				{
 					case LogItem.LogLevel.Information:
-						container.Foreground = whiteBrush;
+						//container.Foreground = (SolidColorBrush)this.Resources["LogInfoTextBrush"];
 						break;
 					case LogItem.LogLevel.Warning:
-						container.Foreground = yellowBrush;
+						container.Foreground = warningBrush;
 						break;
 					case LogItem.LogLevel.Error:
-						container.Foreground = redBrush;
+						container.Foreground = errorBrush;
 						break;
 					default:
 						break;
