@@ -53,9 +53,10 @@
                 </Border>
             </Grid>
         </Popup>
-        <Grid Visibility="Collapsed" x:Name="RetroPassGrid" IsTapEnabled="False" AllowFocusWhenDisabled="True" IsDoubleTapEnabled="False" 
+        <Grid Margin="-1,-1,-1,-1" Visibility="Collapsed" x:Name="RetroPassGrid" IsTapEnabled="False" AllowFocusWhenDisabled="True" IsDoubleTapEnabled="False" 
                IsHoldingEnabled="False" IsRightTapEnabled="False" XYFocusKeyboardNavigation="Disabled" 
-               KeyboardAcceleratorPlacementMode="Hidden" KeyTipPlacementMode="Hidden">
+               KeyboardAcceleratorPlacementMode="Hidden" KeyTipPlacementMode="Hidden" 
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         </Grid>
     </Grid>
 </UserControl>

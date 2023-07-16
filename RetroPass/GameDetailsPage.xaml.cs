@@ -117,7 +117,6 @@ namespace RetroPass
 
 			this.playlistItem = playlistItem;
 			Game game = playlistItem.game;
-			GetDetailsImages();
 
 			DateTime dt;
 			string date = "";
@@ -128,6 +127,10 @@ namespace RetroPass
 			string[] arr = { game.Developer, game.Publisher, date, game.Genre };
 			arr = Array.FindAll(arr, t => string.IsNullOrEmpty(t) == false);
 			Subtitle = string.Join(" · ", arr);
+			
+			//get main box art and then the rest, so focus is shown as soon as possible
+			await GetDetailsMainImageAsync();
+			GetDetailsImages();
 
 			await Task.Delay(40);
 			Dummy.Visibility = Visibility.Collapsed;
@@ -240,12 +243,22 @@ namespace RetroPass
 			}
 		}
 
-		private async void GetDetailsImages()
+		private async Task GetDetailsMainImageAsync()
+		{
+			ButtonDescription.Visibility = Visibility.Collapsed;
+			ButtonVideo.Visibility = Visibility.Collapsed;
+
+			Game game = playlistItem.game;
+			/////////////////////////////////////get box image/////////////////////////////////
+			ItemImage.Source = await game.GetMainImageAsync();
+		}
+
+		private async Task GetDetailsImages()
 		{
 			Game game = playlistItem.game;
 
-			ButtonDescription.Visibility = Visibility.Collapsed;
-			ButtonVideo.Visibility = Visibility.Collapsed;
+			/////////////////////////////////////get box image/////////////////////////////////
+			//ItemImage.Source = await game.GetMainImageAsync();
 
 			/////////////////////////////////////search for video/////////////////////////////////
 			mediaSource = await game.GetVideo();
@@ -277,9 +290,6 @@ namespace RetroPass
 			{
 				ButtonDescription.Visibility = Visibility.Visible;
 			}
-
-			/////////////////////////////////////get box image/////////////////////////////////
-			ItemImage.Source = await game.GetMainImageAsync();
 
 			/////////////////////////////////////get all detail images/////////////////////////////////
 			GameDetailsGridView.Visibility = Visibility.Visible;

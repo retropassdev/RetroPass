@@ -44,6 +44,18 @@ namespace RetroPass
 		{
 			this.InitializeComponent();
 			this.Loaded += FocusControl_Loaded;
+			this.Unloaded += FocusControl_Unloaded;
+		}
+
+		private void FocusControl_Unloaded(object sender, RoutedEventArgs e)
+		{
+			if (parentElement != null)
+			{
+				parentElement.SizeChanged -= Parent_SizeChanged;
+				parentElement.LosingFocus -= ParentElement_LosingFocus;
+				parentElement.GettingFocus -= ParentElement_GettingFocus;
+			}
+			this.Unloaded -= FocusControl_Unloaded;
 		}
 
 		private void FocusControl_Loaded(object sender, RoutedEventArgs e)
@@ -58,7 +70,8 @@ namespace RetroPass
 			{
 				RetroPassGrid.Children.Clear();
 				RetroPassPopup.Child = RetroPassFocusRoot;
-				
+				parentElement = this.Parent as FrameworkElement;
+				parentElement.SizeChanged += Parent_SizeChanged;
 			}
 			else
 			{
@@ -94,6 +107,33 @@ namespace RetroPass
 				Canvas.SetZIndex(parentPanelItem, 1);
 			}
 			//Enabled = true;
+		}
+
+		private void Parent_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			CalculatePopupSize(sender as FrameworkElement);
+		}
+
+		private void CalculatePopupSize(FrameworkElement focusParent)
+		{
+			if (IsPopup == true)
+			{
+				Thickness focusVisualMargin = FocusVisualMargin;
+				focusVisualMargin.Left -= 1;
+				focusVisualMargin.Top -= 1;
+				focusVisualMargin.Right -= 1;
+				focusVisualMargin.Bottom -= 1;
+
+				double focusVisualMarginWidth = (focusVisualMargin.Left + focusVisualMargin.Right) * -1;
+				double focusVisualMarginHeight = (focusVisualMargin.Top + focusVisualMargin.Bottom) * -1;
+				RetroPassFocus.Width = focusParent.ActualWidth + focusVisualMarginWidth;
+				RetroPassFocus.Height = focusParent.ActualHeight + focusVisualMarginHeight;
+				RetroPassFocus.Margin = focusVisualMargin;
+
+				RetroPassBorder.Width = focusParent.ActualWidth + focusVisualMarginWidth;
+				RetroPassBorder.Height = focusParent.ActualHeight + focusVisualMarginHeight;
+				RetroPassBorder.Margin = focusVisualMargin;
+			}
 		}
 
 		private static async void OnEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -140,21 +180,7 @@ namespace RetroPass
 
 			if (isEnabled)
 			{
-				Thickness focusVisualMargin = control.FocusVisualMargin;
-				focusVisualMargin.Left -= 1;
-				focusVisualMargin.Top -= 1;
-				focusVisualMargin.Right -= 1;
-				focusVisualMargin.Bottom -= 1;
-				double focusVisualMarginWidth = (focusVisualMargin.Left + focusVisualMargin.Right) * -1;
-				double focusVisualMarginHeight = (focusVisualMargin.Top + focusVisualMargin.Bottom) * -1;
-
-				control.RetroPassFocus.Width = parent.ActualWidth + focusVisualMarginWidth;
-				control.RetroPassFocus.Height = parent.ActualHeight + focusVisualMarginHeight;
-				control.RetroPassFocus.Margin = focusVisualMargin;
-
-				control.RetroPassBorder.Width = parent.ActualWidth + focusVisualMarginWidth;
-				control.RetroPassBorder.Height = parent.ActualHeight + focusVisualMarginHeight;
-				control.RetroPassBorder.Margin = focusVisualMargin;
+				control.CalculatePopupSize(parent);
 
 				control.RetroPassFocus.Visibility = Visibility.Visible;
 				if(control.IsPopup)

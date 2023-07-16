@@ -51,7 +51,7 @@
                 <StackPanel Padding="0,0,0,0" Background="Transparent" XYFocusKeyboardNavigation="Enabled" Orientation="Horizontal" Height="280" Spacing="8" BringIntoViewRequested="StackPanel_BringIntoViewRequested">
                     <Border Margin="0,0,0,0" Padding="0,0,0,0" Width="62"></Border>
 
-                    <Button x:Name="ButtonPlay" Margin="0,0,0,0" Padding="0,0,0,0" Width="190" 
+                    <Button x:Name="ButtonPlay" Margin="0,0,0,0" Padding="0,0,0,0" Width="Auto" MinWidth="190" 
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Click="ButtonPlay_Click">
                         <Grid>
