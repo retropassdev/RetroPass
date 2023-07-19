@@ -77,6 +77,11 @@ namespace RetroPass.SettingsPages
 
 				TextStatus.Inlines.Add(run1);
 				TextStatus.Inlines.Add(hyperlink);
+				TextStatus.Visibility = Visibility.Visible;
+			}
+			else
+			{
+				TextStatus.Visibility = Visibility.Collapsed;
 			}
 
 			RefreshDataSourceUI();

@@ -144,19 +144,26 @@ namespace RetroPass
 			{
 				StorageFolder volume = await StorageFolder.GetFolderFromPathAsync(pathRoot);
 
-				if(volume != null)
+				if (volume != null)
 				{
 					var xmlConfigFile = await volume.TryGetItemAsync("RetroPass.xml") as StorageFile;
-					var dataSources = await GetDataSourcesFromConfigurationFile(xmlConfigFile);
-					dataSources.Add(dataSource);
-					await SaveDataSourcesToConfigurationFile(dataSources, xmlConfigFile);
-				}
-				else
-				{
-					StorageFile xmlConfigFile = await volume.CreateFileAsync("RetroPass.xml");
 					List<DataSource> dataSources = new List<DataSource>();
-					dataSources.Add(dataSource);
-					await SaveDataSourcesToConfigurationFile(dataSources, xmlConfigFile);
+					
+					if (xmlConfigFile != null)
+					{
+						dataSources = await GetDataSourcesFromConfigurationFile(xmlConfigFile);						
+					}
+					//there is no xml the first time source is added for the volume
+					else
+					{
+						xmlConfigFile = await volume.CreateFileAsync("RetroPass.xml");						
+					}
+
+					if (xmlConfigFile != null)
+					{
+						dataSources.Add(dataSource);
+						await SaveDataSourcesToConfigurationFile(dataSources, xmlConfigFile);
+					}
 				}
 			}
 		}
@@ -229,6 +236,7 @@ namespace RetroPass
 					if(dataSourceInCurrent.status != DataSource.Status.Active)
 					{
 						dataSourceInCurrent.status = DataSource.Status.Active;
+						dataSourceInCurrent.rootFolder = dataSourceInConfig.rootFolder;
 						dataSourcesChanged.Add(dataSourceInCurrent);
 						activeDataSourcesChanged.Add(dataSourceInCurrent);
 					}					

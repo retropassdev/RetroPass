@@ -65,6 +65,7 @@ namespace RetroPass
 			e.Handled = true;
 			Trace.TraceError(e.Message);
 			Trace.TraceError(e.Exception.StackTrace);
+			Trace.Flush();
 		}
 
 		private void OnLaunchedOrActivated(ApplicationExecutionState previousExecutionState, bool prelaunchActivated)

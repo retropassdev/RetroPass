@@ -60,7 +60,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <TextBlock Grid.Row="0" x:Name ="TextStatus" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
+        <TextBlock Grid.Row="0" x:Name ="TextStatus" Text="" Visibility="Collapsed" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
         <Grid Grid.Row="1" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="230"/>

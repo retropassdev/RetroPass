@@ -44,7 +44,6 @@ namespace RetroPass
 		}
 
 		public string name;
-		public bool log;
 		public DataSourceType type;
 		public string relativePath;
 		public Retroarch retroarch;
