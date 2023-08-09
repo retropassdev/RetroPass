@@ -6,18 +6,22 @@ If you do not wish to use LaunchBox, it is also possible to create Emulation Sta
 
 2. Download all images, descriptions and videos. There are various scrapers that can download assets from various databases and output to Emulation Station gamelist.xml files
 
-3. [Download](/Docs/v1.5/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
+3. [Download](/Docs/v1.6/RetroPass.xml) Retropass configuration file and copy it to the root of external storage.
 
 4. Edit **RetroPass.xml** configuration file. 
 	
 	**\<relativePath>** points to Emulation Station directory on the external storage. Do not put absolute path like "E:\EmulationStation", because when external storage is plugged into Xbox, it might be recognized under a different letter. For example, if EmulationStation folder is in the root of external storage, then it should be configured like this:
 
 	```XML
-	<?xml version="1.0"?>
-	<dataSource>
-		<type>EmulationStation</type>
-		<relativePath>./EmulationStation</relativePath>
-	</dataSource>
+	<retropass version="1.6">
+		<dataSources>
+			<dataSource>
+				<name>Games</name>
+				<type>EmulationStation</type>
+				<relativePath>./EmulationStation</relativePath>    
+			</dataSource>
+		</dataSources>
+	</retropass>
 	```
 
 5. Check that **es_systems.cfg** file exists somewhere in the Emulation Station directory and that it has valid systems defined. i.e.
@@ -60,4 +64,4 @@ If you do not wish to use LaunchBox, it is also possible to create Emulation Sta
 	```
 		./EmulationStation/downloaded_images/nes/covers/Elite-thumb.jpg
 	```
-7. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [First Run and Settings](/README.md#first-run-and-settings) section.
+7. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [Add DataSource](/Docs/SettingsDataSources.md) section.
