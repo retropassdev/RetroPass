@@ -22,7 +22,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <Grid x:Name="OverlayPlayLater" Visibility="Collapsed" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
+    <Grid x:Name="OverlayPlayLater" IsHitTestVisible="False" Visibility="Collapsed" MaxWidth="300" Height="32" Margin="0,0,28,26" Padding="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
         <Border Background ="{ThemeResource BackgroundBrush}"  CornerRadius="5"></Border>
         <TextBlock VerticalAlignment="Center" Margin="9,2,0,0" Foreground="#318DAC" FontFamily="Segoe Xbox MDL2 Symbol" 
                    Text="&#xE3CB;" FontSize="20"/>
