@@ -1,20 +1,17 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using static RetroPass.PlaylistLaunchBox;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace RetroPass
 {
@@ -68,6 +65,7 @@ namespace RetroPass
 		PlaylistPlayLater playlistPlayLater = new PlaylistPlayLater();
 		ListView currentListView;
 		Button currentButton;
+		PlaylistItem currentPlaylistItem;
 		DataSourceManager dataSourceManager;
 		StackPanel stackPanelPlayLater;
 		bool activeDataSourcesChanged = false;
@@ -79,18 +77,28 @@ namespace RetroPass
 				case VirtualKey.GamepadX:
 				case VirtualKey.X:
 					// Gamepad X button was pressed
-					if (currentListView != null && currentListView.SelectedItem != null)
+					if (currentPlaylistItem != null)
 					{
-						int lastIndex = currentListView.SelectedIndex;
-						PlaylistItem pl = currentListView.SelectedItem as PlaylistItem;
-						playlistPlayLater.UpdatePlaylistPlayLater(pl);
-						PlayLaterControl.UpdatePlayLaterControl(pl, playlistPlayLater);
+						ListViewItem listViewItem = (ListViewItem)currentListView.ContainerFromItem(currentPlaylistItem);
+						int lastIndex = currentListView.IndexFromContainer(listViewItem);
+						playlistPlayLater.UpdatePlaylistPlayLater(currentPlaylistItem);
+						PlayLaterControl.UpdatePlayLaterControl(currentPlaylistItem, playlistPlayLater);
 						//if this is item from playlistPlayLater, then currentListView is playLater list view
 						//so set proper selected item in case of deletion
-						if (pl.playlist == playlistPlayLater)
+						if (currentPlaylistItem.playlist == playlistPlayLater)
 						{
 							currentListView.SelectedIndex = Math.Min(lastIndex, playlistPlayLater.PlaylistItemsLandingPage.Count - 1);
+							
+							if (playlistPlayLater.PlaylistItems.Count > 0)
+							{
+								currentPlaylistItem = playlistPlayLater.PlaylistItemsLandingPage[currentListView.SelectedIndex];
+							}
+							else
+							{
+								currentPlaylistItem = null;
+							}
 						}
+
 						if (playlistPlayLater.PlaylistItems.Count == 0)
 						{
 							stackPanelPlayLater.Visibility = Visibility.Collapsed;
@@ -107,11 +115,9 @@ namespace RetroPass
 					await ShowSearch();
 					break;
 				case VirtualKey.GamepadMenu:
-					if (currentListView != null && currentListView.SelectedItem != null)
+					if (currentPlaylistItem != null)
 					{
-						int lastIndex = currentListView.SelectedIndex;
-						PlaylistItem pl = currentListView.SelectedItem as PlaylistItem;
-						GameDetailsPage.StartContent(pl);
+						GameDetailsPage.StartContent(currentPlaylistItem);
 					}
 					break;
 			}
@@ -218,7 +224,6 @@ namespace RetroPass
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-
 			base.OnNavigatedTo(e);
 		}
 
@@ -230,11 +235,11 @@ namespace RetroPass
 
 		private void ClearMainPanel()
 		{
-			var stackPanelPlaylists = StackPanelMain.Children.Where(t => t is StackPanel && ((StackPanel)t).Name != "StackPanelMenu").ToList();
-
-			for (int i = stackPanelPlaylists.Count() - 1; i >= 0; i--)
+			var playlists = StackPanelMain.FindChildren().Where(t => t is ScrollViewer).ToList();
+			
+			for (int i = playlists.Count() - 1; i >= 0; i--)
 			{
-				StackPanelMain.Children.Remove(stackPanelPlaylists[i]);
+				StackPanelMain.Children.Remove(playlists[i]);
 			}
 
 			stackPanelPlayLater = null;
@@ -242,15 +247,26 @@ namespace RetroPass
 
 		private void AddList(Playlist playlist, bool prepend)
 		{
-			ListView listView = new ListView();
+			string mainPageLayoutMode = ApplicationData.Current.LocalSettings.Values[App.SettingsMainPageLayoutMode] as string;
 
+			ListView listView = new ListView();
 			listView.ItemTemplate = (DataTemplate)Resources["PlaylistItemTemplate"];
 			listView.ItemsSource = playlist.PlaylistItemsLandingPage;
-			listView.ItemsPanel = (ItemsPanelTemplate)Resources["GamesListViewPanelTemplate"];
-			listView.ItemContainerStyle = (Style)Resources["ListViewPlatformItemContainerTemplateStyle"];
+
+			if(mainPageLayoutMode == "0")
+			{
+				listView.ItemsPanel = (ItemsPanelTemplate)Resources["GamesListViewPanelTemplate"];
+				listView.ItemContainerStyle = (Style)Resources["ListViewPlatformItemContainerTemplateStyle"];
+			}
+			else
+			{
+				listView.ItemsPanel = (ItemsPanelTemplate)Resources["OriginalAspectGamesListViewPanelTemplate"];
+				listView.ItemContainerStyle = (Style)Resources["OriginalAspectListViewPlatformItemContainerTemplateStyle"];
+			}
+			
 			listView.ContainerContentChanging += GamesListView_ContainerContentChanging;
 			listView.SelectionMode = ListViewSelectionMode.Single;
-			listView.SingleSelectionFollowsFocus = true;
+			listView.SingleSelectionFollowsFocus = false;
 			listView.GotFocus += ListView_GotFocus;
 			listView.IsItemClickEnabled = true;
 			listView.ItemClick += OnItemClick;
@@ -272,6 +288,20 @@ namespace RetroPass
 			stackPanel.Children.Add(button);
 			stackPanel.Children.Add(listView);
 
+			ScrollViewer scrollViewer = new ScrollViewer();
+			scrollViewer.Content = stackPanel;
+			//scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+			scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+
+			if (mainPageLayoutMode == "0")
+			{
+				scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+			}
+			else
+			{
+				scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+			}
+
 			//remember playlater stack panel so it can be hidden when there is nothing in the list
 			if (playlist is PlaylistPlayLater)
 			{
@@ -290,18 +320,34 @@ namespace RetroPass
 
 			if (prepend)
 			{
-				StackPanelMain.Children.Insert(0, stackPanel);
+				StackPanelMain.Children.Insert(0, scrollViewer);
 			}
 			else
 			{
-				StackPanelMain.Children.Add(stackPanel);
+				StackPanelMain.Children.Add(scrollViewer);
+			}
+		}
+
+		private void ScrollPlatformListViewToLeft(ListView listView)
+		{			
+			if (listView != null && listView.Items.Count > 0)
+			{
+				var scrollViewer = currentListView.FindAscendant<ScrollViewer>();
+				if (scrollViewer != null)
+				{
+					scrollViewer.ChangeView(0, null, null);
+				}
 			}
 		}
 
 		private void Button_GotFocus(object sender, RoutedEventArgs e)
 		{
 			PlayLaterControl.UpdatePlayLaterControl(null, null);
+			//scroll back current list view to start before setting new list view
+			ScrollPlatformListViewToLeft(currentListView);
+
 			currentButton = sender as Button;
+			currentPlaylistItem = null;
 			currentListView = null;
 		}
 
@@ -312,20 +358,19 @@ namespace RetroPass
 
 			if (currentListView != lv)
 			{
-				if (currentListView == null)
-				{
-					lv.SelectedIndex = 0;
-				}
-				else if (currentListView != null && currentListView.SelectedIndex != -1)
-				{
-					lv.SelectedIndex = Math.Min(currentListView.SelectedIndex, lv.Items.Count - 1);
-					//if(playlistItem.game.)
-				}
+				//scroll back current list view to start before setting new list view
+				ScrollPlatformListViewToLeft(currentListView);
 				currentListView = lv;
 			}
 
-			PlaylistItem playlistItem = lv.SelectedItem as PlaylistItem;
-			PlayLaterControl.UpdatePlayLaterControl(playlistItem, playlistPlayLater);
+			//PlaylistItem playlistItem = current as PlaylistItem;
+			PlayLaterControl.UpdatePlayLaterControl(currentPlaylistItem, playlistPlayLater);
+		}
+
+		private void PlaylistItem_GotFocus(object sender, RoutedEventArgs e)
+		{
+			var focusedButton = sender as Button;
+			currentPlaylistItem = focusedButton.DataContext as PlaylistItem;
 		}
 
 		private void OnPlaylistImported(Playlist playlist)

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
-using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -19,6 +19,7 @@ namespace RetroPass
 		public static readonly string SettingsPlayFullScreenVideo = "SettingsPlayFullScreenVideo";
 		public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
 		public static readonly string SettingsMode = "SettingsMode";
+		public static readonly string SettingsMainPageLayoutMode = "SettingsMainPageLayoutMode";
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
@@ -57,6 +58,11 @@ namespace RetroPass
 			if (localSettings.Values[SettingsMode] == null)
 			{
 				localSettings.Values[SettingsMode] = "Default";
+			}
+
+			if (localSettings.Values[SettingsMainPageLayoutMode] == null)
+			{
+				localSettings.Values[SettingsMainPageLayoutMode] = "0";
 			}
 		}
 
