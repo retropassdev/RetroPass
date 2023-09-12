@@ -124,6 +124,7 @@
         </Style>
 
         <Style x:Name="OriginalAspectListViewPlatformItemContainerTemplateStyle" TargetType="ListViewItem">
+            <Setter Property="MinWidth" Value="136" />
             <Setter Property="Width" Value="Auto" />
             <Setter Property="Height" Value="280" />
             <Setter Property="Margin" Value="4,14,4,14" />

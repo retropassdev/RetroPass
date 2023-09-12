@@ -14,7 +14,14 @@
             <Setter Property="Template" Value="{StaticResource ButtonInGridViewControlTemplate}" />
             <Setter Property="ClickMode" Value="Release" />
         </Style>
-       
+
+        <x:Int32 x:Key="GridWidth">870</x:Int32>
+        <Thickness x:Key="InitialPlaylistItemMargin">4,4,4,4</Thickness>
+        <x:Int32 x:Key="InitialPlaylistItemWidth">136</x:Int32>
+        <Thickness x:Key="PlaylistItemMargin">4,4,4,4</Thickness>
+        <x:Int32 x:Key="PlaylistItemWidth">136</x:Int32>
+        <x:Int32 x:Key="PlaylistItemHeight">210</x:Int32>
+
         <DataTemplate x:Key="GameTemplate"
                       x:DataType="local:PlaylistItem">
             <Button DataContext="{x:Bind}" x:Name="GameButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="GameButton_Click"
@@ -89,9 +96,9 @@
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="IsTabStop" Value="false" />
-                    <Setter Property="Width" Value="137" />
-                    <Setter Property="Height" Value="210" />
-                    <Setter Property="Margin" Value="4,4,4,4" />
+                    <Setter Property="Width" Value="{ThemeResource PlaylistItemWidth}" />
+                    <Setter Property="Height" Value="{ThemeResource PlaylistItemHeight}" />
+                    <Setter Property="Margin" Value="{ThemeResource PlaylistItemMargin}" />
                     <Setter Property="Padding" Value="0,0,0,0" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />

@@ -20,6 +20,7 @@ namespace RetroPass
 		public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
 		public static readonly string SettingsMode = "SettingsMode";
 		public static readonly string SettingsMainPageLayoutMode = "SettingsMainPageLayoutMode";
+		public static readonly string SettingsGameCollectionLayoutMode = "SettingsGameCollectionLayoutMode";
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
@@ -63,6 +64,11 @@ namespace RetroPass
 			if (localSettings.Values[SettingsMainPageLayoutMode] == null)
 			{
 				localSettings.Values[SettingsMainPageLayoutMode] = "0";
+			}
+
+			if (localSettings.Values[SettingsGameCollectionLayoutMode] == null)
+			{
+				localSettings.Values[SettingsGameCollectionLayoutMode] = "0";
 			}
 		}
 

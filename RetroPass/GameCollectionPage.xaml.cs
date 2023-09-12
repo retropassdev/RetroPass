@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -42,12 +42,127 @@ namespace RetroPass
 			this.Loaded += GameCollectionPage_Loaded;
 		}
 
-		private void GameCollectionPage_Loaded(object sender, RoutedEventArgs e)
+		//This layout is default. Fixed dimensions width and height. Looks uniform but higher aspect ratio box art doesn't looks that good.
+		private void SetFixedItemWidth(BitmapImage image)
 		{
-			if (PlatformGridView.ItemsSource == null || PlatformGridView.ItemsSource != playlist.PlaylistItems)
+			this.Resources["PlaylistItemWidth"] = (int)this.Resources["InitialPlaylistItemWidth"];
+			this.Resources["PlaylistItemMargin"] = (Thickness)this.Resources["InitialPlaylistItemMargin"];
+		}
+
+		//This layout puts images into categories of predefined widths, depending on their aspect ratio and fixed spacing.
+		//Widths are predefined so that the number of images in one row perfectly fits available grid area while preserving
+		//exact fixed space between rows and columns.
+		//For example, images that fall between 0.99 and 1.33 aspect ratio, there will be 5 images in a row.
+		private void SetApproximateAspectFixedSpacingItemWidth(BitmapImage image)
+		{
+			if (image != null)
+			{
+				float aspectRatio = (float)image.PixelWidth / image.PixelHeight;
+				int height = (int)this.Resources["PlaylistItemHeight"];
+				int width = (int)(height * aspectRatio);
+				float finalAspectRatio = 136.0f / 210; //0.64, 6 images in a row
+
+				//3 images in a row
+				if (aspectRatio >= 280.0f / 210) //1.33
+				{
+					finalAspectRatio = 280.0f / 210;
+				}
+				//4 images in a row
+				else if (aspectRatio >= 208.0f / 210) //0.99
+				{
+					finalAspectRatio = 208.0f / 210;
+				}
+				//5 images in a row
+				else if (aspectRatio >= 164.0f / 210) //0.78
+				{
+					finalAspectRatio = 164.0f / 210;
+				}
+
+				width = (int)(finalAspectRatio * height);
+
+				this.Resources["PlaylistItemWidth"] = width;
+				this.Resources["PlaylistItemMargin"] = (Thickness)this.Resources["InitialPlaylistItemMargin"];
+			}
+		}
+
+		//This layout calculates how many box art fits into one row and adjusts spacing accordingly.
+		//It is similar to Predefined layout. Small difference is that predefined layout defines exact image dimensions
+		//depending on the aspect ratio and has fixed space
+		//For example: if the box art has aspect ratio of 0.90, in Predefined layout width would be shrinked to that of 
+		//aspect ratio 0.78 and would result in having exactly 5 images in a row
+		//Adaptive layout would display images at ratio 0.90, but since images would be wider, it would probably show only
+		//4 images in a row.
+		private void SetOriginalAspectFlexibleSpacingItemWidth(BitmapImage image)
+		{
+			if (image != null)
+			{
+				float aspectRatio = (float)image.PixelWidth / image.PixelHeight;
+
+				int gridWidth = (int)this.Resources["GridWidth"];
+				Thickness minMarginThickness = (Thickness)this.Resources["InitialPlaylistItemMargin"];
+				int minMargin = (int)minMarginThickness.Left;
+				int height = (int)this.Resources["PlaylistItemHeight"];
+				int width = (int)(height * aspectRatio);
+
+				//fit as much as possible into width
+				float countF = gridWidth / (float)(width + minMargin * 2);
+				int count = (int)countF;
+				double variance = countF - Math.Truncate((double)countF);
+
+				//this means the current width is very close to adding one more item into the row at the expense of smaller width
+				if (variance >= 0.9)
+				{
+					count++;
+					width = gridWidth / count - minMargin * 2;
+				}
+
+				//if aspect ratio is wider than the whole row, shrink width to the max row size
+				if (count == 0)
+				{
+					count = 1;
+					width = gridWidth - minMargin * 2;
+				}
+
+				//check what's left of available space
+				int freeWidth = gridWidth - count * (width + minMargin * 2);
+				//add free space to margins
+				int moreMargin = freeWidth / (count * 2);
+
+				Thickness marginSet = new Thickness(minMargin + moreMargin, 4, minMargin + moreMargin, 4); // Replace with the desired margins
+				this.Resources["PlaylistItemWidth"] = width;
+				this.Resources["PlaylistItemMargin"] = marginSet;
+			}
+		}
+
+		private async void GameCollectionPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			var game = playlist.PlaylistItems[0].game;
+
+			BitmapImage thumb = await game.GetImageThumbnailAsync();
+
+            string layoutMode = ApplicationData.Current.LocalSettings.Values[App.SettingsGameCollectionLayoutMode] as string;
+
+			if (layoutMode == "1")
+			{
+				SetApproximateAspectFixedSpacingItemWidth(thumb);
+			}
+			else if (layoutMode == "2")
+			{
+				SetOriginalAspectFlexibleSpacingItemWidth(thumb);
+			}
+			else
+			{
+				SetFixedItemWidth(thumb);
+			}
+
+            if (PlatformGridView.ItemsSource == null || PlatformGridView.ItemsSource != playlist.PlaylistItems)
 			{
 				PlatformGridView.ItemsSource = playlist.PlaylistItems;
 				NameCollection.Text = playlist.Name;
+				//fix a subtle bug, change SelectedIndex to force selecting first button
+				//seting only to 0, sometimes doesn't select item
+				PlatformGridView.SelectedIndex = -1;
+				await System.Threading.Tasks.Task.Delay(1);
 				PlatformGridView.SelectedIndex = 0;
 			}
 
@@ -124,6 +239,12 @@ namespace RetroPass
 			if (param.playlist != null)
 			{
 				playlist = param.playlist;
+			}
+
+			if (PlatformGridView.ItemsSource == null || PlatformGridView.ItemsSource != playlist.PlaylistItems)
+			{
+				PlatformGridView.ItemsSource = null;
+				PlatformGridView.SelectedIndex = -1;
 			}
 
 			UpdateNumGamesText(playlist.PlaylistItems.Count);
