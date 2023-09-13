@@ -69,6 +69,7 @@ namespace RetroPass
 		DataSourceManager dataSourceManager;
 		StackPanel stackPanelPlayLater;
 		bool activeDataSourcesChanged = false;
+		string currentLayoutMode = null;
 
 		protected async override void OnKeyDown(KeyRoutedEventArgs e)
 		{
@@ -174,9 +175,12 @@ namespace RetroPass
 				return;
 			}
 
-			//load data source only the first time or when it's changed
-			if (activeDataSourcesChanged)
+			string layoutMode = ApplicationData.Current.LocalSettings.Values[App.SettingsMainPageLayout] as string; 
+
+			//load data source only the first time or when it's changed, or if layout is changed
+			if (activeDataSourcesChanged || currentLayoutMode != layoutMode)
 			{
+				currentLayoutMode = layoutMode;
 				activeDataSourcesChanged = false;
 
 				ClearAll();
@@ -247,21 +251,21 @@ namespace RetroPass
 
 		private void AddList(Playlist playlist, bool prepend)
 		{
-			string mainPageLayoutMode = ApplicationData.Current.LocalSettings.Values[App.SettingsMainPageLayoutMode] as string;
+			string mainPageLayoutMode = ApplicationData.Current.LocalSettings.Values[App.SettingsMainPageLayout] as string;
 
 			ListView listView = new ListView();
 			listView.ItemTemplate = (DataTemplate)Resources["PlaylistItemTemplate"];
 			listView.ItemsSource = playlist.PlaylistItemsLandingPage;
 
-			if(mainPageLayoutMode == "0")
-			{
-				listView.ItemsPanel = (ItemsPanelTemplate)Resources["GamesListViewPanelTemplate"];
-				listView.ItemContainerStyle = (Style)Resources["ListViewPlatformItemContainerTemplateStyle"];
-			}
-			else
+			if (mainPageLayoutMode == App.SettingsMainPageLayoutType.OriginalAspect.ToString())
 			{
 				listView.ItemsPanel = (ItemsPanelTemplate)Resources["OriginalAspectGamesListViewPanelTemplate"];
 				listView.ItemContainerStyle = (Style)Resources["OriginalAspectListViewPlatformItemContainerTemplateStyle"];
+			}
+			else
+			{
+				listView.ItemsPanel = (ItemsPanelTemplate)Resources["GamesListViewPanelTemplate"];
+				listView.ItemContainerStyle = (Style)Resources["ListViewPlatformItemContainerTemplateStyle"];
 			}
 			
 			listView.ContainerContentChanging += GamesListView_ContainerContentChanging;
@@ -293,13 +297,13 @@ namespace RetroPass
 			//scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
 			scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
 
-			if (mainPageLayoutMode == "0")
+			if (mainPageLayoutMode == App.SettingsMainPageLayoutType.OriginalAspect.ToString())
 			{
-				scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+				scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
 			}
 			else
 			{
-				scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+				scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
 			}
 
 			//remember playlater stack panel so it can be hidden when there is nothing in the list

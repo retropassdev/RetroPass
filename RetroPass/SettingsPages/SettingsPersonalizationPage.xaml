@@ -19,13 +19,17 @@
     <Grid RowSpacing="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" >Mode:</TextBlock>
@@ -35,7 +39,30 @@
                 <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Light" Tag="Light" Checked="RadioButtonMode_Checked"/>
             </StackPanel>
         </Grid>
-        <CheckBox Grid.Row="1" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
-        <CheckBox Grid.Row="2" x:Name="PlayFullScreenVideoCheckBox" FlowDirection="RightToLeft" Content="Play Full Screen Video:" Checked="PlayFullScreenVideoCheckBox_Checked" Unchecked="PlayFullScreenVideoCheckBox_Unchecked"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Main Page Layout:</TextBlock>
+            <StackPanel x:Name="RadioButtonsMainPageLayout" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Fixed" Tag="Fixed" Checked="RadioButtonMainPageLayout_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Original Aspect" Tag="OriginalAspect" Checked="RadioButtonMainPageLayout_Checked"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Collection Page Layout:</TextBlock>
+            <StackPanel x:Name="RadioButtonsCollectionPageLayout" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Fixed" Tag="Fixed" Checked="RadioButtonCollectionPageLayout_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="OriginalAspect" Tag="OriginalAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Approximate Aspect" Tag="ApproximateAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
+            </StackPanel>
+        </Grid>
+        <CheckBox Grid.Row="5" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
+        <CheckBox Grid.Row="6" x:Name="PlayFullScreenVideoCheckBox" FlowDirection="RightToLeft" Content="Play Full Screen Video:" Checked="PlayFullScreenVideoCheckBox_Checked" Unchecked="PlayFullScreenVideoCheckBox_Unchecked"/>
     </Grid>
 </Page>

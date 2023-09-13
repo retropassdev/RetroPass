@@ -19,8 +19,22 @@ namespace RetroPass
 		public static readonly string SettingsPlayFullScreenVideo = "SettingsPlayFullScreenVideo";
 		public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
 		public static readonly string SettingsMode = "SettingsMode";
-		public static readonly string SettingsMainPageLayoutMode = "SettingsMainPageLayoutMode";
-		public static readonly string SettingsGameCollectionLayoutMode = "SettingsGameCollectionLayoutMode";
+		public static readonly string SettingsMainPageLayout = "SettingsMainPageLayout";
+		public static readonly string SettingsCollectionPageLayout = "SettingsCollectionPageLayout";
+
+		public enum SettingsMainPageLayoutType
+		{
+			Fixed,
+			OriginalAspect
+		}
+
+		public enum SettingsCollectionPageLayoutType
+		{
+			Fixed,
+			OriginalAspect,
+			ApproximateAspect
+		}
+
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
@@ -61,14 +75,14 @@ namespace RetroPass
 				localSettings.Values[SettingsMode] = "Default";
 			}
 
-			if (localSettings.Values[SettingsMainPageLayoutMode] == null)
+			if (localSettings.Values[SettingsMainPageLayout] == null)
 			{
-				localSettings.Values[SettingsMainPageLayoutMode] = "0";
+				localSettings.Values[SettingsMainPageLayout] = SettingsMainPageLayoutType.OriginalAspect.ToString();
 			}
 
-			if (localSettings.Values[SettingsGameCollectionLayoutMode] == null)
+			if (localSettings.Values[SettingsCollectionPageLayout] == null)
 			{
-				localSettings.Values[SettingsGameCollectionLayoutMode] = "0";
+				localSettings.Values[SettingsCollectionPageLayout] = SettingsCollectionPageLayoutType.ApproximateAspect.ToString();
 			}
 		}
 
