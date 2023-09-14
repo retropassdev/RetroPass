@@ -36,6 +36,7 @@ namespace RetroPass
 
 		PlaylistPlayLater playlistPlayLater;
 		string currentLayoutMode = null;
+		string currentImageStretch = null;
 
 		public GameCollectionPage()
 		{
@@ -141,6 +142,7 @@ namespace RetroPass
 
 			BitmapImage thumb = await game.GetImageThumbnailAsync();
 			string layoutMode = ApplicationData.Current.LocalSettings.Values[App.SettingsCollectionPageLayout] as string;
+			string imageStretch = ApplicationData.Current.LocalSettings.Values[App.SettingsImageStretch] as string;
 
 			if (layoutMode == App.SettingsCollectionPageLayoutType.ApproximateAspect.ToString())
 			{
@@ -155,14 +157,17 @@ namespace RetroPass
 				SetFixedItemWidth(thumb);
 			}
 
+			this.Resources["PlaylistItemImageStretch"] = imageStretch;
+
 			//reset layout if needed
-			if (currentLayoutMode != layoutMode)
+			if (currentLayoutMode != layoutMode || currentImageStretch != imageStretch)
 			{
 				currentLayoutMode = layoutMode;
+				currentImageStretch = imageStretch;
 				PlatformGridView.ItemsSource = null;
 			}
 
-            if (PlatformGridView.ItemsSource == null || PlatformGridView.ItemsSource != playlist.PlaylistItems)
+			if (PlatformGridView.ItemsSource == null || PlatformGridView.ItemsSource != playlist.PlaylistItems)
 			{
 				PlatformGridView.ItemsSource = playlist.PlaylistItems;
 				NameCollection.Text = playlist.Name;

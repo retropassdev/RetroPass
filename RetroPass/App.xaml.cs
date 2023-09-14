@@ -21,6 +21,7 @@ namespace RetroPass
 		public static readonly string SettingsMode = "SettingsMode";
 		public static readonly string SettingsMainPageLayout = "SettingsMainPageLayout";
 		public static readonly string SettingsCollectionPageLayout = "SettingsCollectionPageLayout";
+		public static readonly string SettingsImageStretch = "SettingsImageStretch";
 
 		public enum SettingsMainPageLayoutType
 		{
@@ -83,6 +84,11 @@ namespace RetroPass
 			if (localSettings.Values[SettingsCollectionPageLayout] == null)
 			{
 				localSettings.Values[SettingsCollectionPageLayout] = SettingsCollectionPageLayoutType.ApproximateAspect.ToString();
+			}
+
+			if (localSettings.Values[SettingsImageStretch] == null)
+			{
+				localSettings.Values[SettingsImageStretch] = Windows.UI.Xaml.Media.Stretch.Uniform.ToString();
 			}
 		}
 

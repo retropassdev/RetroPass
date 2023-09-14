@@ -21,6 +21,7 @@
         <Thickness x:Key="PlaylistItemMargin">4,4,4,4</Thickness>
         <x:Int32 x:Key="PlaylistItemWidth">136</x:Int32>
         <x:Int32 x:Key="PlaylistItemHeight">210</x:Int32>
+        <Stretch x:Key="PlaylistItemImageStretch">Uniform</Stretch>
 
         <DataTemplate x:Key="GameTemplate"
                       x:DataType="local:PlaylistItem">
@@ -30,7 +31,7 @@
                     BorderThickness="0">
                 <RelativePanel Background="#111111">
                     <Image x:Name="ItemImage"
-                           Stretch="Uniform"
+                           Stretch="{ThemeResource PlaylistItemImageStretch}"
                            HorizontalAlignment="Center"
                            Opacity="1" RelativePanel.AlignTopWithPanel="True" />
                     <Border x:Name="GameNameDisplayEmpty"                            

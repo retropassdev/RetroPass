@@ -22,6 +22,7 @@
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -29,7 +30,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="165"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" >Mode:</TextBlock>
@@ -41,7 +42,7 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="165"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" >Main Page Layout:</TextBlock>
@@ -52,7 +53,7 @@
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="165"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" >Collection Page Layout:</TextBlock>
@@ -62,7 +63,19 @@
                 <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Approximate Aspect" Tag="ApproximateAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
             </StackPanel>
         </Grid>
-        <CheckBox Grid.Row="5" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
-        <CheckBox Grid.Row="6" x:Name="PlayFullScreenVideoCheckBox" FlowDirection="RightToLeft" Content="Play Full Screen Video:" Checked="PlayFullScreenVideoCheckBox_Checked" Unchecked="PlayFullScreenVideoCheckBox_Unchecked"/>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Collection Image Stretch:</TextBlock>
+            <StackPanel x:Name="RadioButtonsImageStretch" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Uniform" Tag="Uniform" Checked="RadioButtonImageStretch_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Fill" Tag="Fill" Checked="RadioButtonImageStretch_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="UniformToFill" Tag="UniformToFill" Checked="RadioButtonImageStretch_Checked"/>
+            </StackPanel>
+        </Grid>
+        <CheckBox Grid.Row="6" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
+        <CheckBox Grid.Row="7" x:Name="PlayFullScreenVideoCheckBox" FlowDirection="RightToLeft" Content="Play Full Screen Video:" Checked="PlayFullScreenVideoCheckBox_Checked" Unchecked="PlayFullScreenVideoCheckBox_Unchecked"/>
     </Grid>
 </Page>
