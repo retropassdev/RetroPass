@@ -60,6 +60,10 @@ You can further configure RetroPass in Settings.
 3. [Logging](/Docs/SettingsLogging.md) - Turn on/off logger and view log entries.
 
 ## Controls
+- **Left Stick** - Navigate
+- **D-pad** - Navigate
+- **Triggers** - Jump vertically for faster navigation through platforms and collections
+- **Bumpers** - Jump horizontally for faster navigation through platforms
 - **Gamepad A** - Confirm
 - **Gamepad B** - Back, previous screen, close dialog
 - **Gamepad X** - Add/Remove title from/to **Play Later** playlist

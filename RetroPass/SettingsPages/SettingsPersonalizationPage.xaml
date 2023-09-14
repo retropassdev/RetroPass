@@ -59,8 +59,8 @@
             <TextBlock Grid.Column="0" VerticalAlignment="Center" >Collection Page Layout:</TextBlock>
             <StackPanel x:Name="RadioButtonsCollectionPageLayout" Grid.Column="1" Orientation="Horizontal" Spacing="10">
                 <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Fixed" Tag="Fixed" Checked="RadioButtonCollectionPageLayout_Checked"/>
-                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="OriginalAspect" Tag="OriginalAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
-                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Approximate Aspect" Tag="ApproximateAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Original Aspect" Tag="OriginalAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Group Aspect" Tag="ApproximateAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="4">
@@ -72,7 +72,7 @@
             <StackPanel x:Name="RadioButtonsImageStretch" Grid.Column="1" Orientation="Horizontal" Spacing="10">
                 <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Uniform" Tag="Uniform" Checked="RadioButtonImageStretch_Checked"/>
                 <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Fill" Tag="Fill" Checked="RadioButtonImageStretch_Checked"/>
-                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="UniformToFill" Tag="UniformToFill" Checked="RadioButtonImageStretch_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Uniform To Fill" Tag="UniformToFill" Checked="RadioButtonImageStretch_Checked"/>
             </StackPanel>
         </Grid>
         <CheckBox Grid.Row="6" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
