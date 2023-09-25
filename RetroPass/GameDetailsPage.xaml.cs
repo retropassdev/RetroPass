@@ -237,9 +237,14 @@ namespace RetroPass
 			}
 			else if (mediaSource != null)
 			{
+				BackgroundImage.Source = null;
 				mediaPlayer.Pause();
 				mediaSource.Dispose();
 				mediaSource = null;
+			}
+			else
+			{
+				BackgroundImage.Source = null;
 			}
 		}
 
@@ -248,9 +253,19 @@ namespace RetroPass
 			ButtonDescription.Visibility = Visibility.Collapsed;
 			ButtonVideo.Visibility = Visibility.Collapsed;
 
+			Task task = AimationFadeInInitialBackground.StartAsync();
+
 			Game game = playlistItem.game;
 			/////////////////////////////////////get box image/////////////////////////////////
 			ItemImage.Source = await game.GetMainImageAsync();
+			
+
+			if (ItemImage.Source != null)
+			{
+				await task;
+				BackgroundImage.Source = ItemImage.Source;
+				AnimationFadeOutInitialBackground.Start();
+			}		
 		}
 
 		private async Task GetDetailsImages()

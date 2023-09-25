@@ -5,7 +5,10 @@
     xmlns:local="using:RetroPass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:ani="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    mc:Ignorable="d"
+    Background="Transparent">
 
     <ContentDialog.Resources>
         <ResourceDictionary>
@@ -30,9 +33,42 @@
             </Style>
         </ResourceDictionary>
     </ContentDialog.Resources>
-    
+
     <RelativePanel>
-        <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="960" Height="478" Background="{ThemeResource PageBackground}">
+        <Grid Width="960" Height="478">
+            <Image x:Name="BackgroundImage" Stretch="Fill"/>
+            <media:UIElementExtensions.VisualFactory>
+                <media:PipelineVisualFactory>
+                    <media:BlurEffect Amount="18" IsAnimatable="False" />
+                </media:PipelineVisualFactory>
+            </media:UIElementExtensions.VisualFactory>
+        </Grid>
+        <Grid Background="{ThemeResource PageBackground}" Width="960" Height="478">
+            <media:UIElementExtensions.VisualFactory>
+                <media:PipelineVisualFactory>
+                    <media:OpacityEffect Value="0"/>
+                </media:PipelineVisualFactory>
+            </media:UIElementExtensions.VisualFactory>
+
+            <ani:Explicit.Animations>
+                <ani:AnimationSet x:Name="AimationFadeInInitialBackground" IsSequential="True">
+                    <ani:OpacityAnimation EasingMode="EaseOut"
+                                              EasingType="Linear"
+                                              From="0"
+                                              To="1"
+                                              Duration="0:0:0.15" />
+                </ani:AnimationSet>
+                <ani:AnimationSet x:Name="AnimationFadeOutInitialBackground" IsSequential="True">
+                    <ani:OpacityAnimation EasingMode="EaseOut"
+                                              EasingType="Linear"
+                                              From="1"
+                                              To="0.66"
+                                              Duration="0:0:0.2" />
+                </ani:AnimationSet>
+            </ani:Explicit.Animations>
+        </Grid>
+        
+        <Grid Margin="0,0,0,0" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="0" Width="960" Height="478" Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="110" />
                 <RowDefinition Height="Auto" />
