@@ -8,6 +8,7 @@
     - [XBSX2](/Docs/SetupXBSX2.md)
     - [Xenia Canary](/Docs/SetupXeniaCanary.md)
     - [PPSSPP](/Docs/SetupPPSSPP.md)
+    - [DuckStation](/Docs/SetupDuckStation.md)
 1. [Import games](/Docs/SetupLaunchBoxImport.md).
 1. If you want to specify the order of your playlists, platforms and games, you can do so by checking the [LaunchBox playlists, platforms and games sorting](/Docs/SetupLaunchBoxSorting.md) section.
 1. At this point setup is finished. Connect external storage to Xbox and start RetroPass. Follow [Add DataSource](/Docs/SettingsDataSources.md) section.
