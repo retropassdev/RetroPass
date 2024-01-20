@@ -14,6 +14,7 @@ namespace RetroPass
 			xenia,
 			xeniacanary,
 			ppsspp,
+			duckstation,
 		}
 		public string Name { get; set; }
 		public string SourceName { get; set; }
@@ -34,8 +35,8 @@ namespace RetroPass
 				EmulatorType = EEmulatorType.retroarch;
 			}
 			else */
-			if (string.IsNullOrEmpty(emulatorPath) == false && 
-					(emulatorPath.Contains("pcsx2", System.StringComparison.CurrentCultureIgnoreCase) || 
+			if (string.IsNullOrEmpty(emulatorPath) == false &&
+					(emulatorPath.Contains("pcsx2", System.StringComparison.CurrentCultureIgnoreCase) ||
 					emulatorPath.Contains("xbsx2", System.StringComparison.CurrentCultureIgnoreCase))
 				)
 			{
@@ -49,7 +50,7 @@ namespace RetroPass
 			{
 				EmulatorType = EEmulatorType.dolphin;
 			}
-			else if (string.IsNullOrEmpty(emulatorPath) == false &&	
+			else if (string.IsNullOrEmpty(emulatorPath) == false &&
 				(emulatorPath.Contains("xenia-canary", System.StringComparison.CurrentCultureIgnoreCase) ||
 				emulatorPath.Contains("xeniacanary", System.StringComparison.CurrentCultureIgnoreCase))
 				)
@@ -63,6 +64,10 @@ namespace RetroPass
 			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("ppsspp", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				EmulatorType = EEmulatorType.ppsspp;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("duckstation", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.duckstation;
 			}
 			else
 			{

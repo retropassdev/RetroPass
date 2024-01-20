@@ -31,6 +31,9 @@ namespace RetroPass
 				case Platform.EEmulatorType.xeniacanary:
 					url = GetUrlXeniaCanary(game);
 					break;
+				case Platform.EEmulatorType.duckstation:
+					url = GetUrlDuckstation(game);
+					break;
 				default:
 					break;
 			}
@@ -90,9 +93,18 @@ namespace RetroPass
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
+
 		private static string GetUrlPpsspp(Game game)
 		{
 			string args = "cmd=" + "ppsspp.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+		private static string GetUrlDuckstation(Game game)
+		{
+			string args = "cmd=" + "duckstation.exe";
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
