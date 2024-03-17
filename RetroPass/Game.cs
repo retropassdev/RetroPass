@@ -39,12 +39,16 @@ namespace RetroPass
 
 		public abstract void Init();
 
-		private async Task<StorageFile> FindImageThumbnailAsync(StorageFolder folder)
+		private async Task<StorageFile> FindImageThumbnailAsync()
 		{
-			//prevent some exceptions if folder is not defined
-			if(folder == null)
+			if (GamePlatform.BoxFrontFolder == null)
 			{
-				return null;
+				GamePlatform.BoxFrontFolder = await StorageUtils.GetFolderFromPathAsync(GamePlatform.BoxFrontPath);
+
+				if (GamePlatform.BoxFrontFolder == null)
+				{
+					return null;
+				}
 			}
 
 			StorageFile boxFrontFile = null;
@@ -61,7 +65,7 @@ namespace RetroPass
 					"System.FileName:~\"" + BoxFrontContentName + ".???" + "\"" + " OR " +
 					"System.FileName:~\"" + BoxFrontContentName + "-*.???" + "\"";
 				options.FolderDepth = FolderDepth.Deep;
-				StorageFileQueryResult queryResult = folder.CreateFileQueryWithOptions(options);
+				StorageFileQueryResult queryResult = GamePlatform.BoxFrontFolder.CreateFileQueryWithOptions(options);
 
 				IReadOnlyList<StorageFile> sortedFiles = await queryResult.GetFilesAsync();
 
@@ -128,27 +132,11 @@ namespace RetroPass
 
 		public async Task<BitmapImage> GetImageThumbnailAsync()
 		{
-			StorageFile ImageFile = null;
-			StorageItemThumbnail thumbnail = null;
-			//BitmapImage bitmapImage = null;
-
 			Trace.TraceInformation("Game: GetImageThumbnailAsync {0}", BoxFrontFileName);
 
-			if (bitmapImage != null)
+			if (bitmapImage == null && string.IsNullOrEmpty(BoxFrontFileName) == false)
 			{
-				return bitmapImage;
-			}
-
-			if (thumbnail == null && string.IsNullOrEmpty(BoxFrontFileName) == false)
-			{
-				if (GamePlatform.BoxFrontFolder == null)
-				{
-					GamePlatform.BoxFrontFolder = await StorageUtils.GetFolderFromPathAsync(GamePlatform.BoxFrontPath);
-				}
-
-				StorageFolder folder = GamePlatform.BoxFrontFolder;
-
-				ImageFile = await FindImageThumbnailAsync(folder);
+				StorageFile ImageFile = await FindImageThumbnailAsync();
 				//check if thumbs file exists
 				if (ImageFile != null)
 				{
@@ -163,22 +151,26 @@ namespace RetroPass
 		{
 			BitmapImage bitmapImage = null;
 
-			Trace.TraceInformation("Game: GetMainImageAsync {0}", BoxFrontFilePath);
+			Trace.TraceInformation("Game: GetMainImageAsync {0}", BoxFrontFileName);
 
-			if (string.IsNullOrEmpty(BoxFrontFilePath) == false)
+			if (string.IsNullOrEmpty(BoxFrontFileName) == false)
 			{
-				var boxFrontFile = await StorageFile.GetFileFromPathAsync(BoxFrontFilePath);
-				using (IRandomAccessStream fileStream = await boxFrontFile.OpenAsync(Windows.Storage.FileAccessMode.Read))
-				{
-					// Set the image source to the selected bitmap
-					bitmapImage = new BitmapImage();
-					// Decode pixel sizes are optional
-					// It's generally a good optimisation to decode to match the size you'll display
-					//bitmapImage.DecodePixelHeight = decodePixelHeight;
-					//bitmapImage.DecodePixelWidth = decodePixelWidth;
+				StorageFile imageFile = await FindImageThumbnailAsync();
 
-					await bitmapImage.SetSourceAsync(fileStream);
-					Trace.TraceInformation("Game: GetMainImageAsync SUCCESS {0}", BoxFrontFilePath);
+				if (imageFile != null)
+				{
+					using (IRandomAccessStream fileStream = await imageFile.OpenAsync(Windows.Storage.FileAccessMode.Read))
+					{
+						// Set the image source to the selected bitmap
+						bitmapImage = new BitmapImage();
+						// Decode pixel sizes are optional
+						// It's generally a good optimisation to decode to match the size you'll display
+						//bitmapImage.DecodePixelHeight = decodePixelHeight;
+						//bitmapImage.DecodePixelWidth = decodePixelWidth;
+
+						await bitmapImage.SetSourceAsync(fileStream);
+						Trace.TraceInformation("Game: GetMainImageAsync SUCCESS {0}", BoxFrontFilePath);
+					}
 				}
 			}
 
@@ -263,7 +255,7 @@ namespace RetroPass
 				foreach (StorageFile item in sortedFiles.Take(count))
 				{
 					//do not load more than 4 images
-					if(imageList.Count >= 4)
+					if (imageList.Count >= 4)
 					{
 						break;
 					}

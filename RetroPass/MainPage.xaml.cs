@@ -89,7 +89,7 @@ namespace RetroPass
 						if (currentPlaylistItem.playlist == playlistPlayLater)
 						{
 							currentListView.SelectedIndex = Math.Min(lastIndex, playlistPlayLater.PlaylistItemsLandingPage.Count - 1);
-							
+
 							if (playlistPlayLater.PlaylistItems.Count > 0)
 							{
 								currentPlaylistItem = playlistPlayLater.PlaylistItemsLandingPage[currentListView.SelectedIndex];
@@ -175,7 +175,7 @@ namespace RetroPass
 				return;
 			}
 
-			string layoutMode = ApplicationData.Current.LocalSettings.Values[App.SettingsMainPageLayout] as string; 
+			string layoutMode = ApplicationData.Current.LocalSettings.Values[App.SettingsMainPageLayout] as string;
 
 			//load data source only the first time or when it's changed, or if layout is changed
 			if (activeDataSourcesChanged || currentLayoutMode != layoutMode)
@@ -184,7 +184,7 @@ namespace RetroPass
 				activeDataSourcesChanged = false;
 
 				ClearAll();
-				
+
 				await playlistPlayLater.Load(dataSourceItems);
 				playlistPlayLater.UpdateGamesLandingPage();
 				OnPlaylistImported(playlistPlayLater);
@@ -196,7 +196,7 @@ namespace RetroPass
 					dataSource.PlaylistImported += OnPlaylistImported;
 					await dataSource.Load();
 				}
-			}			
+			}
 
 			//focus on button only if getting from another page
 			//this is to prevent setting focus after delayed load while search page is visible
@@ -240,7 +240,7 @@ namespace RetroPass
 		private void ClearMainPanel()
 		{
 			var playlists = StackPanelMain.FindChildren().Where(t => t is ScrollViewer).ToList();
-			
+
 			for (int i = playlists.Count() - 1; i >= 0; i--)
 			{
 				StackPanelMain.Children.Remove(playlists[i]);
@@ -267,7 +267,7 @@ namespace RetroPass
 				listView.ItemsPanel = (ItemsPanelTemplate)Resources["GamesListViewPanelTemplate"];
 				listView.ItemContainerStyle = (Style)Resources["ListViewPlatformItemContainerTemplateStyle"];
 			}
-			
+
 			listView.ContainerContentChanging += GamesListView_ContainerContentChanging;
 			listView.SelectionMode = ListViewSelectionMode.Single;
 			listView.SingleSelectionFollowsFocus = false;
@@ -333,7 +333,7 @@ namespace RetroPass
 		}
 
 		private void ScrollPlatformListViewToLeft(ListView listView)
-		{			
+		{
 			if (listView != null && listView.Items.Count > 0)
 			{
 				var scrollViewer = currentListView.FindAscendant<ScrollViewer>();
@@ -449,6 +449,7 @@ namespace RetroPass
 			var item = (sender as FrameworkElement)?.DataContext as PlaylistItem;
 			GameDetailsPage popup = new GameDetailsPage();
 			popup.OnNavigatedTo(item);
+			popup.playlist = item.playlist;
 			await popup.ShowAsync();
 			popup.OnNavigatedFrom();
 		}

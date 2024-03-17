@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Media.Core;
@@ -28,12 +29,18 @@ namespace RetroPass
 	public sealed partial class GameDetailsPage : ContentDialog
 	{
 		public PlaylistItem playlistItem;
+		public Playlist playlist;
 		private bool detailsPopupActive = false;
 		private bool descriptionPopupActive = false;
 		private bool videoPopupActive = false;
 		public string Subtitle { get; set; }
 		private MediaSource mediaSource;
 		private MediaPlayer mediaPlayer;
+
+		Game lastRequestedGame = null;
+		private static SemaphoreSlim semaphoreMainImage = new SemaphoreSlim(1, 1);
+		private static SemaphoreSlim semaphoreVideo = new SemaphoreSlim(1, 1);
+		private static SemaphoreSlim semaphoreDetailsImages = new SemaphoreSlim(1, 1);
 
 		public GameDetailsPage()
 		{
@@ -50,7 +57,7 @@ namespace RetroPass
 					case VirtualKey.GamepadLeftThumbstickLeft:
 					case VirtualKey.GamepadDPadLeft:
 					case VirtualKey.Left:
-						
+
 						//navigate to previous image
 						int index = IndexOfImageInGridView(OverlayImage);
 
@@ -79,7 +86,7 @@ namespace RetroPass
 			}
 
 			//disable navigation when overlay is visible
-			if (ImageOverlay.Visibility == Visibility.Visible || 
+			if (ImageOverlay.Visibility == Visibility.Visible ||
 				DescriptionOverlay.Visibility == Visibility.Visible ||
 				VideoOverlay.Visibility == Visibility.Visible)
 			{
@@ -107,30 +114,52 @@ namespace RetroPass
 						break;
 				}
 			}
+			else
+			{
+				switch (e.Key)
+				{
+					case VirtualKey.N:
+					case VirtualKey.GamepadRightTrigger:
+
+						int indexOfItem = playlist.PlaylistItems.IndexOf(playlistItem);
+
+						if (indexOfItem >= 0 && indexOfItem < playlist.PlaylistItems.Count - 1)
+						{
+							PlaylistItem nextItem = playlist.PlaylistItems[indexOfItem + 1];
+							ShowItem(nextItem);
+						}
+						break;
+
+					case VirtualKey.B:
+					case VirtualKey.GamepadLeftTrigger:
+
+						indexOfItem = playlist.PlaylistItems.IndexOf(playlistItem);
+
+						if (indexOfItem >= 1 && indexOfItem < playlist.PlaylistItems.Count)
+						{
+							PlaylistItem nextItem = playlist.PlaylistItems[indexOfItem - 1];
+							ShowItem(nextItem);
+						}
+						break;
+				}
+			}
 
 			base.OnPreviewKeyDown(e);
 		}
-		
+
 		public async void OnNavigatedTo(PlaylistItem playlistItem)
 		{
 			this.Closing += OnGameDetailsClosing;
 
+			lastRequestedGame = playlistItem.game;
 			this.playlistItem = playlistItem;
 			Game game = playlistItem.game;
-
-			DateTime dt;
-			string date = "";
-			if (DateTime.TryParse(game.ReleaseDate, out dt))
-			{
-				date = dt.Year.ToString();
-			}
-			string[] arr = { game.Developer, game.Publisher, date, game.Genre };
-			arr = Array.FindAll(arr, t => string.IsNullOrEmpty(t) == false);
-			Subtitle = string.Join(" · ", arr);
-			
+			GetTitle(game);
 			//get main box art and then the rest, so focus is shown as soon as possible
 			await GetDetailsMainImageAsync();
-			GetDetailsImages();
+			await GetVideo(game);
+			GetDescription();
+			GetDetailsImages(game);
 
 			await Task.Delay(40);
 			Dummy.Visibility = Visibility.Collapsed;
@@ -161,6 +190,36 @@ namespace RetroPass
 			}
 		}
 
+
+		private async Task ShowItem(PlaylistItem item)
+		{
+			this.playlistItem = item;
+			Game game = playlistItem.game;
+
+			GetTitle(game);
+			Bindings.Update();
+
+			ButtonPlay.Focus(FocusState.Keyboard);
+			SetFocusVisibility(true);
+
+			GameDetailsGridView.ItemsSource = null;
+
+			/////////////////////////////////////get box image/////////////////////////////////
+			ButtonPlay.Opacity = 1.0f;
+			lastRequestedGame = game;
+			ItemImage.Source = await GetMainImageAsync(game);
+
+			if (ItemImage.Source != null)
+			{
+				//await task;
+				BackgroundImage.Source = ItemImage.Source;
+			}
+
+			await GetVideo(game);
+			GetDescription();
+			await GetDetailsImages(game);
+		}
+
 		private void RefreshImage(int index)
 		{
 			var imageList = GameDetailsGridView.ItemsSource as ObservableCollection<DetailImage>;
@@ -184,7 +243,7 @@ namespace RetroPass
 			MediaPlayerSurface surface = mediaPlayer.GetSurface(compositor);
 
 			SpriteVisual spriteVisual = compositor.CreateSpriteVisual();
-			spriteVisual.Size =	new System.Numerics.Vector2((float)width, (float)height);
+			spriteVisual.Size = new System.Numerics.Vector2((float)width, (float)height);
 
 			CompositionBrush brush = compositor.CreateSurfaceBrush(surface.CompositionSurface);
 			spriteVisual.Brush = brush;
@@ -226,7 +285,7 @@ namespace RetroPass
 				SetFocusVisibility(true);
 				args.Cancel = true;
 			}
-			else if(videoPopupActive == true)
+			else if (videoPopupActive == true)
 			{
 				VideoOverlay.Visibility = Visibility.Collapsed;
 				RenderVideo(MediaPlayerContainerButtonVideo, ButtonVideo);
@@ -248,6 +307,19 @@ namespace RetroPass
 			}
 		}
 
+		private void GetTitle(Game game)
+		{
+			DateTime dt;
+			string date = "";
+			if (DateTime.TryParse(game.ReleaseDate, out dt))
+			{
+				date = dt.Year.ToString();
+			}
+			string[] arr = { game.Developer, game.Publisher, date, game.Genre };
+			arr = Array.FindAll(arr, t => string.IsNullOrEmpty(t) == false);
+			Subtitle = string.Join(" · ", arr);
+		}
+
 		private async Task GetDetailsMainImageAsync()
 		{
 			ButtonDescription.Visibility = Visibility.Collapsed;
@@ -258,26 +330,48 @@ namespace RetroPass
 			Game game = playlistItem.game;
 			/////////////////////////////////////get box image/////////////////////////////////
 			ItemImage.Source = await game.GetMainImageAsync();
-			
+
 
 			if (ItemImage.Source != null)
 			{
 				await task;
 				BackgroundImage.Source = ItemImage.Source;
 				AnimationFadeOutInitialBackground.Start();
-			}		
+			}
 		}
 
-		private async Task GetDetailsImages()
+		private async Task<BitmapImage> GetMainImageAsync(Game game)
 		{
-			Game game = playlistItem.game;
+			await semaphoreMainImage.WaitAsync();
 
-			/////////////////////////////////////get box image/////////////////////////////////
-			//ItemImage.Source = await game.GetMainImageAsync();
+			if (lastRequestedGame != game)
+			{
+				//Debug.WriteLine("GetMainImageAsync CANCEL " + game.Title);
+				semaphoreMainImage.Release();
+				return null;
+			}
 
+			//Debug.WriteLine("GetMainImageAsync " + game.Title);
+			var ret = await game.GetMainImageAsync();
+			semaphoreMainImage.Release();
+			return ret;
+		}
+
+		private async Task GetVideo(Game game)
+		{
+			await semaphoreVideo.WaitAsync();
+
+			if (lastRequestedGame != game)
+			{
+				//Debug.WriteLine("GetVideo CANCEL " + game.VideoTitle);
+				semaphoreVideo.Release();
+				return;
+			}
+
+			//Debug.WriteLine("GetVideo " + game.VideoTitle);
 			/////////////////////////////////////search for video/////////////////////////////////
 			mediaSource = await game.GetVideo();
-			
+
 			if (mediaSource != null)
 			{
 				mediaPlayer = new MediaPlayer
@@ -300,18 +394,46 @@ namespace RetroPass
 					mediaPlayer.Play();
 				}
 			}
+			else
+			{
+				ButtonVideo.Visibility = Visibility.Collapsed;
+			}
+
+			semaphoreVideo.Release();
+		}
+
+		private void GetDescription()
+		{
+			Game game = playlistItem.game;
 
 			if (string.IsNullOrEmpty(game.Description) == false)
 			{
 				ButtonDescription.Visibility = Visibility.Visible;
 			}
+			else
+			{
+				ButtonDescription.Visibility = Visibility.Collapsed;
+			}
+		}
+
+		private async Task GetDetailsImages(Game game)
+		{
+			await semaphoreDetailsImages.WaitAsync();
+
+			if (lastRequestedGame != game)
+			{
+				//Debug.WriteLine("GetDetailsImages CANCEL " + game.Title);
+				semaphoreDetailsImages.Release();
+				return;
+			}
 
 			/////////////////////////////////////get all detail images/////////////////////////////////
-			GameDetailsGridView.Visibility = Visibility.Visible;
+			//GameDetailsGridView.Visibility = Visibility.Visible;
 			GameDetailsGridView.ItemsSource = null;
 			ObservableCollection<DetailImage> imageList = new ObservableCollection<DetailImage>();
 			GameDetailsGridView.ItemsSource = imageList;
 			await game.GetDetailsImages(imageList);
+			semaphoreDetailsImages.Release();
 		}
 
 		private void ScrollToCenter(UIElement sender, BringIntoViewRequestedEventArgs args)
@@ -345,11 +467,11 @@ namespace RetroPass
 		{
 			Button button = FocusManager.GetFocusedElement() as Button;
 
-			if(button != null )
+			if (button != null)
 			{
 				FocusControl currentFocusControl = button.FindDescendant<FocusControl>();
 
-				if(currentFocusControl != null)
+				if (currentFocusControl != null)
 				{
 					currentFocusControl.Enabled = enabled;
 				}
