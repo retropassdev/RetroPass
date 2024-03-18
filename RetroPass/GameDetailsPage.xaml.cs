@@ -391,6 +391,7 @@ namespace RetroPass
 				}
 				else
 				{
+					mediaPlayer.IsMuted = (string)(ApplicationData.Current.LocalSettings.Values[App.SettingsMuteVideo]) == "None" ? false : true;
 					mediaPlayer.Play();
 				}
 			}
@@ -512,6 +513,7 @@ namespace RetroPass
 				SetFocusVisibility(false);
 				VideoOverlay.UpdateLayout();
 				RenderVideo(MediaPlayerContainerVideoOverlay, VideoOverlay);
+				mediaPlayer.IsMuted = (string)(ApplicationData.Current.LocalSettings.Values[App.SettingsMuteVideo]) == "Always" ? true : false;
 				mediaPlayer.Play();
 				videoPopupActive = true;
 			}
@@ -522,6 +524,7 @@ namespace RetroPass
 			else
 			{
 				RenderVideo(MediaPlayerContainerButtonVideo, ButtonVideo);
+				mediaPlayer.IsMuted = (string)(ApplicationData.Current.LocalSettings.Values[App.SettingsMuteVideo]) == "Always" ? true : false;
 				mediaPlayer.Play();
 			}
 		}

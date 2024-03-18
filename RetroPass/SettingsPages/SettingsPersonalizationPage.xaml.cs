@@ -22,6 +22,14 @@ namespace RetroPass.SettingsPages
 			AutoPlayVideoCheckBox.IsChecked = (bool)ApplicationData.Current.LocalSettings.Values[App.SettingsAutoPlayVideo];
 			PlayFullScreenVideoCheckBox.IsChecked = (bool)ApplicationData.Current.LocalSettings.Values[App.SettingsPlayFullScreenVideo];
 
+			var buttonsMuteVideo = this.RadioButtonsMuteVideo.Children.OfType<RadioButton>();
+			string currentMuteVideo = (string)ApplicationData.Current.LocalSettings.Values[App.SettingsMuteVideo];
+			var selectedButtonMuteVideo = buttonsMuteVideo.FirstOrDefault(t => t.Tag as string == currentMuteVideo);
+			if (selectedButtonMuteVideo != null)
+			{
+				selectedButtonMuteVideo.IsChecked = true;
+			}
+
 			//set first selected
 			var buttonsMode = this.RadioButtonsMode.Children.OfType<RadioButton>();
 			var selectedButtonMode = buttonsMode.FirstOrDefault(t => t.Tag as string == ThemeManager.Instance.CurrentMode.ToString());
@@ -72,8 +80,14 @@ namespace RetroPass.SettingsPages
 			ApplicationData.Current.LocalSettings.Values[App.SettingsAutoPlayVideo] = false;
 		}
 
-        private void RadioButtonMode_Checked(object sender, RoutedEventArgs e)
-        {
+		private void RadioButtonMuteVideo_Checked(object sender, RoutedEventArgs e)
+		{
+			RadioButton item = sender as RadioButton;
+			ApplicationData.Current.LocalSettings.Values[App.SettingsMuteVideo] = item.Tag.ToString();
+		}
+
+		private void RadioButtonMode_Checked(object sender, RoutedEventArgs e)
+		{
 			RadioButton item = sender as RadioButton;
 			ThemeManager.Instance.ChangeMode(item.Tag.ToString());
 		}
@@ -94,7 +108,7 @@ namespace RetroPass.SettingsPages
 			RadioButton item = sender as RadioButton;
 			App.SettingsCollectionPageLayoutType tag;
 
-			if(Enum.TryParse(item.Tag.ToString(),out tag))
+			if (Enum.TryParse(item.Tag.ToString(), out tag))
 			{
 				ApplicationData.Current.LocalSettings.Values[App.SettingsCollectionPageLayout] = item.Tag.ToString();
 			}
@@ -112,13 +126,13 @@ namespace RetroPass.SettingsPages
 		}
 
 		private void PlayFullScreenVideoCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
+		{
 			ApplicationData.Current.LocalSettings.Values[App.SettingsPlayFullScreenVideo] = true;
 		}
 
-        private void PlayFullScreenVideoCheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
+		private void PlayFullScreenVideoCheckBox_Unchecked(object sender, RoutedEventArgs e)
+		{
 			ApplicationData.Current.LocalSettings.Values[App.SettingsPlayFullScreenVideo] = false;
 		}
-    }
+	}
 }

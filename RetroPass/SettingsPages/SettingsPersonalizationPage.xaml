@@ -27,6 +27,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -77,5 +78,17 @@
         </Grid>
         <CheckBox Grid.Row="6" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
         <CheckBox Grid.Row="7" x:Name="PlayFullScreenVideoCheckBox" FlowDirection="RightToLeft" Content="Play Full Screen Video:" Checked="PlayFullScreenVideoCheckBox_Checked" Unchecked="PlayFullScreenVideoCheckBox_Unchecked"/>
+        <Grid Grid.Row="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Mute Video:</TextBlock>
+            <StackPanel x:Name="RadioButtonsMuteVideo" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="None" Tag="None" Checked="RadioButtonMuteVideo_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="On Auto Play" Tag="OnAutoPlay" Checked="RadioButtonMuteVideo_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Always" Tag="Always" Checked="RadioButtonMuteVideo_Checked"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
