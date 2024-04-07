@@ -300,10 +300,12 @@ namespace RetroPass
 				mediaPlayer.Pause();
 				mediaSource.Dispose();
 				mediaSource = null;
+				lastRequestedGame = null;
 			}
 			else
 			{
 				BackgroundImage.Source = null;
+				lastRequestedGame = null;
 			}
 		}
 
@@ -368,6 +370,11 @@ namespace RetroPass
 				return;
 			}
 
+			if (mediaPlayer != null)
+			{
+				mediaPlayer.Pause();
+			}
+
 			//Debug.WriteLine("GetVideo " + game.VideoTitle);
 			/////////////////////////////////////search for video/////////////////////////////////
 			mediaSource = await game.GetVideo();
@@ -384,7 +391,14 @@ namespace RetroPass
 				ButtonVideo.UpdateLayout();
 				RenderVideo(MediaPlayerContainerButtonVideo, ButtonVideo);
 
-				if ((bool)ApplicationData.Current.LocalSettings.Values[App.SettingsAutoPlayVideo] == false)
+				//already exited
+				if (lastRequestedGame == null)
+				{
+					mediaPlayer?.Pause();
+					mediaSource?.Dispose();
+					mediaSource = null;
+				}
+				else if ((bool)ApplicationData.Current.LocalSettings.Values[App.SettingsAutoPlayVideo] == false)
 				{
 					mediaPlayer.PlaybackSession.Position = TimeSpan.FromSeconds(0.7);
 					mediaPlayer.Pause();

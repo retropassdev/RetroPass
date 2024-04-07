@@ -3,7 +3,6 @@ using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -16,6 +15,7 @@ namespace RetroPass
 	sealed partial class App : Application
 	{
 		public static readonly string SettingsAutoPlayVideo = "SettingsAutoPlayVideo";
+		public static readonly string SettingsMuteVideo = "SettingsMuteVideo";
 		public static readonly string SettingsPlayFullScreenVideo = "SettingsPlayFullScreenVideo";
 		public static readonly string SettingsLoggingEnabled = "SettingsLoggingEnabled";
 		public static readonly string SettingsMode = "SettingsMode";
@@ -64,6 +64,11 @@ namespace RetroPass
 			if (localSettings.Values[SettingsPlayFullScreenVideo] == null)
 			{
 				localSettings.Values[SettingsPlayFullScreenVideo] = true;
+			}
+
+			if (localSettings.Values[SettingsMuteVideo] == null)
+			{
+				localSettings.Values[SettingsMuteVideo] = "None";
 			}
 
 			if (localSettings.Values[SettingsLoggingEnabled] == null)
@@ -117,7 +122,7 @@ namespace RetroPass
 			{
 				// Create a Frame to act as the navigation context and navigate to the first page
 				rootFrame = new Frame();
-				
+
 				rootFrame.NavigationFailed += OnNavigationFailed;
 				//TODO: set theme color
 				//rootFrame.Background
@@ -139,7 +144,7 @@ namespace RetroPass
 					// configuring the new page by passing required information as a navigation
 					// parameter
 					//On first load, wait until theme resources are initalized and then go to main page
-					if(ThemeManager.Instance.IsInitialized == false)
+					if (ThemeManager.Instance.IsInitialized == false)
 					{
 						ThemeManager.Instance.ThemeInitialization_Finished += ThemeResourcesLoaded;
 						ThemeManager.Instance.Init();
@@ -150,6 +155,8 @@ namespace RetroPass
 					}
 				}
 				// Ensure the current window is active
+				//ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+				//ApplicationView.PreferredLaunchViewSize = new Windows.Foundation.Size(960, 540);
 				Window.Current.Activate();
 			}
 		}
