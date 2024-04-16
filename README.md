@@ -62,7 +62,7 @@ You can further configure RetroPass in Settings.
 ## Controls
 - **Left Stick** - Navigate
 - **D-pad** - Navigate
-- **Triggers** - Jump vertically for faster navigation through platforms and collections
+- **Triggers** - Jump vertically for faster navigation through platforms and collections. In game detail view, go to next and previous game in a playlist.
 - **Bumpers** - Jump horizontally for faster navigation through platforms
 - **Gamepad A** - Confirm
 - **Gamepad B** - Back, previous screen, close dialog

@@ -27,4 +27,8 @@
 	![](/Docs/layout_collection_stretch_uniform_to_fill.png)	
 - **Auto Play Video** - If checked, automatically plays a video when content is selected.
 - **Play Full Screen Video** - If checked, plays larger game video.
+- **Mute Video**
+	* **None** - Never mute video.
+	* **On Auto Play** - Mute video only on auto play. If video is paused and then started manually, it plays the sound.
+	* **Always** - Always mute video.
 
