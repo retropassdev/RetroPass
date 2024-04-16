@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -34,6 +35,10 @@ namespace RetroPass
 		private List<Playlist> playlists;
 		private ObservableCollection<PlaylistItem> searchResultList = new ObservableCollection<PlaylistItem>();
 		private bool firstFocus;
+		private List<string> searchGenreList = new List<string>();
+
+		private static string genreAll = "All";
+		private static string genreNone = "None";
 
 		public SearchPage()
 		{
@@ -66,12 +71,12 @@ namespace RetroPass
 
 		public void OnNavigatedTo(List<Playlist> playlists)
 		{
-			if(RequestedTheme != ThemeManager.Instance.CurrentMode)
+			if (RequestedTheme != ThemeManager.Instance.CurrentMode)
 			{
 				RequestedTheme = ThemeManager.Instance.CurrentMode;
 			}
 
-			if(SearchCriteria.SelectedItem == null)
+			if (SearchCriteria.SelectedItem == null)
 			{
 				SearchCriteria.SelectedItem = SearchCriteria.MenuItems[0];
 			}
@@ -120,10 +125,65 @@ namespace RetroPass
 				return;
 			}
 
-			if (searchText.Length > 2)
+			string searchCriteria = (SearchCriteria.SelectedItem as NavigationViewItem).Tag.ToString();
+
+			if (searchCriteria == "Genre")
 			{
-				//string searchCriteria = SearchCriteria.SelectedValue as string;
-				string searchCriteria = (SearchCriteria.SelectedItem as NavigationViewItem).Tag.ToString();
+				SearchText.Visibility = Visibility.Collapsed;
+				SearchGenre.Visibility = Visibility.Visible;
+
+				var genres = playlists.SelectMany(p => p.PlaylistItems).SelectMany(i => i.game.Genre.Split(',')).Select(g => g.Split('/')[0].Trim()).Where(g => !string.IsNullOrEmpty(g)).Distinct().OrderBy(g => g).ToList();
+				//searchGenreList contains previously selected genre. It's useful to keep those checked between searches.
+				//keep any genre that exists in currently selected list
+				searchGenreList.RemoveAll(t => genres.Contains(t) == false);
+
+				StackPanelGenre.Children.Clear();
+
+				ToggleButton toggleButton = new ToggleButton();
+				toggleButton.Content = genreAll;
+				toggleButton.Tag = genreAll;
+				toggleButton.Checked += ToggleButtonGenre_Checked;
+				toggleButton.Unchecked += ToggleButtonGenre_Unchecked;
+				toggleButton.XYFocusDown = SearchCriteria;
+				StackPanelGenre.Children.Add(toggleButton);
+
+
+				toggleButton = new ToggleButton();
+				toggleButton.Content = genreNone;
+				toggleButton.Tag = genreNone;
+				toggleButton.Checked += ToggleButtonGenre_Checked;
+				toggleButton.Unchecked += ToggleButtonGenre_Unchecked;
+				toggleButton.XYFocusDown = SearchCriteria;
+				StackPanelGenre.Children.Add(toggleButton);
+
+				foreach (var genre in genres)
+				{
+					toggleButton = new ToggleButton();
+					toggleButton.Content = genre;
+					toggleButton.Tag = genre;
+					toggleButton.IsChecked = searchGenreList.Contains(genre);
+					toggleButton.Checked += ToggleButtonGenre_Checked;
+					toggleButton.Unchecked += ToggleButtonGenre_Unchecked;
+					toggleButton.XYFocusDown = SearchCriteria;
+					StackPanelGenre.Children.Add(toggleButton);
+				}
+
+				ToggleButton first = StackPanelGenre.Children.First() as ToggleButton;
+				ToggleButton last = StackPanelGenre.Children.Last() as ToggleButton;
+
+				first.XYFocusLeftNavigationStrategy = XYFocusNavigationStrategy.RectilinearDistance;
+				last.XYFocusRightNavigationStrategy = XYFocusNavigationStrategy.RectilinearDistance;
+				first.XYFocusLeft = last;
+				last.XYFocusRight = first;
+
+				RefreshGenreSearch();
+
+			}
+			else if (searchText.Length > 2)
+			{
+				SearchText.Visibility = Visibility.Visible;
+				SearchGenre.Visibility = Visibility.Collapsed;
+
 				switch (searchCriteria)
 				{
 					case "Title":
@@ -156,7 +216,73 @@ namespace RetroPass
 			}
 			else
 			{
+				SearchText.Visibility = Visibility.Visible;
+				SearchGenre.Visibility = Visibility.Collapsed;
+
 				searchResultList.Clear();
+			}
+		}
+
+		private void ToggleButtonGenre_Unchecked(object sender, RoutedEventArgs e)
+		{
+			string genre = ((ToggleButton)sender).Tag.ToString();
+
+			if (genre == genreAll || genre == genreNone)
+			{
+				//ignore
+			}
+			else if (searchGenreList.Contains(genre) == true)
+			{
+				searchGenreList.Remove(genre);
+				RefreshGenreSearch();
+			}
+		}
+
+		private void ToggleButtonGenre_Checked(object sender, RoutedEventArgs e)
+		{
+			string genre = ((ToggleButton)sender).Tag.ToString();
+
+			if (genre == genreAll)
+			{
+				searchGenreList.Clear();
+
+				foreach (ToggleButton toggleButton in StackPanelGenre.Children)
+				{
+					if (toggleButton.Tag.ToString() == genreNone || toggleButton.Tag.ToString() == genreAll)
+					{
+						toggleButton.IsChecked = false;
+					}
+					else
+					{
+						toggleButton.IsChecked = true;
+						searchGenreList.Add(toggleButton.Tag.ToString());
+					}
+				}
+			}
+			else if (genre == genreNone)
+			{
+				searchGenreList.Clear();
+
+				foreach (ToggleButton toggleButton in StackPanelGenre.Children)
+				{
+					toggleButton.IsChecked = false;
+				}
+			}
+			else if (searchGenreList.Contains(genre) == false)
+			{
+				searchGenreList.Add(genre);
+			}
+
+			RefreshGenreSearch();
+		}
+
+		private void RefreshGenreSearch()
+		{
+			var playlistItems = playlists.SelectMany(p => p.PlaylistItems).Where(t => t.game.Genre != null && searchGenreList.Any(g => t.game.Genre.Contains(g, StringComparison.InvariantCultureIgnoreCase))).ToList();
+			searchResultList.Clear();
+			foreach (PlaylistItem i in playlistItems)
+			{
+				searchResultList.Add(i);
 			}
 		}
 

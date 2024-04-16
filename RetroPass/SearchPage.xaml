@@ -38,6 +38,10 @@
                 <Setter Property="Template" Value="{StaticResource TextboxControlTemplate}" />
             </Style>
 
+            <Style TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
+                <Setter Property="Template" Value="{StaticResource ToggleButtonControlTemplate}" />
+            </Style>
+
             <DataTemplate x:Key="GameTemplate"
                     x:DataType="local:PlaylistItem">
 
@@ -74,7 +78,6 @@
                 <Setter Property="ClickMode" Value="Release" />
             </Style>
 
-  
         </ResourceDictionary> 
     </ContentDialog.Resources>
 
@@ -97,13 +100,18 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
+
             <TextBox Grid.Row="0" x:Name="SearchText" Width="512" Height="28" Visibility="Visible" MinHeight="28"
                      BorderThickness="0" CornerRadius="14" Text=""
                      PlaceholderText="Search RetroPass" TextChanged="TextBox_TextChanged"
                      Background="{ThemeResource SearchButtonBackgroundBrush}" Opacity="0.95">
             </TextBox>
-            
+
+            <ScrollViewer Margin="0,-4,0,0" Grid.Row="0" x:Name="SearchGenre" Width="810" Visibility="Collapsed" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"> 
+                <StackPanel x:Name="StackPanelGenre" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="6" Margin="0">
+                </StackPanel>
+            </ScrollViewer>
+
             <NavigationView Grid.Row="1" x:Name="SearchCriteria" PaneDisplayMode="Top" SelectionFollowsFocus="Enabled" IsBackButtonVisible="Collapsed" 
                             IsSettingsVisible="False" HorizontalAlignment="Center" IsPaneToggleButtonVisible="False"
                             IsTextScaleFactorEnabled="False" MenuItemContainerStyle="{StaticResource NavItemStyle}"
@@ -112,6 +120,7 @@
                     <NavigationViewItem Height="32" Content="Title" Tag="Title" IsSelected="True"/>
                     <NavigationViewItem Height="32" Content="Developer" Tag="Developer"/>
                     <NavigationViewItem Height="32" Content="Year" Tag="Year" />
+                    <NavigationViewItem Height="32" Content="Genre" Tag="Genre" />
                 </NavigationView.MenuItems>
             </NavigationView>
 
