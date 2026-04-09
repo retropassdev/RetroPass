@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace RetroPass
 {
@@ -15,6 +17,9 @@ namespace RetroPass
 					break;
 				case Platform.EEmulatorType.rgx:
 					url = GetUrlRetrix(game);
+					break;
+				case Platform.EEmulatorType.citrara:
+					url = GetUrlCitrara(game);
 					break;
 				case Platform.EEmulatorType.xbsx2:
 					url = GetUrlXBSX2(game);
@@ -34,7 +39,25 @@ namespace RetroPass
 				case Platform.EEmulatorType.duckstation:
 					url = GetUrlDuckstation(game);
 					break;
-				default:
+				case Platform.EEmulatorType.flycast:
+					url = GetUrlFlycast(game);
+					break;
+				case Platform.EEmulatorType.edge:
+					url = GetUrlEdge(game);
+					break;
+				case Platform.EEmulatorType.gamepass:
+					url = GetUrlGamepass(game);
+					break;
+                case Platform.EEmulatorType.armsx:
+					url = GetUrlArmsX(game);
+					break;
+                case Platform.EEmulatorType.panda:
+                    url = GetUrlPanda(game);
+					break;
+                case Platform.EEmulatorType.supermodel:
+                    url = GetUrlSupermodel(game);
+                    break;
+                default:
 					break;
 			}
 
@@ -59,6 +82,13 @@ namespace RetroPass
 			args += " cores\\" + game.CoreName;
 			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
 			args += " &launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+		private static string GetUrlCitrara(Game game)
+		{
+			string args = "cmd=" + "citrara.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
 
@@ -109,5 +139,106 @@ namespace RetroPass
 			args += "&launchOnExit=" + "retropass:";
 			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
 		}
-	}
+
+		private static string GetUrlFlycast(Game game)
+		{
+			string args = "cmd=" + "flycast.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+		private static string GetUrlArmsX(Game game)
+		{
+			string args = "cmd=" + "armsx.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+		private static string GetUrlPanda(Game game)
+		{
+			string args = "cmd=" + "Alber.exe";
+			args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+			args += "&launchOnExit=" + "retropass:";
+			return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+		}
+
+        private static string GetUrlSupermodel(Game game)
+        {
+            string args = "cmd=" + "supermodel.exe";
+            args += " \"" + Uri.EscapeDataString(game.ApplicationPathFull) + "\"";
+            args += "&launchOnExit=" + "retropass:";
+            return game.GamePlatform.EmulatorType.ToString() + ":?" + args;
+        }
+
+        public static string GetUrlGamepass(Game game)
+		{
+			if (game == null || string.IsNullOrEmpty(game.ApplicationPathFull))
+			{
+				return null;
+			}
+
+			if (!File.Exists(game.ApplicationPathFull) || !game.ApplicationPathFull.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+			{
+				return null;
+			}
+
+			try
+			{
+				string urlContent = File.ReadAllText(game.ApplicationPathFull).Trim();
+				return string.IsNullOrEmpty(urlContent) ? null : $"gamepass:{urlContent}";
+			}
+			catch
+			{
+				return null;
+			}
+		}
+
+        public static string GetUrlEdge(Game game)
+        {
+            if (game == null || string.IsNullOrEmpty(game.ApplicationPathFull))
+            {
+                return null;
+            }
+
+            if (!File.Exists(game.ApplicationPathFull) || !game.ApplicationPathFull.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            try
+            {
+                string urlContent = File.ReadAllText(game.ApplicationPathFull).Trim();
+                return string.IsNullOrEmpty(urlContent) ? null : $"microsoft-edge:{urlContent}";
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static string GetUrlPorts(Game game)
+        {
+            if (game == null || string.IsNullOrEmpty(game.ApplicationPathFull))
+            {
+                return null;
+            }
+
+            if (!File.Exists(game.ApplicationPathFull) || !game.ApplicationPathFull.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            try
+            {
+                string urlContent = File.ReadAllText(game.ApplicationPathFull).Trim();
+                return string.IsNullOrEmpty(urlContent) ? null : urlContent;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
 }

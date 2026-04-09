@@ -9,13 +9,20 @@ namespace RetroPass
 		{
 			retroarch,
 			rgx,
-			xbsx2,
+			citrara,
+            xbsx2,
 			dolphin,
 			xenia,
 			xeniacanary,
 			ppsspp,
 			duckstation,
-		}
+			flycast,
+			edge,
+            gamepass,
+            armsx,
+			panda,
+            supermodel,
+        }
 		public string Name { get; set; }
 		public string SourceName { get; set; }
 		public EEmulatorType EmulatorType { get; set; }
@@ -46,6 +53,10 @@ namespace RetroPass
 			{
 				EmulatorType = EEmulatorType.rgx;
 			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("citrara", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.citrara;
+			}
 			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("dolphin", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				EmulatorType = EEmulatorType.dolphin;
@@ -69,7 +80,31 @@ namespace RetroPass
 			{
 				EmulatorType = EEmulatorType.duckstation;
 			}
-			else
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("flycast", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.flycast;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("edge", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.edge;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("gamepass", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.gamepass;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("armsx", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.armsx;
+			}
+			else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("panda", System.StringComparison.CurrentCultureIgnoreCase))
+			{
+				EmulatorType = EEmulatorType.panda;
+			}
+            else if (string.IsNullOrEmpty(emulatorPath) == false && emulatorPath.Contains("supermodel", System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                EmulatorType = EEmulatorType.supermodel;
+            }
+            else
 			{
 				//let it just be default retroarch
 				EmulatorType = EEmulatorType.retroarch;
