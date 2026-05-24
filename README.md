@@ -1,7 +1,5 @@
 # RetroPass
 
-## <span style="color:red">Request from retropassdev</span>: I'm currently looking for a job. If you need a mid-senior programmer/game developer, please click [here](/Temp/Job.md) for more details. Thank you.
-
 Retro Pass is a simple frontend for emulators running on Xbox.
 
 ![Video](/Docs/menu.gif)
